@@ -40,7 +40,7 @@
                     <p class="card-text"><b><%= rs.getString("titulo")%></b></p>
                     <p class="card-text"> <b>Descrição:</b> <%= rs.getString("descricao")%> </p>
                     <p class="card-text"> <b>Comodos:</b> <%= rs.getString("comodos")%> &nbsp;&nbsp;&nbsp; <b>Banheiros:</b> <%= rs.getString("banheiros")%> &nbsp;&nbsp;&nbsp;<b>Vagas na Garagem:</b> <%= rs.getString("vagas_garagem")%></p>
-                    <p class="card-text"> <b>Area Total:</b> <%= rs.getString("area_total")%> &nbsp;&nbsp;&nbsp; <b>Area Edificada:</b> <%= rs.getString("area_edificada")%></p>
+                    <p class="card-text"> <b>Area Total:</b> <%= rs.getString("area_total")%> m² &nbsp;&nbsp;&nbsp; <b>Area Edificada:</b> <%= rs.getString("area_edificada")%> m² &nbsp;&nbsp;&nbsp;<b>Valor do Imóvel:</b> R$ <%= rs.getString("valor")%></p>
                     <p class="card-text"> <b>Local do Imóvel:</b> <%= rs.getString("enderecocompleto")%> </p>
                 </div>
             </div>

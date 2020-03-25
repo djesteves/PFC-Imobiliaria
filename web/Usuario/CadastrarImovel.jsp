@@ -53,17 +53,17 @@
 
                                     <div class="form-group col-md-4">
                                         <label for="areatotal">Área Total:</label>
-                                        <input type="text" class="form-control" name="areatotal" id="areatotal"   maxlength="2" />
+                                        <input type="text" class="form-control" name="areatotal" id="areatotal"   maxlength="10" />
                                     </div>
 
                                     <div class="form-group col-md-4">
                                         <label for="areaedificada">Área edificada:</label>
-                                        <input type="text" class="form-control" name="areaedificada" id="areaedificada"   maxlength="2" />
+                                        <input type="text" class="form-control" name="areaedificada" id="areaedificada"   maxlength="10" />
                                     </div>
                                     
                                     <div class="form-group col-md-4">
                                         <label for="areaedificada">Valor do Imóvel:</label>
-                                        <input type="text" class="form-control" name="valorimovel" id="valorimovel"   maxlength="2" />
+                                        <input type="text" class="form-control" name="valorimovel" id="valorimovel"   maxlength="10" />
                                     </div>
 
                                     <div class="form-group col-md-4">
