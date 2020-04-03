@@ -133,7 +133,7 @@ public class ImovelCadastrar implements Command {
                 return "erro.jsp";
             }
 
-        } catch (NumberFormatException | SQLException | IOException | ServletException ex) {
+        } catch (NumberFormatException | IOException | ServletException ex) {
             Logger.getLogger(ImovelCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "erro.jsp";
