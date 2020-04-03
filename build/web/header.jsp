@@ -2,37 +2,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="cliente" class="modelo.Usuario"/>
 <html>
-    <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <head>
-        <title>Imobili√°ria</title>
-        <!-- Meta tags Obrigat√≥rias -->
+        <title>Imobili·ria</title>
+        <!-- Meta tags ObrigatÛrias -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="shortcut icon" href="<%=request.getContextPath()%>/Resources/img/icon_imob.png">
 
-        <%-- Fontes do Site --%>
+        <!-- Fontes do Site -->
         <link href="https://fonts.googleapis.com/css?family=Chivo:400,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700" rel="stylesheet">
 
-        <%-- Bootstrap --%>
+        <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <%-- Data Tables --%>
+        <!-- Data Tables -->
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
-        <%-- Data AOS --%>
+        <!-- Data AOS -->
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="<%=request.getContextPath()%>/Resources/Style.css" rel="stylesheet" type="text/css"/>
 
-        <%-- Scripts --%>
+        <!-- Scripts -->
         <script charset="UTF-8" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script charset="UTF-8" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script charset="UTF-8" src="https://kit.fontawesome.com/7982155587.js" crossorigin="anonymous"></script>
         <script charset="UTF-8" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <%-- Scripts Data Tables --%>
+        <!-- Scripts Data Tables -->
         <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-
     </head>
     <body>
         <header>
@@ -45,21 +44,17 @@
                 </div>
             </c:if> 
 
-            <nav class="navbar navbar-expand-lg navbar-light mb-4">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
                     <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">
                         <img src="<%=request.getContextPath()%>/Resources/img/icon_imob.png" width="50" height="50" class="d-inline-block align-top" alt="">
                     </a>
-                    
-                    
-                    
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite" aria-controls="navbarSite" aria-expanded="false" aria-label="Navega√ß√£o">
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite" aria-controls="navbarSite" aria-expanded="false" aria-label="NavegaÁ„o">
                         <span class="navbar-toggler-icon"></span>       
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
                         <ul class="navbar-nav ml-auto ">
-                            
-
                             <c:if test="${usuarioLogado == null}">
                                 <li class="nav-item dropdown">
                                     <a class="btn btn-outline-primary dropdown-toggle shadow lift mr-1" href="#" id="navbarDropdownLogin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -93,20 +88,20 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioListar">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioConsultar?id=<c:out value='${usuarioLogado.id_usuario}' />">
                                             <i class="fas fa-user-cog"></i>
                                             Gerenciar Conta
                                         </a>
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/ImovelListar">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/ImovelListarPorID">
                                             <i class="fas fa-city"></i>
-                                            Gerenciar Im√≥veis
+                                            Gerenciar ImÛveis
                                         </a>
 
-                                        <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.getLogin().getNivel())}">
+                                        <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
                                             <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">
                                                 <i class="fa fa-tools" aria-hidden="true"></i>
-                                                Administra√ß√£o
+                                                AdministraÁ„o
                                             </a>
                                         </c:if>
 

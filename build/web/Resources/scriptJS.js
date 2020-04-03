@@ -1,25 +1,3 @@
-function editausuario() {
-    $('#btnAlterar').prop('disabled', false);
-    $('#btnHEditar').hide();
-    $('#name').prop('readonly', false);
-    $('#tel_celular').prop('readonly', false);
-    $('#tel_residencial').prop('readonly', false);
-}
-
-function editausuarioendereco() {
-    $('#btnAlterarEndereco').prop('disabled', false);
-    $('#divestadodb').hide();
-    $('#divestado').show();
-    $('#btnHEditarEndereco').hide();
-    $('#logradouro').prop('readonly', false);
-    $('#numero').prop('readonly', false);
-    $('#complemento').prop('readonly', false);
-    $('#cidade').prop('readonly', false);
-    $('#bairro').prop('readonly', false);
-    $('#cep').prop('readonly', false);
-    $('#estado').prop('disabled', false);
-}
-
 /*function cnpj_cpf verifica qual das funcoes tem que chamar cpf ou cnpj*/
 
 function cnpj_cpf(campo, documento, f) {

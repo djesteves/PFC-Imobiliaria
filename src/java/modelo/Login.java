@@ -6,6 +6,15 @@ public class Login {
     private String email;
     private String senha;
     private Perfil nivel;
+    private String situacao;
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
 
     public Perfil getNivel() {
         return nivel;

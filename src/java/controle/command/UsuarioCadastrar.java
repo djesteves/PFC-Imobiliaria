@@ -1,10 +1,8 @@
-
 package controle.command;
 
 import modelo.Usuario;
 import modelo.DAO.UsuarioDAO;
 import controle.Command;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -32,11 +30,8 @@ public class UsuarioCadastrar implements Command {
             String tppessoa = request.getParameter("tipo_pessoa");
             String cpfcnpj = request.getParameter("cpfcnpj");
             String rg = request.getParameter("rg");
-            String razao_social = request.getParameter("razao_social");
-            String nome_fantasia = request.getParameter("nome_fantasia");
             String tel_celular = request.getParameter("tel_celular");
             String tel_residencial = request.getParameter("tel_residencial");
-            String tel_contato = request.getParameter("tel_contato");
 
             //Login
             String mail = request.getParameter("mail");
@@ -57,11 +52,8 @@ public class UsuarioCadastrar implements Command {
             usuario.setCpfcnpj(cpfcnpj);
             usuario.setRg(rg);
             usuario.setTipoPessoa(tppessoa);
-            usuario.setRazao_social(razao_social);
-            usuario.setNome_fantasia(nome_fantasia);
             usuario.setTel_celular(tel_celular);
             usuario.setTel_residencial(tel_residencial);
-            usuario.setTel_contato(tel_contato);
 
             //Login
             usuario.getLogin().setEmail(mail);
@@ -69,18 +61,17 @@ public class UsuarioCadastrar implements Command {
             usuario.getLogin().setNivel(Perfil.USUARIO);
 
             UsuarioDAO dao = new UsuarioDAO();
-            boolean cadastro = dao.cadastrar(usuario, request, response);
-            String msg = (String) request.getAttribute("msg");
-            request.setAttribute("msgcadastro", msg);
+            boolean cadastro = dao.cadastrar(usuario);
 
             if (cadastro) {
+                request.setAttribute("msgcadastro", "Usuário cadastrado com sucesso!");
                 return "index.jsp";
             } else {
-                request.setAttribute("msgerro", msg);
-                return "Usuario/CadastrarUsuario.jsp";
+                request.setAttribute("msgerro", "EMAIL ou CPF/CNPJ já cadastrado em nosso sistema, utilize o botão 'Recuperar senha'");
+                return "erro.jsp";
             }
 
-        } catch (NumberFormatException | SQLException ex) {
+        } catch (NumberFormatException ex) {
             Logger.getLogger(UsuarioCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "erro.jsp";

@@ -9,12 +9,8 @@ public class Usuario {
     private String nome;
     private String tel_celular;
     private String tel_residencial;
-    private String tel_contato;
     private String cpfcnpj;
-    
-    private String razao_social;    
-    private String nome_fantasia;    
-    
+       
     private String rg;
     private String tipoPessoa;
     private Login login;
@@ -65,36 +61,12 @@ public class Usuario {
         this.tel_residencial = tel_residencial;
     }
 
-    public String getTel_contato() {
-        return tel_contato;
-    }
-
-    public void setTel_contato(String tel_contato) {
-        this.tel_contato = tel_contato;
-    }
-
     public String getCpfcnpj() {
         return cpfcnpj;
     }
 
     public void setCpfcnpj(String cpfcnpj) {
         this.cpfcnpj = cpfcnpj;
-    }
-
-    public String getRazao_social() {
-        return razao_social;
-    }
-
-    public void setRazao_social(String razao_social) {
-        this.razao_social = razao_social;
-    }
-
-    public String getNome_fantasia() {
-        return nome_fantasia;
-    }
-
-    public void setNome_fantasia(String nome_fantasia) {
-        this.nome_fantasia = nome_fantasia;
     }
 
     public String getRg() {

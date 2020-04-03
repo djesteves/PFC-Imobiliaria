@@ -9,10 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Perfil;
+import modelo.Usuario;
 import util.DataAccess;
 
 /**
@@ -29,26 +33,36 @@ public class AdminDAO {
     private final String UPDATE_SITUACAO = "UPDATE Login SET situacao = ?"
             + " WHERE id_usuario = ?";
 
-
-    public ResultSet listarUsuarios() throws SQLException, Exception {
-        ResultSet rs;
+    public List<Usuario> listarUsuarios() throws SQLException, Exception {
 
         try (Connection connection = DataAccess.getConexao()) {
-
+            List<Usuario> listUsuario = new ArrayList<>();
             PreparedStatement smt = connection.prepareStatement(SELECT_USUARIOS);
-          
-            rs = smt.executeQuery();
+            ResultSet resultSet = smt.executeQuery();
 
+            while (resultSet.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId_usuario(resultSet.getInt("id_usuario"));
+                usuario.setNome(resultSet.getString("nome"));
+                usuario.setCpfcnpj(resultSet.getString("cpf_cnpj"));
+                usuario.getLogin().setNivel(Perfil.valueOf(resultSet.getString("nivel_acesso")));
+                usuario.getLogin().setSituacao(resultSet.getString("situacao"));
+                listUsuario.add(usuario);
+            }
+
+            resultSet.close();
+            smt.close();
             connection.close();
 
+            return listUsuario;
         } catch (Exception ex) {
             Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return rs;
+
     }
-    
-    public boolean AlterarSituacaoUsuario(int id, HttpServletRequest request, HttpServletResponse response)  {
+
+    public boolean excluirUsuario(int id, HttpServletRequest request, HttpServletResponse response) {
         String msg = "";
         try (Connection connection = DataAccess.getConexao()) {
 
@@ -56,7 +70,7 @@ public class AdminDAO {
 
             smt.setString(1, "Inativo");
             smt.setInt(2, id);
-  
+
             smt.executeUpdate();
 
             msg = "Usuário removido com sucesso!";
@@ -65,11 +79,10 @@ public class AdminDAO {
             Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        
+
         request.setAttribute("msg", msg);
         return true;
 
     }
-    
 
 }

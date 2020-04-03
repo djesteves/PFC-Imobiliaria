@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import modelo.DAO.ImovelDAO;
 import modelo.Imovel;
-import modelo.Usuario;
+import modelo.Sessao;
 
 /**
  *
@@ -38,14 +38,14 @@ public class ImovelCadastrar implements Command {
         try {
 
             HttpSession usuarioLogado = request.getSession();
-            Usuario usuarioid = (Usuario) usuarioLogado.getAttribute("usuarioLogado");
-            usuarioid.getId_usuario();
+            Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
+            sessao.getId_usuario();
 
             Part filePart = request.getPart("uploadFile"); // 
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //
             InputStream fileContent = filePart.getInputStream();
 
-            imovel.setDiretorioimg(usuarioid.getId_usuario() + File.separator + fileName);
+            imovel.setDiretorioimg(sessao.getId_usuario() + File.separator + fileName);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -61,7 +61,7 @@ public class ImovelCadastrar implements Command {
 
             // cria o diretorio de upload
             // esse caminho e relativo ao diretorio da aplicacao
-            String uploadPath = "C:\\Users\\danil\\OneDrive\\Documentos\\PFC\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + usuarioid.getId_usuario();
+            String uploadPath = "C:\\Users\\tr0j4nh4x\\Desktop\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
 
             /* 
             String uploadPath = request.getServletContext().getRealPath("")
@@ -130,7 +130,7 @@ public class ImovelCadastrar implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", msg);
-                return "Usuario/CadastrarImovel.jsp";
+                return "erro.jsp";
             }
 
         } catch (NumberFormatException | SQLException | IOException | ServletException ex) {

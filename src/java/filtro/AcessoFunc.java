@@ -11,8 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.Usuario;
 import modelo.Perfil;
+import modelo.Sessao;
 
 public class AcessoFunc implements Filter{
 
@@ -24,9 +24,9 @@ public class AcessoFunc implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpSession usuarioLogado = ((HttpServletRequest) request).getSession();
-        Usuario usuario = (Usuario) usuarioLogado.getAttribute("usuarioLogado");
+        Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
 
-        if (usuario != null && usuario.getLogin().getNivel().equals(Perfil.FUNCIONARIO)) {
+        if (sessao != null && sessao.getNivel().equals(Perfil.FUNCIONARIO)) {
             chain.doFilter(request, response);
         } else {
             ((HttpServletResponse) response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/acessonegado.jsp");

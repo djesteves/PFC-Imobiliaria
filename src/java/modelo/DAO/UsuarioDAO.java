@@ -7,53 +7,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import modelo.Perfil;
+import modelo.Sessao;
 
 public class UsuarioDAO {
 
-    java.util.Date data = new java.util.Date();
-    java.sql.Timestamp timestamp = new java.sql.Timestamp(data.getTime());
-
-    //INSERTS
-    private final String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
-    private final String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
-    private final String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
-    //SELECTS
-    private final String SELECT_LOGIN = "SELECT U.id_usuario, email, senha, nivel_acesso, nome, U.id_endereco FROM "
-            + "Login L LEFT JOIN Usuario U ON U.id_usuario = l.id_usuario "
-            + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
-    
-    private final String SELECT_DADOSUSUARIOS = "SELECT * FROM Usuario U "
-            + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
-            + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
-            + "WHERE U.id_usuario = ?";
-    
-    private final String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
-            + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
-    //UPDATES
-    private final String UPDATE_USUARIODADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
-            + " tel_residencial = ?"
-            + " WHERE id_usuario = ?";
-    
-    private final String UPDATE_USUARIOENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
-            + " cidade = ?, cep = ?, bairro = ?, estado = ?"
-            + " WHERE id_endereco = ?";
-    
-    private final String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
+    Date data = new Date();
+    Timestamp timestamp = new Timestamp(data.getTime());
 
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Usuario Usuario, HttpServletRequest request, HttpServletResponse response) throws SQLException {
+    private final String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
+    private final String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
+    private final String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
+
+    private final String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
+            + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
+
+    public boolean cadastrar(Usuario Usuario) {
 
         boolean sucesso = false;
-        String msg = "";
         try (Connection connection = DataAccess.getConexao()) {
 
             smt = connection.prepareStatement(SELECT_VERIFICACAO);
@@ -62,7 +40,7 @@ public class UsuarioDAO {
             rs = smt.executeQuery();
 
             if (rs.next()) {
-                msg = "EMAIL ou CPF/CNPJ já cadastrado em nosso sistema, utilize o botão 'Recuperar senha'";
+                sucesso = false;
             } else {
                 //Endereço
                 smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
@@ -103,126 +81,152 @@ public class UsuarioDAO {
                 smt.setString(3, Usuario.getLogin().getNivel().toString());
                 smt.setString(4, "Ativo");
                 smt.setInt(5, rs.getInt(1));
-                
+
                 smt.execute();
 
                 smt.close();
+                rs.close();
                 connection.close();
-                msg = "Cadastrado com sucesso!";
+
                 sucesso = true;
             }
 
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            msg = ex.getMessage();
+            return false;
         }
 
-        request.setAttribute("msg", msg);
         return sucesso;
     }
 
-    public boolean logar(Usuario Usuario) throws SQLException, Exception {
-        boolean Autenticado = false;
+    private final String SELECT_LOGIN = "SELECT * FROM Usuario U "
+            + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
+            + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
+            + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
+
+    public Sessao logar(Usuario usuario) {
+        Sessao sessao = null;
         try (Connection connection = DataAccess.getConexao()) {
-            PreparedStatement smt = connection.prepareStatement(SELECT_LOGIN);
-            smt.setString(1, Usuario.getLogin().getEmail());
-            smt.setString(2, Usuario.getLogin().getSenha());
+            smt = connection.prepareStatement(SELECT_LOGIN);
+            smt.setString(1, usuario.getLogin().getEmail());
+            smt.setString(2, usuario.getLogin().getSenha());
             ResultSet resultado = smt.executeQuery();
             if (resultado.next()) {
-
-                //da um substring no primeiro espaço que encontrar para pegar somente o primeiro nome
-                String nome = "";
-                String linha = resultado.getString("nome");
-                String pattern = "\\p{L}+";
-
-                Pattern r = Pattern.compile(pattern);
-                Matcher m = r.matcher(linha);
-                if (m.find()) {
-                    nome = m.group(0);
-                }
-
-                Usuario.setNome(nome);
-                Usuario.setId_usuario(resultado.getInt("id_usuario"));
-                Usuario.getLogin().setEmail(resultado.getString("email"));
-                Usuario.getLogin().setSenha(resultado.getString("senha"));
-                Usuario.getEndereco().setId_endereco(resultado.getInt("id_endereco"));
-                Usuario.getLogin().setNivel(Perfil.valueOf(resultado.getString("nivel_acesso")));
-
+                sessao = new Sessao(resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
                 connection.close();
-                Autenticado = true;
+                resultado.close();
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return Autenticado;
+        return sessao;
+
     }
 
-    public ResultSet listar(int id) throws SQLException, Exception {
-        ResultSet rs;
+    private final String SELECT_DADOS = "SELECT * FROM Usuario U "
+            + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
+            + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
+            + "WHERE U.id_usuario = ?";
 
+    public Usuario getUsuario(int id) {
+        Usuario usuario = null;
         try (Connection connection = DataAccess.getConexao()) {
 
-            PreparedStatement smt = connection.prepareStatement(SELECT_DADOSUSUARIOS);
+            smt = connection.prepareStatement(SELECT_DADOS);
             smt.setInt(1, id);
+
             rs = smt.executeQuery();
             if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setNome(rs.getString("nome"));
+                usuario.setCpfcnpj(rs.getString("cpf_cnpj"));
+                usuario.setDataCadastro(rs.getDate("data_cadastro"));
+                usuario.setId_usuario(rs.getInt("id_usuario"));
+                usuario.setRg(rs.getString("rg"));
+                usuario.setTel_celular(rs.getString("tel_celular"));
+                usuario.setTel_residencial(rs.getString("tel_residencial"));
+                usuario.setTipoPessoa(rs.getString("tipo_pessoa"));
+
+                usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+                usuario.getEndereco().setBairro(rs.getString("bairro"));
+                usuario.getEndereco().setCep(rs.getString("cep"));
+                usuario.getEndereco().setCidade(rs.getString("cidade"));
+                usuario.getEndereco().setComplemento(rs.getString("complemento"));
+                usuario.getEndereco().setEstado(rs.getString("estado"));
+                usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+                usuario.getEndereco().setLogradouro(rs.getString("logradouro"));
+                usuario.getEndereco().setNumero(rs.getInt("numero"));
+
                 connection.close();
+
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return rs;
+        return usuario;
     }
 
-    public boolean alterar(Usuario Usuario, HttpServletRequest request, HttpServletResponse response) throws SQLException, Exception {
+    private final String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
+            + " tel_residencial = ?"
+            + " WHERE id_usuario = ?";
+
+    private final String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
+            + " cidade = ?, cep = ?, bairro = ?, estado = ?"
+            + " WHERE id_endereco = ?";
+
+    public boolean alterar(Usuario Usuario) {
         boolean Atualizado = false;
-        String msg = "";
-        String acao = (String) request.getAttribute("acao");
         try (Connection connection = DataAccess.getConexao()) {
 
-            if (acao.equalsIgnoreCase("userdados")) {
-                PreparedStatement smt = connection.prepareStatement(UPDATE_USUARIODADOS);
+            smt = connection.prepareStatement(UPDATE_DADOS);
 
-                smt.setString(1, Usuario.getNome());
-                smt.setString(2, Usuario.getTel_celular());
-                smt.setString(3, Usuario.getTel_residencial());
-                smt.setInt(4, Usuario.getId_usuario());
+            smt.setString(1, Usuario.getNome());
+            smt.setString(2, Usuario.getTel_celular());
+            smt.setString(3, Usuario.getTel_residencial());
+            smt.setInt(4, Usuario.getId_usuario());
 
-                smt.executeUpdate();
-                msg = "Dados de cadastro atualizados com sucesso!";
-            } else if (acao.equalsIgnoreCase("userendereco")) {
-                PreparedStatement smt = connection.prepareStatement(UPDATE_USUARIOENDERECO);
+            smt.executeUpdate();
 
-                smt.setString(1, Usuario.getEndereco().getLogradouro());
-                smt.setString(2, Usuario.getEndereco().getComplemento());
-                smt.setInt(3, Usuario.getEndereco().getNumero());
-                smt.setString(4, Usuario.getEndereco().getCidade());
-                smt.setString(5, Usuario.getEndereco().getCep());
-                smt.setString(6, Usuario.getEndereco().getBairro());
-                smt.setString(7, Usuario.getEndereco().getEstado());
-                smt.setInt(8, Usuario.getEndereco().getId_endereco());
+            smt = connection.prepareStatement(UPDATE_ENDERECO);
 
-                smt.executeUpdate();
-                msg = "Dados de endereço atualizados com sucesso!";
+            smt.setString(1, Usuario.getEndereco().getLogradouro());
+            smt.setString(2, Usuario.getEndereco().getComplemento());
+            smt.setInt(3, Usuario.getEndereco().getNumero());
+            smt.setString(4, Usuario.getEndereco().getCidade());
+            smt.setString(5, Usuario.getEndereco().getCep());
+            smt.setString(6, Usuario.getEndereco().getBairro());
+            smt.setString(7, Usuario.getEndereco().getEstado());
+            smt.setInt(8, Usuario.getEndereco().getId_endereco());
 
-            } else {
-                PreparedStatement smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
+            smt.executeUpdate();
 
-                smt.setString(1, Usuario.getLogin().getSenha());
-                smt.setInt(2, Usuario.getId_usuario());
-
-                smt.executeUpdate();
-
-                msg = "Senha alterada com sucesso, por favor logue novamente!";
-            }
             Atualizado = true;
             connection.close();
-            request.setAttribute("msg", msg);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("msgerro", ex.getMessage());
+            return false;
         }
         return Atualizado;
+    }
+
+    private final String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
+
+    public boolean AlterarSenha(int id) {
+
+        try (Connection connection = DataAccess.getConexao()) {
+            Usuario usuario = new Usuario();
+
+            smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
+            smt.setString(1, usuario.getLogin().getSenha());
+            smt.setInt(2, id);
+
+            boolean rowUpdate = smt.executeUpdate() > 0;
+
+            return rowUpdate;
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }

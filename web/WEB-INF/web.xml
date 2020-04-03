@@ -28,6 +28,7 @@
     <filter-mapping>
         <filter-name>AcessoAdmin</filter-name>
         <url-pattern>/Admin/*</url-pattern>
+        <url-pattern>/controle/UsuarioListar</url-pattern>
     </filter-mapping>
     
     <filter-mapping>
@@ -37,18 +38,8 @@
     
     <filter-mapping>
         <filter-name>Logado</filter-name>
-        <url-pattern>/Usuario/GerenciarUsuario.jsp</url-pattern>
+        <url-pattern>/Usuario/GerenciarImoveis.jsp</url-pattern>
+        <url-pattern>/Usuario/FormImovel.jsp</url-pattern>
     </filter-mapping>
-    
-    <filter-mapping>
-        <filter-name>Logado</filter-name>
-        <url-pattern>/Usuario/GerenciarImovel.jsp</url-pattern>
-    </filter-mapping>
-    
-    <filter-mapping>
-        <filter-name>Logado</filter-name>
-        <url-pattern>/Usuario/CadastrarImovel.jsp</url-pattern>
-    </filter-mapping>
-    
     
 </web-app>

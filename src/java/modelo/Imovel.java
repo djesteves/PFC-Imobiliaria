@@ -24,9 +24,19 @@ public class Imovel {
     private String titulo;
     private String diretorioimg;
     private Endereco endereco;
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Imovel() {
         this.endereco = new Endereco();
+        this.usuario = new Usuario();
     }
     
     public String getDiretorioimg() {
