@@ -1,0 +1,21 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03/04/2020, 00:20:47
+    Author     : Diego
+*/
+
+.card-header{
+    font-size:120%;
+}
+body {
+    font-family: 'Chivo', sans-serif;
+    font-size: 14px;
+}
+
+.background {
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
