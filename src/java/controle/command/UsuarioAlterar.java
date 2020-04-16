@@ -10,7 +10,6 @@ import modelo.Usuario;
 import modelo.DAO.UsuarioDAO;
 import modelo.Perfil;
 import modelo.Sessao;
-import util.Criptografia;
 
 public class UsuarioAlterar implements Command {
 
@@ -34,10 +33,8 @@ public class UsuarioAlterar implements Command {
             return "erro.jsp";
         } else {
             try {
-
                 //Login
                 String mail = request.getParameter("mail");
-                String senha = Criptografia.criptografia(request.getParameter("senha"));
 
                 String nome = request.getParameter("name");
                 String tel_celular = request.getParameter("tel_celular");
@@ -51,7 +48,6 @@ public class UsuarioAlterar implements Command {
                 usuario.setTel_celular(tel_celular);
                 usuario.setTel_residencial(tel_residencial);
                 usuario.getLogin().setEmail(mail);
-                usuario.getLogin().setSenha(senha);
 
                 String logradouro = request.getParameter("logradouro");
                 int numero = Integer.parseInt(request.getParameter("numero"));

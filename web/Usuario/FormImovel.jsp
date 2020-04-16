@@ -4,6 +4,7 @@
     Author     : Diego
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="../header.jsp" />
 
 <div class="container portfolio-block">
@@ -64,7 +65,8 @@
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Valor do Imóvel:</label>
-                    <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="<c:out value='${imovel.valor}' />" maxlength="15" />
+                    <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/>" maxlength="15" />
+           
                 </div>
 
                 <div class="form-group col-md-4">

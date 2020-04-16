@@ -67,7 +67,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
                         <ul class="nav navbar-nav ml-auto ">
-                            <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Imóveis</a></li>
+                            <li class="nav-item text-center" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
 
                             <c:if test="${usuarioLogado == null}">
                                 <li class="nav-item dropdown">
@@ -95,12 +95,14 @@
                                 </li>
                             </c:if>  
                             <c:if test="${usuarioLogado != null}">
-                                <li class="nav-item dropdown">
+                                <div class="dropdown text-center">
                                     <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownLogado" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="far fa-user"></i>
                                         ${usuarioLogado.nome}
                                     </a>
+
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
+
 
                                         <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioConsultar?id=<c:out value='${usuarioLogado.id_usuario}' />">
                                             <i class="fas fa-user-cog"></i>
@@ -112,6 +114,11 @@
                                             Gerenciar Imóveis
                                         </a>
 
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Usuario/AlterarSenhaUsuario.jsp">
+                                            <i class="fas fa-key"></i>
+                                            Alterar Senha
+                                        </a>
+
                                         <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
                                             <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">
                                                 <i class="fa fa-tools" aria-hidden="true"></i>
@@ -119,19 +126,19 @@
                                             </a>
                                         </c:if>
 
-                                        <hr class="my-4">
+                                        <hr >
+
                                         <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/Deslogar">
                                             <i class="fas fa-sign-out-alt"></i>
                                             Deslogar
                                         </a>
                                     </div> 
-                                </li>
+                                </div>
                             </c:if>
                         </ul>
                     </div>
                 </div>
             </nav>
-
         </header>            
 
 

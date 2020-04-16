@@ -157,6 +157,8 @@ public class UsuarioDAO {
                 usuario.getEndereco().setLogradouro(rs.getString("logradouro"));
                 usuario.getEndereco().setNumero(rs.getInt("numero"));
 
+                usuario.getLogin().setEmail(rs.getString("email"));
+
                 connection.close();
 
             }
@@ -170,7 +172,7 @@ public class UsuarioDAO {
     private final String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
             + " tel_residencial = ?"
             + " WHERE id_usuario = ?";
-    
+
     private final String UPDATE_USUARIOEMAIL = "UPDATE Login SET email = ? WHERE id_usuario = ?";
 
     private final String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
@@ -180,7 +182,7 @@ public class UsuarioDAO {
     public boolean alterar(Usuario Usuario) {
         boolean Atualizado = false;
         try (Connection connection = DataAccess.getConexao()) {
-            
+
             smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
 
             smt.setString(1, Usuario.getLogin().getEmail());
@@ -221,21 +223,16 @@ public class UsuarioDAO {
 
     private final String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
 
-    public boolean AlterarSenha(int id) {
+    public boolean AlterarSenha(int id, Usuario usuario) throws SQLException {
 
-        try (Connection connection = DataAccess.getConexao()) {
-            Usuario usuario = new Usuario();
+        Connection connection = DataAccess.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
-            smt.setString(1, usuario.getLogin().getSenha());
-            smt.setInt(2, id);
+        smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
+        smt.setString(1, usuario.getLogin().getSenha());
+        smt.setInt(2, id);
 
-            boolean rowUpdate = smt.executeUpdate() > 0;
+        boolean rowUpdate = smt.executeUpdate() > 0;
 
-            return rowUpdate;
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        return rowUpdate;
     }
 }

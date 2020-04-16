@@ -41,6 +41,7 @@
         <filter-name>Logado</filter-name>
         <url-pattern>/Usuario/GerenciarImoveis.jsp</url-pattern>
         <url-pattern>/Usuario/FormImovel.jsp</url-pattern>
+        <url-pattern>/Usuario/AlterarSenhaUsuario.jsp</url-pattern>
     </filter-mapping>
     
 </web-app>
