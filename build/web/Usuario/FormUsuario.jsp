@@ -1,36 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
 
-<div class="container">
+<div class="portfolio-block">
+    <div class="heading">
+        <c:if test="${usuario != null}">
+            <p>Editar Usuário</p>
+        </c:if>
+        <c:if test="${usuario == null}">
+            <p>Cadastro de Usuário</p>
+        </c:if>
+    </div>
+   
 
-    <c:if test="${msg != null}">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            ${msg}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </c:if> 
-
-</div>
-
-<div class="card bg-primary mb-4 text-white text-center">
-    <c:if test="${usuario != null}">
-        <div class="card-header">Editar Usuário</div>
-    </c:if>
-    <c:if test="${usuario == null}">
-        <div class="card-header">Cadastro de Usuário</div>
-    </c:if>
-</div>
-
-<div class="container">
     <c:if test="${usuario != null}">
 
         <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" name="form_cadastro">
             <input type="hidden" name="id" value="<c:out value='${usuario.id_usuario}' />" />
             <input type="hidden" name="ide" value="<c:out value='${usuario.endereco.id_endereco}' />" />
         </c:if>
-        <c:if test="${usuario == null}">
             <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" name="form_cadastro">
                 <div class="form-row">
                     <div class="form-group col-md-6">
@@ -45,8 +32,7 @@
                         </small>
                     </div>
                 </div>
-            </c:if>
-
+                
             <div class="form-group">
                 <label for="name">Nome:</label>
                 <input type="text" class="form-control" name="name" id="name" value="<c:out value='${usuario.nome}' />" maxlength="255" required/>

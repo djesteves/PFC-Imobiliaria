@@ -23,7 +23,7 @@ function mostraDialogo(mensagem, tipo, tempo) {
 
     // monta o css da mensagem para que fique flutuando na frente de todos elementos da página
     var cssMessage = "display: block; position: fixed; top: 0; left: 20%; right: 20%; width: 60%; padding-top: 10px; z-index: 9999";
-    var cssInner = "margin: 0 auto; box-shadow: 1px 1px 5px black;";
+    var cssInner = "margin: 0 auto; box-shadow: 1px 1px 5px black; ";
 
     // monta o html da mensagem com Bootstrap
     var dialogo = "";

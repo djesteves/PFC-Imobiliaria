@@ -6,13 +6,8 @@
 
 <jsp:include page="/header.jsp" />
 
-<div class="card bg-primary mb-4 text-white text-center">
-    <div class="card-header">Dashboard</div>
-</div>
-
-<div class="container"> 
+<div class="container portfolio-block"> 
     <a href="<%=request.getContextPath()%>/controle/UsuarioListar"> Gerenciar Usuários </a>
     <br>
-    <a href="<%=request.getContextPath()%>/controle/#"> Gerenciar Imóveis </a>
+    <a href="<%=request.getContextPath()%>/controle/ImoveisEmAnalise"> Aprovar Imóveis </a>
 </div>
-<jsp:include page="/footer.jsp" />

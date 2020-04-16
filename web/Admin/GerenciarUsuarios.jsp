@@ -2,11 +2,9 @@
 <jsp:include page="/header.jsp" />
 
 
-<div class="card bg-primary mb-4 text-white text-center">
-    <div class="card-header">Dashboard - Usuários</div>
-</div>
+<div class="table-responsive container portfolio-block">
 
-<div class="container">
+    <p class="heading">Dashboard - Usuários</p>
 
     <table id="usuariostable" class="table table-hover table-striped table-bordered">
 
@@ -25,7 +23,8 @@
                 <tr>
                     <c:if test = "${usuario.login.nivel != 'ADMINISTRADOR'}">
                         <td>
-                            <button type="button" class="btn-sm btn-danger" onClick="confirmaDelete(<c:out value="${usuario.id_usuario}" />)"> <span  title="Excluir Usuário"><i class="fa fa-trash-o" aria-hidden="true"></i></span></button>
+                            <a title="Deletar Usuário" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(<c:out value="${usuario.id_usuario}" />)"><i class="fas fa-trash-alt"></i></a>
+
                             <a title="Editar Usuário" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/UsuarioConsultar?id=<c:out value='${usuario.id_usuario}' />"><i class="fas fa-user-edit"></i></a>
                         </td>
                     </c:if>
@@ -88,4 +87,3 @@
         });
     });
 </script>
-<jsp:include page="/footer.jsp" />

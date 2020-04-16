@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="header.jsp" />
 
-<div class="container-fluid bg-light">
+<div class="container-fluid portfolio-block block-intro">
     <div class="container " data-aos="fade-left" data-aos-delay="200">
         <div class="row align-items-center">
             <div class="col-12 col-md-5 col-lg-6 order-md-2">
@@ -22,11 +22,6 @@
                     Bem-vindo a <span class="text-primary">Imobiliária</span>. <br>
                     Seu novo imóvel está aqui!
                 </h1>
-
-                <!-- Texto -->
-                <p class="lead text-center text-md-left text-muted mb-6 mb-lg-8">
-
-                </p>
 
                 <!-- Botões -->
                 <div class="text-center text-md-left">
@@ -44,41 +39,6 @@
         </div> 
     </div> 
 </div> 
-
-<div class="mb-5"></div>
-
-
-<%
-    Connection connection = DataAccess.getConexao();
-
-    PreparedStatement smt = connection.prepareStatement("Select * from imovel order by data_cadastro desc limit 3");
-
-    ResultSet rs = smt.executeQuery();
-
-    connection.close();
-%>
-
-<% if (rs != null) { %>
-<div class="container mt-5" data-aos="fade-right" data-aos-delay="200">   
-    <div class="row">
-        <% while (rs.next()) {%>
-        <div class="col-md-4 mb-5">
-            <div class="card h-100">
-                <img class="card-img-top" src="<%=request.getContextPath()%>/Resources/upload/<%=rs.getString("imagemdir")%>" alt="Imagem de capa do card">
-                <div class="card-body">
-                    <h2 class="card-title"><%=rs.getString("titulo")%></h2>
-                    <p class="card-text"><%=rs.getString("descricao")%></p>
-                    <p class="card-text"><%=rs.getDouble("valor")%></p>
-                    
-                        <a class="btn btn-primary stretched-link float-right" href="<%=request.getContextPath()%>/controle/ImovelConsultar?imovel=<%=rs.getString("id_imovel")%>"> + Infos </a>
-                        
-                </div>
-            </div>
-        </div>
-        <%}%>
-    </div>
-</div>
-<%}%>
 
 
 <jsp:include page="footer.jsp" />

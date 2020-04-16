@@ -112,7 +112,7 @@ public class UsuarioDAO {
             smt.setString(2, usuario.getLogin().getSenha());
             ResultSet resultado = smt.executeQuery();
             if (resultado.next()) {
-                sessao = new Sessao(resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
+                sessao = new Sessao(resultado.getString("email"), resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
                 connection.close();
                 resultado.close();
             }
@@ -170,6 +170,8 @@ public class UsuarioDAO {
     private final String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
             + " tel_residencial = ?"
             + " WHERE id_usuario = ?";
+    
+    private final String UPDATE_USUARIOEMAIL = "UPDATE Login SET email = ? WHERE id_usuario = ?";
 
     private final String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
             + " cidade = ?, cep = ?, bairro = ?, estado = ?"
@@ -178,6 +180,13 @@ public class UsuarioDAO {
     public boolean alterar(Usuario Usuario) {
         boolean Atualizado = false;
         try (Connection connection = DataAccess.getConexao()) {
+            
+            smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
+
+            smt.setString(1, Usuario.getLogin().getEmail());
+            smt.setInt(2, Usuario.getId_usuario());
+
+            smt.executeUpdate();
 
             smt = connection.prepareStatement(UPDATE_DADOS);
 

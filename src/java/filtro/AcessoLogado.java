@@ -28,7 +28,7 @@ public class AcessoLogado implements Filter{
         if (sessao != null) {
             chain.doFilter(request, response);
         } else {
-            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/acessonegado.jsp");
+            ((HttpServletResponse) response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/acessologado.jsp");
         }
     }
 

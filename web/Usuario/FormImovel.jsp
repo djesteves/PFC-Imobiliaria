@@ -6,16 +6,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
 
-<div class="card bg-primary mb-4 text-white text-center">
-    <c:if test="${imovel != null}">
-        <div class="card-header">Editar Imóvel</div>
-    </c:if>
-    <c:if test="${imovel == null}">
-        <div class="card-header">Cadastro de Imóvel</div>
-    </c:if>
-</div>
+<div class="container portfolio-block">
+    <div class="heading">
+        <c:if test="${imovel != null}">
+            <p>Editar Imóvel</p>
+        </c:if>
+        <c:if test="${imovel == null}">
+            <p>Cadastro de Imóvel</p>
+        </c:if>
+    </div>
 
-<div class="container">
     <c:if test="${imovel != null}">
 
         <form action="<%=request.getContextPath()%>/controle/ImovelAlterar" method="post" name="form_cadastro">
@@ -144,13 +144,14 @@
             <c:if test="${imovel == null}">
                 <div class="form-group">
                     <label for="uploadFile">Defina a imagem do anúncio:</label>
-                    <input type="file" class="form-control-file" id="uploadFile" name="uploadFile" required/>
+                    <input type="file" class="form-control-file" accept="image/png, image/jpeg" id="uploadFile" name="uploadFile" required/>
                 </div>
             </c:if>
 
             <hr>
             <div class="button">
                 <button type="submit" class="btn btn-primary">Confirmar</button>
+                <button type="button" onclick="window.history.back();" class="btn btn-danger">Voltar</button>
             </div>
 
         </form>

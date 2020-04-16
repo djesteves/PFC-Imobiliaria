@@ -14,11 +14,21 @@ public class Sessao {
     private String nome;
     private int id_usuario;
     private Perfil nivel;
+    private String email;
 
     public Sessao(){
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
-    public Sessao(String nome, int id_usuario, Perfil nivel) {
+    public Sessao(String email, String nome, int id_usuario, Perfil nivel) {
+        this.email = email;
         this.nome = nome;
         this.id_usuario = id_usuario;
         this.nivel = nivel;

@@ -37,7 +37,7 @@ public class Logar implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "Usúario ou senha inválidos");
-                return "erro.jsp";
+                return "index.jsp";
             }
         } catch (Exception ex) {
             Logger.getLogger(Logar.class.getName()).log(Level.SEVERE, null, ex);

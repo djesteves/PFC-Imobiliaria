@@ -15,6 +15,12 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +29,7 @@ import javax.servlet.http.Part;
 import modelo.DAO.ImovelDAO;
 import modelo.Imovel;
 import modelo.Sessao;
+import util.EnviaEmail;
 
 /**
  *
@@ -61,7 +68,8 @@ public class ImovelCadastrar implements Command {
 
             // cria o diretorio de upload
             // esse caminho e relativo ao diretorio da aplicacao
-            String uploadPath = "C:\\Users\\tr0j4nh4x\\Desktop\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
+            //String uploadPath = "C:\\Users\\tr0j4nh4x\\Desktop\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
+            String uploadPath = "D:\\Faculdade\\PFC\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
 
             /* 
             String uploadPath = request.getServletContext().getRealPath("")
@@ -89,7 +97,6 @@ public class ImovelCadastrar implements Command {
             Double areatotal = Double.parseDouble(request.getParameter("areatotal"));
             Double areaedificada = Double.parseDouble(request.getParameter("areaedificada"));
             String tpimovel = request.getParameter("tpimovel");
-
 
             imovel.setTitulo(titulo);
             imovel.setDescricao(descricao);
@@ -126,6 +133,36 @@ public class ImovelCadastrar implements Command {
             String msg = (String) request.getAttribute("msg");
 
             if (cadastro) {
+                String assunto = "Cadastro de Imóvel - Royal Imobiliária";
+                String msgemail = "Olá, Obrigado por cadastrar seu imóvel em nosso site!! <br>"
+                        + "O status do imóvel é: Aguardando Aprovação <br> "
+                        + "Assim que o cadastro for aprovado enviaremos uma notificação por aqui :) <br><br> "
+                        + "*Esté email foi gerado automaticamente, por favor não o responda.*";
+                
+                String email = sessao.getEmail();
+
+                String remetente = "royal.imobiliaria2020@gmail.com";
+                System.out.println("__________________________________________________");
+                System.out.println("Enviando email DE: " + remetente + " PARA: " + email);
+                System.out.println("Assunto: " + assunto);
+
+                Message message = new MimeMessage(EnviaEmail.criarSessionMail());
+                message.setFrom(new InternetAddress(remetente)); // Remetente
+
+                Address[] toUser = InternetAddress // Destinatário(s)
+                        .parse(email.trim().toLowerCase());
+
+                message.setRecipients(Message.RecipientType.TO, toUser);
+                message.setSubject(assunto);// Assunto
+                message.setContent(msgemail, "text/html");
+                /**
+                 * Método para enviar a mensagem criada
+                 */
+                Transport.send(message);
+
+                System.out.println("Email enviado com sucesso !");
+                System.out.println("__________________________________________________");
+
                 request.setAttribute("msg", msg);
                 return "index.jsp";
             } else {
@@ -133,7 +170,7 @@ public class ImovelCadastrar implements Command {
                 return "erro.jsp";
             }
 
-        } catch (NumberFormatException | IOException | ServletException ex) {
+        } catch (NumberFormatException | SQLException | IOException | ServletException | MessagingException ex) {
             Logger.getLogger(ImovelCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "erro.jsp";
