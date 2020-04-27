@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="rg">RG/Inscr Estadual:</label>
+                        <label for="rg">RG:</label>
                         <input type="text" class="form-control" name="rg" id="rg" value="<c:out value='${usuario.rg}' />" required maxlength="20" required/>
                     </div>
                     <div class="form-group col-md-4">

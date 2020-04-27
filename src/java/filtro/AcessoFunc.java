@@ -26,7 +26,7 @@ public class AcessoFunc implements Filter{
         HttpSession usuarioLogado = ((HttpServletRequest) request).getSession();
         Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
 
-        if (sessao != null && (sessao.getNivel().equals(Perfil.FUNCIONARIO) || sessao.getNivel().equals(Perfil.ADMINISTRADOR)) ) {
+        if (sessao != null && (sessao.getNivel().equals(Perfil.CORRETOR) || sessao.getNivel().equals(Perfil.ADMINISTRADOR)) ) {
             chain.doFilter(request, response);
         } else {
             ((HttpServletResponse) response).sendRedirect(((HttpServletRequest)request).getContextPath()+"/acessonegado.jsp");

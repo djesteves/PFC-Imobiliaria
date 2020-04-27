@@ -14,7 +14,7 @@ public class Imovel {
     private int id_imovel;
     private double area_total;
     private double area_edificada;
-    private double valor;
+    private String valor;
     private int comodos;
     private int banheiros;
     private int vagas_garagem;
@@ -47,11 +47,11 @@ public class Imovel {
         this.diretorioimg = diretorioimg;
     }
     
-    public double getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

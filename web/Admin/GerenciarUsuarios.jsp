@@ -4,7 +4,7 @@
 
 <div class="table-responsive container portfolio-block">
 
-    <p class="heading">Dashboard - Usuários</p>
+    <p class="heading">Usuários Ativos</p>
 
     <table id="usuariostable" class="table table-hover table-striped table-bordered">
 

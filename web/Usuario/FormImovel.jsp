@@ -65,7 +65,7 @@
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Valor do Imóvel:</label>
-                    <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/>" maxlength="15" />
+                    <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="${imovel.valor}" maxlength="15" />
            
                 </div>
 

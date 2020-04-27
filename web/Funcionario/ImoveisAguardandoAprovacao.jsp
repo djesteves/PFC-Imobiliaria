@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="/header.jsp" />
 
 
@@ -22,16 +21,16 @@
             <c:forEach var="imovel" items="${ImoveisEmAnalise}">
                 <tr>
                     <td>
-                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/UsuarioConsultar?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-eye"></i></a>
+                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/ImovelConsultar?id=<c:out value='${imovel.id_imovel}' />&idu=<c:out value='${imovel.usuario.id_usuario}' />"><i class="fas fa-eye"></i></a>
 
                         <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/controle/AprovarImovel?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-check"></i></a>
 
-                        <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(${imovel.id_imovel})"><i class="fas fa-times"></i></a>
+                        <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(<c:out value="${imovel.id_imovel}" />)"><i class="fas fa-times"></i></a>
                         
                     </td>
                     <td><c:out value="${imovel.id_imovel}" /></td>
                     <td><c:out value="${imovel.titulo}" /></td>
-                    <td>R$<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/></td>
+                    <td><c:out value="${imovel.valor}" /></td>
                     <td><c:out value="${imovel.status}" /></td>
                 </tr>
             </c:forEach>
@@ -41,8 +40,8 @@
 
 <script type="text/javascript">
     function confirmaDelete(id) {
-        if (confirm('Tem certeza que deseja reprovar este imóvel?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/controle/ReprovarImovel?id=" + id;
+        if (confirm('Tem certeza que deseja excluir este Usuário?')) {
+            window.location.href = "${pageContext.servletContext.contextPath}/controle/ImovelDeletar?id=" + id;
         }
     }
 

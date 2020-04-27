@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -74,7 +72,7 @@ public class ImovelDAO {
             smt.setString(1, imovel.getTitulo());
             smt.setString(2, imovel.getDescricao());
             smt.setString(3, "Em Análise");
-            smt.setDouble(4, imovel.getValor());
+            smt.setString(4, imovel.getValor());
             smt.setDouble(5, imovel.getArea_total());
             smt.setDouble(6, imovel.getArea_edificada());
             smt.setInt(7, imovel.getComodos());
@@ -128,7 +126,7 @@ public class ImovelDAO {
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setArea_total(rs.getDouble("area_total"));
                 imovel.setArea_edificada(rs.getDouble("area_edificada"));
-                imovel.setValor(rs.getDouble("valor"));
+                imovel.setValor(rs.getString("valor"));
                 imovel.setDiretorioimg(rs.getString("imagemdir"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
@@ -174,8 +172,10 @@ public class ImovelDAO {
                 imovel.setTipo_imovel(rs.getString("tipo_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setValor(rs.getDouble("valor"));
-
+                imovel.setValor(rs.getString("valor"));
+                
+                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+                
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
                 imovel.getEndereco().setCep(rs.getString("cep"));
                 imovel.getEndereco().setCidade(rs.getString("cidade"));
@@ -207,7 +207,7 @@ public class ImovelDAO {
 
         smt.setString(1, imovel.getTitulo());
         smt.setString(2, imovel.getDescricao());
-        smt.setDouble(3, imovel.getValor());
+        smt.setString(3, imovel.getValor());
         smt.setDouble(4, imovel.getArea_total());
         smt.setDouble(5, imovel.getArea_edificada());
         smt.setInt(6, imovel.getComodos());
@@ -235,6 +235,7 @@ public class ImovelDAO {
     }
 
     private final String SELECT_APROVARIMOVEIS = "SELECT * FROM Imovel I "
+            + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
             + "WHERE Status = 'Em Análise'";
 
     public List<Imovel> imoveisEmAnalise() throws SQLException {
@@ -247,8 +248,9 @@ public class ImovelDAO {
                 Imovel imovel = new Imovel();
                 imovel.setId_imovel(rs.getInt("id_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
-                imovel.setValor(rs.getDouble("valor"));
+                imovel.setValor(rs.getString("valor"));
                 imovel.setStatus(rs.getString("status"));
+                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
 
                 listAprovarImovel.add(imovel);
             }
@@ -266,24 +268,6 @@ public class ImovelDAO {
         Connection connection = DataAccess.getConexao();
 
         smt = connection.prepareStatement(UPDATE_APROVARIMOVEIS);
-
-        smt.setInt(1, id);
-        boolean rowUpdate = smt.executeUpdate() > 0;
-
-        smt.close();
-        connection.close();
-        
-        return rowUpdate;
-    }
-    
-    private final String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
-            + "SET Status = 'Reprovado' "
-            + "WHERE id_imovel = ?";
-
-    public boolean reprovarImovel(int id) throws SQLException {
-        Connection connection = DataAccess.getConexao();
-
-        smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
         smt.setInt(1, id);
         boolean rowUpdate = smt.executeUpdate() > 0;

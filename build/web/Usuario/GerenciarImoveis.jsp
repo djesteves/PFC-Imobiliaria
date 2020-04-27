@@ -7,11 +7,11 @@
 
 <div class="container portfolio-block">
     <c:if test = "${listaImovel != null}">
-        <div class="card-deck">
+
             <div class="row">
                 <c:forEach var="i" items="${listaImovel}">
-                    <div class="col-6 col-sm-4 mb-3">
-                        <div class="card w-100">
+                    <div class="col-sm-6 col-xl-4 mb-3">
+                        <div class="card">
                             <img class="card-img-top" src="<%=request.getContextPath()%>/Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
                             <div class="card-body">
                                 <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
@@ -27,10 +27,10 @@
                     </div>
                 </c:forEach>
             </div>
-        </div>
+
     </c:if>
     <c:if test = "${listaImovel == null}">
-        <p align="center"> <strong> Nenhum Imóvel Cadastrado </strong> </p>
+        <p class="heading"> <strong> Nenhum Imóvel Cadastrado </strong> </p>
     </c:if>
 </div>
 

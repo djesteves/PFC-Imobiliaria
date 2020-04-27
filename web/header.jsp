@@ -70,7 +70,7 @@
                             <li class="nav-item text-center" role="presentation"><a class="nav-link active" href="#"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
 
                             <c:if test="${usuarioLogado == null}">
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown text-center">
                                     <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownLogin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="far fa-user"></i>
                                         Login
@@ -90,7 +90,7 @@
                                             <button type="submit" class="btn btn-primary">Entrar</button>
                                         </form>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Usuario/CadastrarUsuario.jsp">Novo, por aqui? Registre-se.</a>
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp">Novo, por aqui? Registre-se.</a>
                                     </div>
                                 </li>
                             </c:if>  
