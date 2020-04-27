@@ -68,8 +68,8 @@ public class ImovelCadastrar implements Command {
 
             // cria o diretorio de upload
             // esse caminho e relativo ao diretorio da aplicacao
-            String uploadPath = "C:\\Users\\tr0j4nh4x\\Downloads\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
-            //String uploadPath = "D:\\Faculdade\\PFC\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
+            //String uploadPath = "C:\\Users\\tr0j4nh4x\\Downloads\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
+            String uploadPath = "C:\\Users\\danil\\OneDrive\\Documentos\\PFC\\PFC-Imobiliaria\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
 
             /* 
             String uploadPath = request.getServletContext().getRealPath("")

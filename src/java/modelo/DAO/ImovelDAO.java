@@ -275,4 +275,22 @@ public class ImovelDAO {
         
         return rowUpdate;
     }
+    
+    private final String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
+            + "SET Status = 'Reprovado' "
+            + "WHERE id_imovel = ?";
+
+    public boolean reprovarImovel(int id) throws SQLException {
+        Connection connection = DataAccess.getConexao();
+
+        smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
+
+        smt.setInt(1, id);
+        boolean rowUpdate = smt.executeUpdate() > 0;
+
+        smt.close();
+        connection.close();
+        
+        return rowUpdate;
+    }
 }

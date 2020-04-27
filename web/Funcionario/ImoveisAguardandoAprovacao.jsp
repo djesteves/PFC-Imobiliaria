@@ -26,7 +26,7 @@
 
                         <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/controle/AprovarImovel?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-check"></i></a>
 
-                        <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(<c:out value="${imovel.id_imovel}" />)"><i class="fas fa-times"></i></a>
+                        <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(${imovel.id_imovel})"><i class="fas fa-times"></i></a>
                         
                     </td>
                     <td><c:out value="${imovel.id_imovel}" /></td>
@@ -41,8 +41,8 @@
 
 <script type="text/javascript">
     function confirmaDelete(id) {
-        if (confirm('Tem certeza que deseja excluir este Usuário?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/controle/ImovelDeletar?id=" + id;
+        if (confirm('Tem certeza que deseja reprovar este imóvel?')) {
+            window.location.href = "${pageContext.servletContext.contextPath}/controle/ReprovarImovel?id=" + id;
         }
     }
 
