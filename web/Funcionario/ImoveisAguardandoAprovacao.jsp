@@ -22,7 +22,7 @@
             <c:forEach var="imovel" items="${ImoveisEmAnalise}">
                 <tr>
                     <td>
-                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/UsuarioConsultar?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-eye"></i></a>
+                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/ImovelConsultar?id=<c:out value='${imovel.id_imovel}' />&idu=<c:out value='${imovel.usuario.id_usuario}' />"><i class="fas fa-eye"></i></a>
 
                         <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/controle/AprovarImovel?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-check"></i></a>
 
@@ -31,7 +31,8 @@
                     </td>
                     <td><c:out value="${imovel.id_imovel}" /></td>
                     <td><c:out value="${imovel.titulo}" /></td>
-                    <td>R$<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/></td>
+                    <!--<td>R$<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/></td>-->
+                    <td>R$<c:out value="${imovel.valor}" /></td>
                     <td><c:out value="${imovel.status}" /></td>
                 </tr>
             </c:forEach>

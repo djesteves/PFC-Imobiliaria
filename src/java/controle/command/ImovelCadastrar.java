@@ -93,7 +93,7 @@ public class ImovelCadastrar implements Command {
             int comodos = Integer.parseInt(request.getParameter("comodos"));
             int banheiro = Integer.parseInt(request.getParameter("banheiro"));
             int garagem = Integer.parseInt(request.getParameter("garagem"));
-            String valor = request.getParameter("valorimovel");
+            Double valor = Double.parseDouble(request.getParameter("valorimovel"));
             Double areatotal = Double.parseDouble(request.getParameter("areatotal"));
             Double areaedificada = Double.parseDouble(request.getParameter("areaedificada"));
             String tpimovel = request.getParameter("tpimovel");

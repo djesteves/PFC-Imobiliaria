@@ -35,12 +35,6 @@ public class ImovelDAO {
     private final String INSERTIMOVEL = "INSERT INTO Imovel VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
 
-    //SELECTS
-    private final String CONSULTAIMOVEL = "SELECT * FROM Imovel I "
-            + " INNER JOIN Endereco E ON E.id_endereco = I.id_endereco"
-            + " INNER JOIN Usuario U ON U.id_usuario = I.id_usuario"
-            + " WHERE I.id_imovel = ?";
-
     public boolean cadastrar(Imovel imovel, HttpServletRequest request, HttpServletResponse response) throws SQLException {
 
         boolean sucesso = false;
@@ -72,7 +66,7 @@ public class ImovelDAO {
             smt.setString(1, imovel.getTitulo());
             smt.setString(2, imovel.getDescricao());
             smt.setString(3, "Em Análise");
-            smt.setString(4, imovel.getValor());
+            smt.setDouble(4, imovel.getValor());
             smt.setDouble(5, imovel.getArea_total());
             smt.setDouble(6, imovel.getArea_edificada());
             smt.setInt(7, imovel.getComodos());
@@ -126,7 +120,7 @@ public class ImovelDAO {
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setArea_total(rs.getDouble("area_total"));
                 imovel.setArea_edificada(rs.getDouble("area_edificada"));
-                imovel.setValor(rs.getString("valor"));
+                imovel.setValor(rs.getDouble("valor"));
                 imovel.setDiretorioimg(rs.getString("imagemdir"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
@@ -172,7 +166,7 @@ public class ImovelDAO {
                 imovel.setTipo_imovel(rs.getString("tipo_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setValor(rs.getString("valor"));
+                imovel.setValor(rs.getDouble("valor"));
                 
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 
@@ -207,7 +201,7 @@ public class ImovelDAO {
 
         smt.setString(1, imovel.getTitulo());
         smt.setString(2, imovel.getDescricao());
-        smt.setString(3, imovel.getValor());
+        smt.setDouble(3, imovel.getValor());
         smt.setDouble(4, imovel.getArea_total());
         smt.setDouble(5, imovel.getArea_edificada());
         smt.setInt(6, imovel.getComodos());
@@ -248,7 +242,7 @@ public class ImovelDAO {
                 Imovel imovel = new Imovel();
                 imovel.setId_imovel(rs.getInt("id_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
-                imovel.setValor(rs.getString("valor"));
+                imovel.setValor(rs.getDouble("valor"));
                 imovel.setStatus(rs.getString("status"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
 
