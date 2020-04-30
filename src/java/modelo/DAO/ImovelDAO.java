@@ -201,7 +201,7 @@ public class ImovelDAO {
             smt.setInt(8, imovel.getBanheiros());
             smt.setString(9, imovel.getTipo_imovel());
             smt.setInt(10, imovel.getId_imovel());
-
+            
             boolean rowUpdate = smt.executeUpdate() > 0;
 
             smt = connection.prepareStatement(UPDATE_ENDERECO);

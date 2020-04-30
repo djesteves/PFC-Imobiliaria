@@ -23,15 +23,12 @@ import util.ConnectionFactory;
  */
 public class AdminDAO {
 
-    private final String SELECT_USUARIOS = "SELECT U.id_usuario, nome, cpf_cnpj, nivel_acesso, l.situacao FROM "
-            + "Login L LEFT JOIN Usuario U ON U.id_usuario = l.id_usuario "
-            + "  WHERE l.situacao = 'Ativo'"
-            + " ORDER BY nivel_acesso";
+    public List<Usuario> listarUsuarios() {
 
-    private final String UPDATE_SITUACAO = "UPDATE Login SET situacao = ?"
-            + " WHERE id_usuario = ?";
-
-    public List<Usuario> listarUsuarios() throws SQLException, Exception {
+        String SELECT_USUARIOS = "SELECT U.id_usuario, nome, cpf_cnpj, nivel_acesso, l.situacao FROM "
+                + "Login L LEFT JOIN Usuario U ON U.id_usuario = l.id_usuario "
+                + "  WHERE l.situacao = 'Ativo'"
+                + " ORDER BY nivel_acesso";
 
         try (Connection connection = ConnectionFactory.getConexao()) {
             List<Usuario> listUsuario = new ArrayList<>();
@@ -53,15 +50,17 @@ public class AdminDAO {
             connection.close();
 
             return listUsuario;
-        } catch (Exception ex) {
-            System.err.println("Erro: "+ex);
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
             return null;
         }
 
     }
 
-    public boolean excluirUsuario(int id, HttpServletRequest request, HttpServletResponse response) {
-        String msg = "";
+    public boolean excluirUsuario(int id) {
+        String UPDATE_SITUACAO = "UPDATE Login SET situacao = ?"
+                + " WHERE id_usuario = ?";
+
         try (Connection connection = ConnectionFactory.getConexao()) {
 
             PreparedStatement smt = connection.prepareStatement(UPDATE_SITUACAO);
@@ -69,18 +68,13 @@ public class AdminDAO {
             smt.setString(1, "Inativo");
             smt.setInt(2, id);
 
-            smt.executeUpdate();
-
-            msg = "Usuário removido com sucesso!";
+            boolean rowUpdate = smt.executeUpdate() > 0;
+            return rowUpdate;
 
         } catch (Exception ex) {
-            System.err.println("Erro: "+ex);
+            System.err.println("Erro: " + ex);
             return false;
         }
-
-        request.setAttribute("msg", msg);
-        return true;
-
     }
 
 }

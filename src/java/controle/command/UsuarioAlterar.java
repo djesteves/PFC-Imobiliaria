@@ -1,8 +1,6 @@
 package controle.command;
 
 import controle.Command;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +13,6 @@ public class UsuarioAlterar implements Command {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-        boolean atualizado = false;
         HttpSession usuarioLogado = request.getSession();
         Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
         int id = Integer.parseInt(request.getParameter("id"));
@@ -67,9 +64,8 @@ public class UsuarioAlterar implements Command {
                 usuario.getEndereco().setBairro(bairro);
 
                 UsuarioDAO dao = new UsuarioDAO();
-                atualizado = dao.alterar(usuario);
 
-                if (atualizado) {
+                if (dao.alterar(usuario)) {
                     request.setAttribute("msg", "Dados alterados com sucesso!");
                     return "index.jsp";
                 } else {
@@ -77,7 +73,6 @@ public class UsuarioAlterar implements Command {
                     return "index.jsp";
                 }
             } catch (NumberFormatException ex) {
-                Logger.getLogger(UsuarioAlterar.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("msgerro", ex.getMessage());
                 return "index.jsp";
             }

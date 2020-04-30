@@ -25,8 +25,7 @@ public class UsuarioDeletar implements Command {
         HttpSession usuarioLogado = request.getSession();
         Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
         int id = Integer.parseInt(request.getParameter("id"));
-        boolean alterado = false;
-        String msg = "";
+
         boolean autorizado = false;
 
         if (sessao.getNivel().equals(Perfil.ADMINISTRADOR)) {
@@ -41,14 +40,12 @@ public class UsuarioDeletar implements Command {
             return "index.jsp";
         } else {
             AdminDAO dao = new AdminDAO();
-            alterado = dao.excluirUsuario(id, request, response);
-            msg = (String) request.getAttribute("msg");
 
-            if (alterado) {
-                request.setAttribute("msg", msg);
+            if (dao.excluirUsuario(id)) {
+                request.setAttribute("msg", "Usuário removido com sucesso!");
                 return "index.jsp";
             } else {
-                request.setAttribute("msgerro", request.getAttribute("msgerro"));
+                request.setAttribute("msgerro", "Não foi possivel a excluir o usuário");
                 return "index.jsp";
             }
         }

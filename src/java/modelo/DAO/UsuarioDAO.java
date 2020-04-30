@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import modelo.Perfil;
 import modelo.Sessao;
 
@@ -22,14 +20,14 @@ public class UsuarioDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    private final String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
-    private final String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
-    private final String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
-
-    private final String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
-            + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
-
     public boolean cadastrar(Usuario Usuario) {
+
+        String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
+        String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
+        String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
+
+        String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
+                + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
 
         boolean sucesso = false;
         try (Connection connection = ConnectionFactory.getConexao()) {
@@ -92,19 +90,20 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException ex) {
-            System.err.println("Erro:" +ex);
+            System.err.println("Erro:" + ex);
             return false;
         }
 
         return sucesso;
     }
 
-    private final String SELECT_LOGIN = "SELECT * FROM Usuario U "
-            + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
-            + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
-            + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
-
     public Sessao logar(Usuario usuario) {
+
+        String SELECT_LOGIN = "SELECT * FROM Usuario U "
+                + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
+                + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
+                + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
+
         Sessao sessao = null;
         try (Connection connection = ConnectionFactory.getConexao()) {
             smt = connection.prepareStatement(SELECT_LOGIN);
@@ -117,18 +116,19 @@ public class UsuarioDAO {
                 resultado.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro:" + ex);
         }
         return sessao;
 
     }
 
-    private final String SELECT_DADOS = "SELECT * FROM Usuario U "
-            + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
-            + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
-            + "WHERE U.id_usuario = ?";
-
     public Usuario getUsuario(int id) {
+
+        String SELECT_DADOS = "SELECT * FROM Usuario U "
+                + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
+                + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
+                + "WHERE U.id_usuario = ?";
+
         Usuario usuario = null;
         try (Connection connection = ConnectionFactory.getConexao()) {
 
@@ -163,24 +163,24 @@ public class UsuarioDAO {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            System.err.println("Erro:" + ex);
         }
         return usuario;
     }
 
-    private final String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
-            + " tel_residencial = ?"
-            + " WHERE id_usuario = ?";
-
-    private final String UPDATE_USUARIOEMAIL = "UPDATE Login SET email = ? WHERE id_usuario = ?";
-
-    private final String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
-            + " cidade = ?, cep = ?, bairro = ?, estado = ?"
-            + " WHERE id_endereco = ?";
-
     public boolean alterar(Usuario Usuario) {
-        boolean Atualizado = false;
+
+        String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
+                + " tel_residencial = ?"
+                + " WHERE id_usuario = ?";
+
+        String UPDATE_USUARIOEMAIL = "UPDATE Login SET email = ? WHERE id_usuario = ?";
+
+        String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
+                + " cidade = ?, cep = ?, bairro = ?, estado = ?"
+                + " WHERE id_endereco = ?";
+
+        boolean rowUpdate = false;
         try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
@@ -210,29 +210,31 @@ public class UsuarioDAO {
             smt.setString(7, Usuario.getEndereco().getEstado());
             smt.setInt(8, Usuario.getEndereco().getId_endereco());
 
-            smt.executeUpdate();
-
-            Atualizado = true;
+            rowUpdate = smt.executeUpdate() > 0;
+            
             connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            System.err.println("Erro:" + ex);
         }
-        return Atualizado;
+        return rowUpdate;
     }
 
-    private final String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
+    public boolean AlterarSenha(int id, Usuario usuario) {
 
-    public boolean AlterarSenha(int id, Usuario usuario) throws SQLException {
+        String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
+        boolean rowUpdate = false;
 
-        Connection connection = ConnectionFactory.getConexao();
+        try (Connection connection = ConnectionFactory.getConexao()) {
 
-        smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
-        smt.setString(1, usuario.getLogin().getSenha());
-        smt.setInt(2, id);
+            smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
+            smt.setString(1, usuario.getLogin().getSenha());
+            smt.setInt(2, id);
 
-        boolean rowUpdate = smt.executeUpdate() > 0;
-
+            rowUpdate = smt.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.err.println("Erro:" + ex);
+            return false;
+        }
         return rowUpdate;
     }
 }

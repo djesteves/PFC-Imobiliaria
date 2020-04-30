@@ -1,8 +1,6 @@
 package controle.command;
 
 import controle.Command;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,7 +38,6 @@ public class UsuarioConsultar implements Command {
                 return "Usuario/FormUsuario.jsp";
             }
         } catch (NumberFormatException ex) {
-            Logger.getLogger(UsuarioConsultar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "index.jsp";
         }

@@ -3,8 +3,6 @@ package controle.command;
 import modelo.Usuario;
 import modelo.DAO.UsuarioDAO;
 import controle.Command;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
@@ -61,10 +59,9 @@ public class UsuarioCadastrar implements Command {
             usuario.getLogin().setNivel(Perfil.USUARIO);
 
             UsuarioDAO dao = new UsuarioDAO();
-            boolean cadastro = dao.cadastrar(usuario);
 
-            if (cadastro) {
-                request.setAttribute("msgcadastro", "Usuário cadastrado com sucesso!");
+            if (dao.cadastrar(usuario)) {
+                request.setAttribute("msg", "Usuário cadastrado com sucesso!");
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "EMAIL ou CPF/CNPJ já cadastrado em nosso sistema, utilize o botão 'Recuperar senha'");
@@ -72,7 +69,6 @@ public class UsuarioCadastrar implements Command {
             }
 
         } catch (NumberFormatException ex) {
-            Logger.getLogger(UsuarioCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "index.jsp";
         }

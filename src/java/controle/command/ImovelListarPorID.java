@@ -9,8 +9,6 @@ import controle.Command;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import modelo.DAO.ImovelDAO;
 import modelo.Imovel;
@@ -37,7 +35,6 @@ public class ImovelListarPorID implements Command {
             return "Usuario/GerenciarImoveis.jsp";
 
         } catch (Exception ex) {
-            Logger.getLogger(ImovelListarPorID.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             return "index.jsp";
         }

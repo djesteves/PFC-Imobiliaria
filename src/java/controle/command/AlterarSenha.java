@@ -6,9 +6,6 @@
 package controle.command;
 
 import controle.Command;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,21 +33,15 @@ public class AlterarSenha implements Command {
             request.setAttribute("msgerro", "As senhas não coincidem!");
             return "Usuario/AlterarSenhaUsuario.jsp";
         } else {
-            try {
-                usuario.getLogin().setSenha(Criptografia.criptografia(senha));
-                               
-                UsuarioDAO dao = new UsuarioDAO();
-                boolean sucesso = dao.AlterarSenha(sessao.getId_usuario(), usuario);
-                if (sucesso) {
-                    request.setAttribute("msg", "A senha foi alterada, realize o login novamente!");
-                    request.getSession().removeAttribute("usuarioLogado");
-                } 
+            usuario.getLogin().setSenha(Criptografia.criptografia(senha));
+            UsuarioDAO dao = new UsuarioDAO();
+            if (dao.AlterarSenha(sessao.getId_usuario(), usuario)) {
+                request.setAttribute("msg", "A senha foi alterada, realize o login novamente!");
+                request.getSession().removeAttribute("usuarioLogado");
                 return "index.jsp";
-
-            } catch (SQLException ex) {
-                Logger.getLogger(AlterarSenha.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("msgerro", ex.getMessage());
-                return "index.jsp";
+            } else {
+                request.setAttribute("msgerro", "Não foi possivel alterar a senha, tente novamente!");
+                return "Usuario/AlterarSenhaUsuario.jsp";
             }
 
         }

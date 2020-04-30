@@ -8,8 +8,6 @@ package controle.command;
 import modelo.Usuario;
 import modelo.DAO.UsuarioDAO;
 import controle.Command;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Sessao;
