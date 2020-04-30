@@ -68,13 +68,13 @@ public class UsuarioCadastrar implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "EMAIL ou CPF/CNPJ já cadastrado em nosso sistema, utilize o botão 'Recuperar senha'");
-                return "erro.jsp";
+                return "index.jsp";
             }
 
         } catch (NumberFormatException ex) {
             Logger.getLogger(UsuarioCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
 
     }

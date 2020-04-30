@@ -36,7 +36,7 @@ public class ControleFactory extends HttpServlet {
         } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | ServletException ex) {
             Logger.getLogger(ControleFactory.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            request.getRequestDispatcher("/erro.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
 
         }
 

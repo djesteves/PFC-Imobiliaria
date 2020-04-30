@@ -1,4 +1,3 @@
-<%@page import="util.DataAccess"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="cliente" class="modelo.Usuario"/>
 <html>
@@ -47,6 +46,7 @@
                     mostraDialogo(mensagem, "success", 3000);
                 </script>
             </c:if> 
+                
             <c:if test="${msgerro != null}">
                 <script>
                     var mensagem = "${msgerro}";

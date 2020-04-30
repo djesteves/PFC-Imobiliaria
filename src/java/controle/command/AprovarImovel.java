@@ -66,11 +66,11 @@ public class AprovarImovel implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "Ocorreu um erro ao tentar aprovar o imóvel");
-                return "erro.jsp";
+                return "index.jsp";
             }
         } catch (NumberFormatException | MessagingException ex) {
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
 
     }

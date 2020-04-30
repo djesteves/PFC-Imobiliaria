@@ -39,7 +39,7 @@ public class ImovelListarPorID implements Command {
         } catch (Exception ex) {
             Logger.getLogger(ImovelListarPorID.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
     }
 }

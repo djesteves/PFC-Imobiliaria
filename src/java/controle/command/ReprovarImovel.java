@@ -75,12 +75,12 @@ public class ReprovarImovel implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", msg);
-                return "erro.jsp";
+                return "index.jsp";
             }
         } catch (NumberFormatException | SQLException | MessagingException ex) {
             Logger.getLogger(ImovelCadastrar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
 
     }

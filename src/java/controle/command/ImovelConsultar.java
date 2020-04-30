@@ -40,7 +40,7 @@ public class ImovelConsultar implements Command {
 
             if (!autorizado) {
                 request.setAttribute("msgerro", "Você não tem permissão para visualizar este Imóvel");
-                return "erro.jsp";
+                return "index.jsp";
             } else {
                 ImovelDAO dao = new ImovelDAO();
 
@@ -53,7 +53,7 @@ public class ImovelConsultar implements Command {
         } catch (NumberFormatException ex) {
             Logger.getLogger(ImovelConsultar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
     }
 

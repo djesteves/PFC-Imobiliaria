@@ -6,9 +6,6 @@
 package controle.command;
 
 import controle.Command;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -70,11 +67,11 @@ public class ImovelAlterar implements Command {
                     return "index.jsp";
                 } else {
                     request.setAttribute("msgerro", "Não foi possivel atualizar os dados, tente novamente após alguns minutos!");
-                    return "erro.jsp";
+                    return "index.jsp";
                 }
             } catch (NumberFormatException ex) {
                 request.setAttribute("msgerro", ex.getMessage());
-                return "erro.jsp";
+                return "index.jsp";
             }
         }
     }

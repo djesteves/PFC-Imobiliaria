@@ -30,7 +30,7 @@ public class UsuarioConsultar implements Command {
             
             if (!autorizado) {
                 request.setAttribute("msgerro", "Você não tem permissão para visualizar este Usuário");
-                return "erro.jsp";
+                return "index.jsp";
             } else {
                 UsuarioDAO dao = new UsuarioDAO();
 
@@ -42,7 +42,7 @@ public class UsuarioConsultar implements Command {
         } catch (NumberFormatException ex) {
             Logger.getLogger(UsuarioConsultar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
     }
 

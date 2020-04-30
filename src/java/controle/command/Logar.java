@@ -40,9 +40,8 @@ public class Logar implements Command {
                 return "index.jsp";
             }
         } catch (Exception ex) {
-            Logger.getLogger(Logar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
     }
 }

@@ -38,7 +38,7 @@ public class UsuarioDeletar implements Command {
 
         if (!autorizado) {
             request.setAttribute("msgerro", "Você não tem permissão para excluir este Usuário");
-            return "erro.jsp";
+            return "index.jsp";
         } else {
             AdminDAO dao = new AdminDAO();
             alterado = dao.excluirUsuario(id, request, response);
@@ -49,7 +49,7 @@ public class UsuarioDeletar implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", request.getAttribute("msgerro"));
-                return "erro.jsp";
+                return "index.jsp";
             }
         }
     }

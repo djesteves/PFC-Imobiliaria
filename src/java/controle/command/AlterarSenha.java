@@ -50,7 +50,7 @@ public class AlterarSenha implements Command {
             } catch (SQLException ex) {
                 Logger.getLogger(AlterarSenha.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("msgerro", ex.getMessage());
-                return "erro.jsp";
+                return "index.jsp";
             }
 
         }

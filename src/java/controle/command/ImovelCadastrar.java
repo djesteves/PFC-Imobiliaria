@@ -157,11 +157,11 @@ public class ImovelCadastrar implements Command {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "Ocorreu um erro ao tentar cadastrar o imóvel, tente novamente");
-                return "erro.jsp";
+                return "index.jsp";
             }
         } catch (NumberFormatException | IOException | ServletException | MessagingException ex) {
-            request.setAttribute("msgerro", ex);
-            return "erro.jsp";
+            request.setAttribute("msgerro", ex.getMessage());
+            return "index.jsp";
         }
     }
 }

@@ -33,7 +33,7 @@ public class UsuarioListar implements Command {
         } catch (Exception ex) {
             Logger.getLogger(UsuarioListar.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
+            return "index.jsp";
         }
 
     }

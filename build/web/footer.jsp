@@ -1,5 +1,3 @@
-
-
 <footer class="page-footer">
     <div class="container">
         <div class="links"><a href="#">Sobre</a><a href="#">Contato</a><a href="#">Imóveis</a></div>

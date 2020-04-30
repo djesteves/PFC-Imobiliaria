@@ -30,7 +30,7 @@ public class UsuarioAlterar implements Command {
 
         if (!autorizado) {
             request.setAttribute("msgerro", "Você não tem permissão para editar este Usuário");
-            return "erro.jsp";
+            return "index.jsp";
         } else {
             try {
                 //Login
@@ -74,12 +74,12 @@ public class UsuarioAlterar implements Command {
                     return "index.jsp";
                 } else {
                     request.setAttribute("msgerro", "Ocorreu um erro ao tentar atualizar os Dados");
-                    return "erro.jsp";
+                    return "index.jsp";
                 }
             } catch (NumberFormatException ex) {
                 Logger.getLogger(UsuarioAlterar.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("msgerro", ex.getMessage());
-                return "erro.jsp";
+                return "index.jsp";
             }
         }
 
