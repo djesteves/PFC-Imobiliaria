@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataAccess {
+public class ConnectionFactory {
     public static String status = "Não conectou...";
 
-    public DataAccess() {
+    public ConnectionFactory() {
     }
 
     public static java.sql.Connection getConexao() {
@@ -45,7 +45,7 @@ public class DataAccess {
 
     public static boolean FecharConexao() {
         try {
-            DataAccess.getConexao().close();
+            ConnectionFactory.getConexao().close();
             return true;
         } catch (SQLException e) {
             System.out.println("Nao foi possivel encerrar a conexao ao Banco de Dados."+e);
@@ -55,7 +55,7 @@ public class DataAccess {
 
     public static java.sql.Connection ReiniciarConexao() {
         FecharConexao();
-        return DataAccess.getConexao();
+        return ConnectionFactory.getConexao();
     }
 
 }

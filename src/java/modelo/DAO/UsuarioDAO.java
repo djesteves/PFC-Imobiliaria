@@ -1,7 +1,7 @@
 package modelo.DAO;
 
 import modelo.Usuario;
-import util.DataAccess;
+import util.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +32,7 @@ public class UsuarioDAO {
     public boolean cadastrar(Usuario Usuario) {
 
         boolean sucesso = false;
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(SELECT_VERIFICACAO);
             smt.setString(1, Usuario.getLogin().getEmail());
@@ -92,7 +92,7 @@ public class UsuarioDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro:" +ex);
             return false;
         }
 
@@ -106,7 +106,7 @@ public class UsuarioDAO {
 
     public Sessao logar(Usuario usuario) {
         Sessao sessao = null;
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
             smt = connection.prepareStatement(SELECT_LOGIN);
             smt.setString(1, usuario.getLogin().getEmail());
             smt.setString(2, usuario.getLogin().getSenha());
@@ -130,7 +130,7 @@ public class UsuarioDAO {
 
     public Usuario getUsuario(int id) {
         Usuario usuario = null;
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(SELECT_DADOS);
             smt.setInt(1, id);
@@ -181,7 +181,7 @@ public class UsuarioDAO {
 
     public boolean alterar(Usuario Usuario) {
         boolean Atualizado = false;
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
 
@@ -225,7 +225,7 @@ public class UsuarioDAO {
 
     public boolean AlterarSenha(int id, Usuario usuario) throws SQLException {
 
-        Connection connection = DataAccess.getConexao();
+        Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
         smt.setString(1, usuario.getLogin().getSenha());

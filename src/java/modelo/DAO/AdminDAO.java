@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Perfil;
 import modelo.Usuario;
-import util.DataAccess;
+import util.ConnectionFactory;
 
 /**
  *
@@ -35,7 +35,7 @@ public class AdminDAO {
 
     public List<Usuario> listarUsuarios() throws SQLException, Exception {
 
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
             List<Usuario> listUsuario = new ArrayList<>();
             PreparedStatement smt = connection.prepareStatement(SELECT_USUARIOS);
             ResultSet resultSet = smt.executeQuery();
@@ -56,7 +56,7 @@ public class AdminDAO {
 
             return listUsuario;
         } catch (Exception ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro: "+ex);
             return null;
         }
 
@@ -64,7 +64,7 @@ public class AdminDAO {
 
     public boolean excluirUsuario(int id, HttpServletRequest request, HttpServletResponse response) {
         String msg = "";
-        try (Connection connection = DataAccess.getConexao()) {
+        try (Connection connection = ConnectionFactory.getConexao()) {
 
             PreparedStatement smt = connection.prepareStatement(UPDATE_SITUACAO);
 
@@ -76,7 +76,7 @@ public class AdminDAO {
             msg = "Usuário removido com sucesso!";
 
         } catch (Exception ex) {
-            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Erro: "+ex);
             return false;
         }
 

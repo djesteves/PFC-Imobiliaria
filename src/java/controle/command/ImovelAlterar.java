@@ -41,9 +41,8 @@ public class ImovelAlterar implements Command {
             return "erro.jsp";
         } else {
             try {
-                boolean atualizado = false;
                 Imovel imovel = new Imovel();
-                
+
                 imovel.setId_imovel(Integer.parseInt(request.getParameter("id")));
                 imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada")));
                 imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal")));
@@ -65,17 +64,15 @@ public class ImovelAlterar implements Command {
                 imovel.getEndereco().setBairro(request.getParameter("bairro"));
 
                 ImovelDAO dao = new ImovelDAO();
-                atualizado = dao.alterar(imovel);
 
-                if (atualizado) {
+                if (dao.alterar(imovel)) {
                     request.setAttribute("msg", "Dados atualizados com sucesso!");
                     return "index.jsp";
                 } else {
                     request.setAttribute("msgerro", "Não foi possivel atualizar os dados, tente novamente após alguns minutos!");
                     return "erro.jsp";
                 }
-            } catch (NumberFormatException | SQLException ex) {
-                Logger.getLogger(ImovelAlterar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
                 request.setAttribute("msgerro", ex.getMessage());
                 return "erro.jsp";
             }

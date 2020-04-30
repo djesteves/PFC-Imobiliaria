@@ -6,10 +6,7 @@
 package controle.command;
 
 import controle.Command;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.DAO.ImovelDAO;
@@ -24,19 +21,13 @@ public class ImoveisEmAnalise implements Command {
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            ImovelDAO dao = new ImovelDAO();
+        ImovelDAO dao = new ImovelDAO();
 
-            List<Imovel> imoveis = dao.imoveisEmAnalise();
+        List<Imovel> imoveis = dao.imoveisEmAnalise();
 
-            request.setAttribute("ImoveisEmAnalise", imoveis);
-            return "Funcionario/ImoveisAguardandoAprovacao.jsp";
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ImoveisEmAnalise.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("msgerro", ex.getMessage());
-            return "erro.jsp";
-        }
+        request.setAttribute("ImoveisEmAnalise", imoveis);
+        return "Funcionario/ImoveisAguardandoAprovacao.jsp";
+
     }
 
 }
