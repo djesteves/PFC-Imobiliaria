@@ -29,7 +29,6 @@ public class UsuarioDAO {
         String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
                 + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
 
-        boolean sucesso = false;
         try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(SELECT_VERIFICACAO);
@@ -38,7 +37,7 @@ public class UsuarioDAO {
             rs = smt.executeQuery();
 
             if (rs.next()) {
-                sucesso = false;
+                return false;
             } else {
                 //Endereço
                 smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
@@ -86,15 +85,13 @@ public class UsuarioDAO {
                 rs.close();
                 connection.close();
 
-                sucesso = true;
+                return true;
             }
 
         } catch (SQLException ex) {
             System.err.println("Erro:" + ex);
             return false;
         }
-
-        return sucesso;
     }
 
     public Sessao logar(Usuario usuario) {

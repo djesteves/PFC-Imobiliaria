@@ -130,7 +130,6 @@
                         <option value="SP">São Paulo</option>
                         <option value="SE">Sergipe</option>
                         <option value="TO">Tocantins</option>
-                        <option value="EX">Estrangeiro</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">

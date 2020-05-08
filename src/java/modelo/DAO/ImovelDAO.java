@@ -201,8 +201,8 @@ public class ImovelDAO {
             smt.setInt(8, imovel.getBanheiros());
             smt.setString(9, imovel.getTipo_imovel());
             smt.setInt(10, imovel.getId_imovel());
-            
-            boolean rowUpdate = smt.executeUpdate() > 0;
+
+            smt.executeUpdate();
 
             smt = connection.prepareStatement(UPDATE_ENDERECO);
 
@@ -215,9 +215,8 @@ public class ImovelDAO {
             smt.setString(7, imovel.getEndereco().getEstado());
             smt.setInt(8, imovel.getEndereco().getId_endereco());
 
-            rowUpdate = smt.executeUpdate() > 0;
-            return rowUpdate;
-
+            smt.executeUpdate();
+            return true;
         } catch (SQLException ex) {
             System.err.println("Erro: " + ex);
             return false;
