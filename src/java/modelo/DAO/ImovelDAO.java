@@ -275,7 +275,7 @@ public class ImovelDAO {
         }
     }
 
-    public boolean reprovarImovel(int id) throws SQLException {
+    public boolean reprovarImovel(int id) {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
                 + "SET Status = 'Reprovado' "
@@ -296,4 +296,64 @@ public class ImovelDAO {
             return false;
         }
     }
+
+    public List<Imovel> listarImoveis(String Pesquisa, int quartos, double vlr) {
+        String SELECT_IMOVEIS = "";
+
+        if (Pesquisa.equalsIgnoreCase("Todos") || quartos == 0 && vlr == 0) {
+            SELECT_IMOVEIS = "SELECT * FROM Imovel I "
+                    + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
+                    + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
+                    + "WHERE I.status = 'Disponivel'";
+        } else if (Pesquisa.equalsIgnoreCase("Filtro")){
+            SELECT_IMOVEIS = "SELECT * FROM Imovel I "
+                    + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
+                    + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
+                    + "WHERE I.status = 'Disponivel' "
+                    + "AND I.";
+        }
+
+        Imovel imovel = null;
+        List<Imovel> listImoveis = null;
+        try (Connection connection = ConnectionFactory.getConexao()) {
+            listImoveis = new ArrayList<>();
+
+            smt = connection.prepareStatement(SELECT_IMOVEIS);
+
+            rs = smt.executeQuery();
+            while (rs.next()) {
+                imovel = new Imovel();
+                imovel.setArea_edificada(rs.getDouble("area_edificada"));
+                imovel.setArea_total(rs.getDouble("area_total"));
+                imovel.setBanheiros(rs.getInt("banheiros"));
+                imovel.setComodos(rs.getInt("comodos"));
+                imovel.setDescricao(rs.getString("descricao"));
+                imovel.setDiretorioimg(rs.getString("imagemdir"));
+                imovel.setId_imovel(rs.getInt("id_imovel"));
+                imovel.setStatus(rs.getString("status"));
+                imovel.setTipo_imovel(rs.getString("tipo_imovel"));
+                imovel.setTitulo(rs.getString("titulo"));
+                imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
+                imovel.setValor(rs.getDouble("valor"));
+                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+                imovel.getEndereco().setBairro(rs.getString("bairro"));
+                imovel.getEndereco().setCep(rs.getString("cep"));
+                imovel.getEndereco().setCidade(rs.getString("cidade"));
+                imovel.getEndereco().setComplemento(rs.getString("complemento"));
+                imovel.getEndereco().setEstado(rs.getString("estado"));
+                imovel.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+                imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
+                imovel.getEndereco().setNumero(rs.getInt("numero"));
+
+                listImoveis.add(imovel);
+
+                connection.close();
+
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+        }
+        return listImoveis;
+    }
+
 }

@@ -67,7 +67,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
                         <ul class="nav navbar-nav ml-auto ">
-                            <li class="nav-item text-center" role="presentation"><a class="nav-link active" href="<%=request.getContextPath()%>/catalogoimoveis.jsp"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
+                            <li class="nav-item text-center" role="presentation"><a class="nav-link active" href="<%=request.getContextPath()%>/controle/ImoveisListar"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
 
                             <c:if test="${usuarioLogado == null}">
                                 <li class="nav-item dropdown text-center">

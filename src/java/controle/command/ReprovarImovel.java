@@ -6,9 +6,6 @@
 package controle.command;
 
 import controle.Command;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -77,8 +74,7 @@ public class ReprovarImovel implements Command {
                 request.setAttribute("msgerro", msg);
                 return "index.jsp";
             }
-        } catch (NumberFormatException | SQLException | MessagingException ex) {
-            Logger.getLogger(ImovelCadastrar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NumberFormatException | MessagingException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             return "index.jsp";
         }
