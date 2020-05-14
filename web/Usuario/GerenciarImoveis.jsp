@@ -17,6 +17,9 @@
                         <p class="card-text"><c:out value='${i.descricao}' /></p>
                     </div>
                     <div class="card-footer">
+                        <div class="float-left">
+                            <p class="card-text"><c:out value='${i.status}' /></p>
+                        </div>   
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
                             <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-primary"><i class="far fa-edit"></i></a>
                             <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>

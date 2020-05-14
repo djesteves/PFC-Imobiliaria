@@ -1,4 +1,7 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="pt-BR" />
+
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="modelo.Imovel"%>
@@ -58,10 +61,9 @@
                                 <p class="card-text"><c:out value='${i.descricao}' /></p>
                             </div>
                             <div class="card-footer">
-                                <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
-                                    <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                                    <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
-                                </div>
+                                <p class="card-text float-right"><fmt:formatNumber value="${i.valor}" minFractionDigits="2" type="currency" /></p>
+                                
+                                
                             </div>
                         </div>
                     </div>
