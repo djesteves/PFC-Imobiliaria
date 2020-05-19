@@ -5,31 +5,27 @@
  */
 package util;
 
-import java.io.OutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
- 
+
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JRExporter;
-import net.sf.jasperreports.engine.JRExporterParameter;
- 
+
 import net.sf.jasperreports.engine.JasperFillManager;
- 
+
 import net.sf.jasperreports.engine.JasperPrint;
- 
+
 import net.sf.jasperreports.engine.JasperReport;
- 
+
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.view.JasperViewer;
- 
+
 /**
  *
  * @author Diego
  */
 public class GeradorDeRelatorios {
-   
 
     private final Connection conexao;
 
@@ -37,9 +33,8 @@ public class GeradorDeRelatorios {
         this.conexao = conexao;
     }
 
-    public void geraPdf(String jrxml, 
-        Map<String, Object> parametros, OutputStream saida) {
-       
+    public void geraPdf(String jrxml,
+            Map<String, Object> parametros) throws IOException {
 
         try {
 
@@ -50,13 +45,16 @@ public class GeradorDeRelatorios {
             JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
 
             // exporta para pdf
-            JasperViewer.viewReport(print);
-            
+            //JasperViewer.viewReport(print);
+            JasperExportManager.exportReportToPdfFile(print, "C:/relatorio.pdf");
+            Runtime.getRuntime().exec("cmd /c start C:/relatorio.pdf");
+
+            File file = new File("C:/relatorio.pdf");
+            file.deleteOnExit();
 
         } catch (JRException e) {
             throw new RuntimeException("Erro ao gerar relatório", e);
         }
-    }   
+    }
 
-    
 }

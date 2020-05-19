@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,24 +29,21 @@ public class EmitirRelatorio implements Command {
             // acha jrxml dentro da aplicação
             ServletContext contexto = request.getServletContext();
             String jrxml = contexto.getRealPath("Resources/relatorios/teste.jrxml");
-           
             // prepara parâmetros
             Map<String, Object> parametros = new HashMap<>();
             //parametros.put("curso", request.getParameter("curso_id"));
-
             // abre conexão com o banco
             Connection conexao = ConnectionFactory.getConexao();
-
             // gera relatório
             GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
-            gerador.geraPdf(jrxml, parametros, response.getOutputStream());
-
+            gerador.geraPdf(jrxml, parametros);
             ConnectionFactory.FecharConexao();
-
+            return "index.jsp";
         } catch (IOException ex) {
-            Logger.getLogger(EmitirRelatorio.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("msgerro", ex.getMessage());
+            return "index.jsp";
         }
-        return null;
+
     }
 
 }
