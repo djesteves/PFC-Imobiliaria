@@ -38,10 +38,6 @@
 				</textElement>
 				<text><![CDATA[Imóveis Aprovados por Período]]></text>
 			</staticText>
-			<image>
-				<reportElement x="12" y="11" width="50" height="50" uuid="95d31932-dead-4ea9-b7a2-120b7a263751"/>
-				<imageExpression><![CDATA["C:/Users/Diego/Documents/PFC-Imobiliaria/web/Resources/img/icon_imob.png"]]></imageExpression>
-			</image>
 			<line>
 				<reportElement x="80" y="0" width="1" height="72" uuid="385eec8b-019b-4532-8825-f726d52a38c0"/>
 			</line>

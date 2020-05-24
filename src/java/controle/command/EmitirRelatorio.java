@@ -14,7 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import util.ConnectionFactory;
-import util.GeradorDeRelatorios;
+import modelo.DAO.GeradorDeRelatoriosDAO;
 
 /**
  *
@@ -26,24 +26,21 @@ public class EmitirRelatorio implements Command {
     public String executar(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            String rel = request.getParameter("nomerel");
+            String relatorio = request.getParameter("nomerel");
             // acha jrxml dentro da aplicação
             ServletContext contexto = request.getServletContext();
-            String jrxml = contexto.getRealPath("Resources/relatorios/"+rel+".jrxml");
+            String jrxml = contexto.getRealPath("Resources/relatorios/"+relatorio+".jrxml");
             // prepara parâmetros
             Map<String, Object> parametros = new HashMap<>();
             
-            if("RelAprovadosImoveis".equalsIgnoreCase(rel)){
+            if("RelAprovadosImoveis".equalsIgnoreCase(relatorio)){
                 parametros.put("datainicio", request.getParameter("datainicio"));
                 parametros.put("datafinal", request.getParameter("datafinal"));
             }
             
-            // abre conexão com o banco
-            Connection conexao = ConnectionFactory.getConexao();
             // gera relatório
-            GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
+            GeradorDeRelatoriosDAO gerador = new GeradorDeRelatoriosDAO();
             gerador.geraPdf(jrxml, parametros);
-            ConnectionFactory.FecharConexao();
             return "Admin/Dashboard.jsp";
         } catch (IOException ex) {
             request.setAttribute("msgerro", ex.getMessage());

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package modelo.DAO;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,19 +20,16 @@ import net.sf.jasperreports.engine.JasperReport;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
+import util.ConnectionFactory;
 
 /**
  *
  * @author Diego
  */
-public class GeradorDeRelatorios {
+public class GeradorDeRelatoriosDAO {
 
-    private final Connection conexao;
-
-    public GeradorDeRelatorios(Connection conexao) {
-        this.conexao = conexao;
-    }
-
+    Connection conexao = ConnectionFactory.getConexao();
+    
     public void geraPdf(String jrxml,
             Map<String, Object> parametros) throws IOException {
 
@@ -50,6 +47,7 @@ public class GeradorDeRelatorios {
             Runtime.getRuntime().exec("cmd /c start C:/relatorio.pdf");
 
             File file = new File("C:/relatorio.pdf");
+            ConnectionFactory.FecharConexao();
             file.deleteOnExit();
 
         } catch (JRException e) {
