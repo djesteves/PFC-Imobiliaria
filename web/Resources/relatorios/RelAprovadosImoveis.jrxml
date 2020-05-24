@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelAprovadosImoveis" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30362aa8-bfaa-4ae5-8232-1af28fc4c609">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="datainicio" class="java.lang.String"/>
+	<parameter name="datafinal" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select  nome, 
+			 id_imovel, 
+			 valor, 
+			 to_char( i.data_cadastro, 'DD/MM/YYYY') as data_cadastro
+	from imovel i
+  inner join usuario u on u.id_usuario = i.id_usuario
+	 where status = 'Disponivel'
+	and to_char(i.data_cadastro, 'YYYY-MM-DD') between  $P{datainicio}  and  $P{datafinal}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String"/>
+	<field name="id_imovel" class="java.lang.Integer"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="data_cadastro" class="java.lang.String"/>
+	<background>
+		<band height="802" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="802" uuid="7e287c85-db27-435a-bbf3-25feae387b99"/>
+			</rectangle>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="24" width="553" height="20" uuid="84e84bd5-fc4a-4e20-8c0c-1f30603deccd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imóveis Aprovados por Período]]></text>
+			</staticText>
+			<image>
+				<reportElement x="12" y="11" width="50" height="50" uuid="95d31932-dead-4ea9-b7a2-120b7a263751"/>
+				<imageExpression><![CDATA["C:/Users/Diego/Documents/PFC-Imobiliaria/web/Resources/img/icon_imob.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="80" y="0" width="1" height="72" uuid="385eec8b-019b-4532-8825-f726d52a38c0"/>
+			</line>
+			<textField pattern="d-M-yyyy" isBlankWhenNull="true">
+				<reportElement x="385" y="50" width="69" height="15" uuid="0ded205d-e16c-4302-9dca-0ff37746f292"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{datainicio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="d-M-yyyy" isBlankWhenNull="true">
+				<reportElement x="469" y="50" width="73" height="15" uuid="2a142cc1-77fd-4fef-911d-305fd6410fcf"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{datafinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="50" width="92" height="15" uuid="30e838e0-0351-4e66-bd27-d0ee33abc2d4"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="50" width="26" height="15" uuid="763fb20a-0892-433d-903b-72e9453ad78f"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Até]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="43406a41-7332-4bff-b69f-10aa39e7196f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="2" y="0" width="256" height="20" uuid="e6fa033a-ecec-4e7b-9d2a-9357a64a33a3"/>
+				<box leftPadding="3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="100" height="20" uuid="13a0566d-b706-4a38-9e5c-6ae057dda33b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Valor do Imóvel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="0" width="82" height="20" uuid="c3764913-d240-488c-ba32-de4716767f2c"/>
+				<box rightPadding="3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Data de Cadastro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="258" y="0" width="102" height="20" uuid="2188768a-33cc-43e1-bc4b-a316d253fdfd"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Código do Imóvel]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="256" height="15" uuid="7893ea7e-0849-40ef-8250-8e9f9395b09a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="715e6773-20cd-4b4b-bd38-c285ed6f0e3e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="0" width="102" height="15" uuid="df5c1b43-30f8-4894-9be8-e5119b8b45f8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="96be484e-fa3e-4306-a7f3-102fc95d526c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_imovel}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="360" y="0" width="100" height="15" uuid="d33eff4a-6da0-4213-b73b-f45246e9daca">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d52140ca-feb0-4ccf-baae-a24a8d081c98"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="0" width="82" height="15" uuid="0c03b884-50c1-4971-851a-432afbc92658">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ccafc6a1-3510-40e5-bbef-bffddce66ad5"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{data_cadastro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="645465f5-2e20-436a-a88d-0998adc9304b"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="0" width="55" height="10" uuid="018311a6-1372-46c8-9300-b9ab4bfbc7c7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="0" width="30" height="10" uuid="25cd0ba8-5079-446c-ba23-257ca4d4235b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="115" height="10" uuid="4aae5e81-01f2-431e-bf42-1d27f6fcd16b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[RelAprovadosImoveis]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="10">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="be909857-f2e4-4a51-9949-e47a9b983f0d"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="0" width="55" height="10" uuid="5bd807b6-fc85-47b5-a0d4-0bfc5a628d92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="0" width="30" height="10" uuid="350198a2-2548-48a5-9980-6a45a85bd6e5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="115" height="10" uuid="7392dd32-9779-4d93-8f1a-dee481636145">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[RelAprovadosImoveis]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="0" width="85" height="10" uuid="4224bcaa-37f1-4737-b852-d2e4b46fba75">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total de Registros: " + $V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="260" y="12" width="120" height="15" uuid="9ff274e1-dee5-44a3-8905-2876c8556f07"/>
+				<textElement textAlignment="Left">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Total de Imóveis Aprovados:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="e5a5c868-7936-426a-a2f9-610c4eeceb64"/>
+			</line>
+			<textField>
+				<reportElement x="380" y="12" width="175" height="15" uuid="3d26b577-8578-403a-84da-480f5bfbe015"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -7,6 +7,7 @@ package controle.command;
 
 import controle.Command;
 import java.util.List;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.DAO.ImovelDAO;
@@ -19,10 +20,16 @@ import modelo.Imovel;
 public class ImoveisListar implements Command {
 
     @Override
-    public String executar(HttpServletRequest request, HttpServletResponse response) {
+    public String executar(HttpServletRequest request, HttpServletResponse response){
         try {
             ImovelDAO dao = new ImovelDAO();
-            List<Imovel> imovel = dao.listarImoveis("Todos", 0, 0);
+
+            String array = request.getParameter("selectquartos") + ";" + request.getParameter("selectvalor");
+            String pesquisa[] = new String[2];
+            pesquisa = array.split(";");
+
+            List<Imovel> imovel = dao.listarImoveis(pesquisa);
+
             request.setAttribute("listaImoveis", imovel);
             return "catalogoimoveis.jsp";
         } catch (Exception ex) {

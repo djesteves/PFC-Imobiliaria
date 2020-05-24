@@ -11,7 +11,8 @@
         <c:forEach var="i" items="${listaImovel}">
             <div class="col-sm-6 col-xl-4 mb-3">
                 <div class="card">
-                    <img class="card-img-top" src="<%=request.getContextPath()%>/Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
+
+                    <img class="card-img-top" src="../Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
                     <div class="card-body">
                         <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
                         <p class="card-text"><c:out value='${i.descricao}' /></p>
@@ -22,7 +23,7 @@
                         </div>   
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
                             <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                            <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
+                            <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelDeletar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>

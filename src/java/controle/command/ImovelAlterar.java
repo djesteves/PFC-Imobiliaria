@@ -35,7 +35,7 @@ public class ImovelAlterar implements Command {
 
         if (!autorizado) {
             request.setAttribute("msgerro", "Você não tem permissão para editar este Imóvel");
-            return "erro.jsp";
+            return "index.jsp";
         } else {
             try {
                 Imovel imovel = new Imovel();

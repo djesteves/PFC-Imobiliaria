@@ -82,7 +82,7 @@ public class ImovelDAO {
         String CONSULTAIMOVELUSUARIO = "SELECT * FROM Imovel I "
                 + " INNER JOIN Endereco E ON E.id_endereco = I.id_endereco"
                 + " INNER JOIN Usuario U ON U.id_usuario = I.id_usuario"
-                + " WHERE I.id_usuario = ?";
+                + " WHERE I.id_usuario = ? and Status <> 'Inativo'";
 
         List<Imovel> ArrImovel = null;
 
@@ -275,6 +275,28 @@ public class ImovelDAO {
         }
     }
 
+    public boolean deletarImovel(int id) {
+
+        String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
+                + "SET Status = 'Inativo' "
+                + "WHERE id_imovel = ?";
+
+        try (Connection connection = ConnectionFactory.getConexao()) {
+
+            smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
+
+            smt.setInt(1, id);
+            boolean rowUpdate = smt.executeUpdate() > 0;
+
+            smt.close();
+            connection.close();
+            return rowUpdate;
+        } catch (SQLException ex) {
+            System.err.println("Erro: " + ex);
+            return false;
+        }
+    }
+
     public boolean reprovarImovel(int id) {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
@@ -297,22 +319,21 @@ public class ImovelDAO {
         }
     }
 
-    public List<Imovel> listarImoveis(String Pesquisa, int quartos, double vlr) {
-        String SELECT_IMOVEIS = "";
-
-        if (Pesquisa.equalsIgnoreCase("Todos") || quartos == 0 && vlr == 0) {
-            SELECT_IMOVEIS = "SELECT * FROM Imovel I "
-                    + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
-                    + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
-                    + "WHERE I.status = 'Disponivel'";
-        } else if (Pesquisa.equalsIgnoreCase("Filtro")){
-            SELECT_IMOVEIS = "SELECT * FROM Imovel I "
-                    + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
-                    + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
-                    + "WHERE I.status = 'Disponivel' "
-                    + "AND I.";
+    public List<Imovel> listarImoveis(String[] Pesquisa) throws Exception {
+        
+        String SELECT_IMOVEIS = "SELECT * FROM Imovel I "
+                + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
+                + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
+                + "WHERE I.status = 'Disponivel'";
+        
+        if (!"null".equals(Pesquisa[0])) {
+            SELECT_IMOVEIS += " AND comodos = " + Pesquisa[0];
         }
 
+        if (!"null".equals(Pesquisa[1])) {
+            SELECT_IMOVEIS += " AND valor <= " + Pesquisa[1];
+        }
+        
         Imovel imovel = null;
         List<Imovel> listImoveis = null;
         try (Connection connection = ConnectionFactory.getConexao()) {
@@ -355,5 +376,4 @@ public class ImovelDAO {
         }
         return listImoveis;
     }
-
 }

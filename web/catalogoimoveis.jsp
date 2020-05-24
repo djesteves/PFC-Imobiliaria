@@ -16,11 +16,9 @@
     <div class="row">
 
         <div class="col-md-4 col-lg-3 mb-3" data-aos="fade-down" data-aos-delay="200">
-            <form>
+            <form action="<%=request.getContextPath()%>/controle/ImoveisListar" method="post">
                 <div class="heading">
-
                     <p>Filtros de Busca</p>
-
                 </div>
 
                 <label for="selectquartos">Nº de Quartos</label>
@@ -55,25 +53,21 @@
                 <c:forEach var="i" items="${listaImoveis}">
                     <div class="col-sm-6 col-xl-4 mb-3 align-items-center">
                         <div class="card">
-                            <img class="card-img-top" src="<%=request.getContextPath()%>/Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
+                            <img class="card-img-top" src="../Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
                             <div class="card-body">
                                 <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
                                 <p class="card-text"><c:out value='${i.descricao}' /></p>
                             </div>
                             <div class="card-footer">
                                 <p class="card-text float-right"><fmt:formatNumber value="${i.valor}" minFractionDigits="2" type="currency" /></p>
-                                
-                                
                             </div>
                         </div>
                     </div>
                 </c:forEach>
 
-
                 <c:if test="${empty listaImoveis}">
                     <p class="heading"> <strong> Nenhum Imóvel Cadastrado </strong> </p>
                 </c:if>
-
             </div>
         </div>
 

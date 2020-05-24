@@ -26,19 +26,25 @@ public class EmitirRelatorio implements Command {
     public String executar(HttpServletRequest request, HttpServletResponse response) {
 
         try {
+            String rel = request.getParameter("nomerel");
             // acha jrxml dentro da aplicação
             ServletContext contexto = request.getServletContext();
-            String jrxml = contexto.getRealPath("Resources/relatorios/teste.jrxml");
+            String jrxml = contexto.getRealPath("Resources/relatorios/"+rel+".jrxml");
             // prepara parâmetros
             Map<String, Object> parametros = new HashMap<>();
-            //parametros.put("curso", request.getParameter("curso_id"));
+            
+            if("RelAprovadosImoveis".equalsIgnoreCase(rel)){
+                parametros.put("datainicio", request.getParameter("datainicio"));
+                parametros.put("datafinal", request.getParameter("datafinal"));
+            }
+            
             // abre conexão com o banco
             Connection conexao = ConnectionFactory.getConexao();
             // gera relatório
             GeradorDeRelatorios gerador = new GeradorDeRelatorios(conexao);
             gerador.geraPdf(jrxml, parametros);
             ConnectionFactory.FecharConexao();
-            return "index.jsp";
+            return "Admin/Dashboard.jsp";
         } catch (IOException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             return "index.jsp";

@@ -18,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,13 +65,9 @@ public class ImovelCadastrar implements Command {
 
             // cria o diretorio de upload
             // esse caminho e relativo ao diretorio da aplicacao
-            String uploadPath = "C:\\Users\\Diego\\Documents\\PFC-Imobiliaria\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
-            //String uploadPath = "C:\\Users\\danil\\Documents\\PFC\\PFC_Imobiliaria_Postgres\\web\\Resources\\upload" + File.separator + sessao.getId_usuario();
+            ServletContext context = request.getServletContext();
+            String uploadPath = context.getRealPath("/") + "Resources\\upload" + File.separator + sessao.getId_usuario();
 
-            /* 
-            String uploadPath = request.getServletContext().getRealPath("")
-                    + File.separator + UPLOAD_DIRETORIO + File.separator + usuarioid.getId_usuario();
-             */
             // caso o diretorio nao exista o bloco abaixo cria o mesmo
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
