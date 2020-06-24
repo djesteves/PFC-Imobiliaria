@@ -11,7 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.Usuario;
 import modelo.Perfil;
 import modelo.Sessao;
 
@@ -39,5 +38,4 @@ public class AcessoAdmin implements Filter {
     public void destroy() {
 
     }
-
 }

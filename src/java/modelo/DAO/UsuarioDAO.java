@@ -20,7 +20,7 @@ public class UsuarioDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Usuario Usuario) {
+    public boolean cadastrar(Usuario usuario) {
 
         String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
         String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
@@ -32,8 +32,8 @@ public class UsuarioDAO {
         try (Connection connection = ConnectionFactory.getConexao()) {
 
             smt = connection.prepareStatement(SELECT_VERIFICACAO);
-            smt.setString(1, Usuario.getLogin().getEmail());
-            smt.setString(2, Usuario.getCpfcnpj());
+            smt.setString(1, usuario.getLogin().getEmail());
+            smt.setString(2, usuario.getCpfcnpj());
             rs = smt.executeQuery();
 
             if (rs.next()) {
@@ -42,13 +42,13 @@ public class UsuarioDAO {
                 //Endereço
                 smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
 
-                smt.setString(1, Usuario.getEndereco().getLogradouro());
-                smt.setString(2, Usuario.getEndereco().getComplemento());
-                smt.setInt(3, Usuario.getEndereco().getNumero());
-                smt.setString(4, Usuario.getEndereco().getCidade());
-                smt.setString(5, Usuario.getEndereco().getCep());
-                smt.setString(6, Usuario.getEndereco().getBairro());
-                smt.setString(7, Usuario.getEndereco().getEstado());
+                smt.setString(1, usuario.getEndereco().getLogradouro());
+                smt.setString(2, usuario.getEndereco().getComplemento());
+                smt.setInt(3, usuario.getEndereco().getNumero());
+                smt.setString(4, usuario.getEndereco().getCidade());
+                smt.setString(5, usuario.getEndereco().getCep());
+                smt.setString(6, usuario.getEndereco().getBairro());
+                smt.setString(7, usuario.getEndereco().getEstado());
                 smt.execute();
 
                 rs = smt.getGeneratedKeys();
@@ -57,13 +57,13 @@ public class UsuarioDAO {
                 //Usuario
                 smt = connection.prepareStatement(INSERTUSUARIO, Statement.RETURN_GENERATED_KEYS);
 
-                smt.setString(1, Usuario.getNome());
+                smt.setString(1, usuario.getNome());
                 smt.setTimestamp(2, timestamp);
-                smt.setString(3, Usuario.getTel_celular());
-                smt.setString(4, Usuario.getTel_residencial());
-                smt.setString(5, Usuario.getCpfcnpj());
-                smt.setString(6, Usuario.getRg());
-                smt.setString(7, Usuario.getTipoPessoa());
+                smt.setString(3, usuario.getTel_celular());
+                smt.setString(4, usuario.getTel_residencial());
+                smt.setString(5, usuario.getCpfcnpj());
+                smt.setString(6, usuario.getRg());
+                smt.setString(7, usuario.getTipoPessoa());
                 smt.setInt(8, rs.getInt(1));
                 smt.execute();
 
@@ -73,9 +73,9 @@ public class UsuarioDAO {
                 //Login
                 smt = connection.prepareStatement(INSERTLOGIN);
 
-                smt.setString(1, Usuario.getLogin().getEmail());
-                smt.setString(2, Usuario.getLogin().getSenha());
-                smt.setString(3, Usuario.getLogin().getNivel().toString());
+                smt.setString(1, usuario.getLogin().getEmail());
+                smt.setString(2, usuario.getLogin().getSenha());
+                smt.setString(3, usuario.getLogin().getNivel().toString());
                 smt.setString(4, "Ativo");
                 smt.setInt(5, rs.getInt(1));
 
@@ -165,7 +165,7 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public boolean alterar(Usuario Usuario) {
+    public boolean alterar(Usuario usuario) {
 
         String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
                 + " tel_residencial = ?"
@@ -182,30 +182,30 @@ public class UsuarioDAO {
 
             smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
 
-            smt.setString(1, Usuario.getLogin().getEmail());
-            smt.setInt(2, Usuario.getId_usuario());
+            smt.setString(1, usuario.getLogin().getEmail());
+            smt.setInt(2, usuario.getId_usuario());
 
             smt.executeUpdate();
 
             smt = connection.prepareStatement(UPDATE_DADOS);
 
-            smt.setString(1, Usuario.getNome());
-            smt.setString(2, Usuario.getTel_celular());
-            smt.setString(3, Usuario.getTel_residencial());
-            smt.setInt(4, Usuario.getId_usuario());
+            smt.setString(1, usuario.getNome());
+            smt.setString(2, usuario.getTel_celular());
+            smt.setString(3, usuario.getTel_residencial());
+            smt.setInt(4, usuario.getId_usuario());
 
             smt.executeUpdate();
 
             smt = connection.prepareStatement(UPDATE_ENDERECO);
 
-            smt.setString(1, Usuario.getEndereco().getLogradouro());
-            smt.setString(2, Usuario.getEndereco().getComplemento());
-            smt.setInt(3, Usuario.getEndereco().getNumero());
-            smt.setString(4, Usuario.getEndereco().getCidade());
-            smt.setString(5, Usuario.getEndereco().getCep());
-            smt.setString(6, Usuario.getEndereco().getBairro());
-            smt.setString(7, Usuario.getEndereco().getEstado());
-            smt.setInt(8, Usuario.getEndereco().getId_endereco());
+            smt.setString(1, usuario.getEndereco().getLogradouro());
+            smt.setString(2, usuario.getEndereco().getComplemento());
+            smt.setInt(3, usuario.getEndereco().getNumero());
+            smt.setString(4, usuario.getEndereco().getCidade());
+            smt.setString(5, usuario.getEndereco().getCep());
+            smt.setString(6, usuario.getEndereco().getBairro());
+            smt.setString(7, usuario.getEndereco().getEstado());
+            smt.setInt(8, usuario.getEndereco().getId_endereco());
 
             rowUpdate = smt.executeUpdate() > 0;
             
