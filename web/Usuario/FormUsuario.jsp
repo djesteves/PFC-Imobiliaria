@@ -14,11 +14,11 @@
 
     <c:if test="${usuario != null}">
 
-        <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" name="form_cadastro">
+        <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" name="form_cadastro" class="formulario" id="formulario">
             <input type="hidden" name="id" value="<c:out value='${usuario.id_usuario}' />" />
             <input type="hidden" name="ide" value="<c:out value='${usuario.endereco.id_endereco}' />" />
         </c:if>
-        <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" name="form_cadastro">
+        <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" name="form_cadastro" class="formulario" id="formulario">
             <div class="form-row">
                 <c:if test="${usuario == null}">
                     <div class="form-group col-md-6">
@@ -26,6 +26,7 @@
                     <c:if test="${usuario != null}">
                         <div class="form-group col-md-12">
                         </c:if>
+                        <input type="hidden" value="<%=request.getParameter("modo")%>" class="form-control" name="modo" id="modo" required/>
                         <label for="mail">E-mail:</label>
                         <input type="email" value="<c:out value='${usuario.login.email}' />" class="form-control" name="mail" id="mail" required/>
                     </div>
@@ -135,6 +136,7 @@
 
                 <div class="button">
                     <button type="submit" class="btn btn-primary">Confirmar</button>
+                    <button type="button" onclick="window.history.back();" class="btn btn-danger">Voltar</button>
                 </div>
         </form>
 </div>	

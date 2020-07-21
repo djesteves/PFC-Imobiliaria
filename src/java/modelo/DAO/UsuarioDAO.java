@@ -20,11 +20,12 @@ public class UsuarioDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Usuario usuario) {
+    public boolean cadastrar(Usuario usuario, String modo) {
 
         String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
         String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
         String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
+        String INSERTFUNCIONARIO = "INSERT INTO Funcionario VALUES (DEFAULT,?)";
 
         String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
                 + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
@@ -80,6 +81,13 @@ public class UsuarioDAO {
                 smt.setInt(5, rs.getInt(1));
 
                 smt.execute();
+
+                //Funcionario
+                if (modo.equalsIgnoreCase("funcionario")) {
+                    smt = connection.prepareStatement(INSERTFUNCIONARIO);
+                    smt.setInt(1, rs.getInt(1));
+                    smt.execute();
+                }
 
                 smt.close();
                 rs.close();
@@ -208,7 +216,7 @@ public class UsuarioDAO {
             smt.setInt(8, usuario.getEndereco().getId_endereco());
 
             rowUpdate = smt.executeUpdate() > 0;
-            
+
             connection.close();
         } catch (SQLException ex) {
             System.err.println("Erro:" + ex);

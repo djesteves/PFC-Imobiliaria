@@ -23,7 +23,7 @@ public class UsuarioCadastrar implements Command {
             String cep = request.getParameter("cep");
             String bairro = request.getParameter("bairro");
 
-            //Cliente
+            //Usuario
             String name = request.getParameter("name");
             String tppessoa = request.getParameter("tipo_pessoa");
             String cpfcnpj = request.getParameter("cpfcnpj");
@@ -45,7 +45,7 @@ public class UsuarioCadastrar implements Command {
             usuario.getEndereco().setCep(cep);
             usuario.getEndereco().setBairro(bairro);
 
-            //Cliente
+            //Usuario
             usuario.setNome(name);
             usuario.setCpfcnpj(cpfcnpj);
             usuario.setRg(rg);
@@ -56,11 +56,18 @@ public class UsuarioCadastrar implements Command {
             //Login
             usuario.getLogin().setEmail(mail);
             usuario.getLogin().setSenha(senha);
-            usuario.getLogin().setNivel(Perfil.USUARIO);
+            
+            //Funcionario
+            String modo = request.getParameter("modo");  
+            if (modo.equalsIgnoreCase("funcionario")) {
+                usuario.getLogin().setNivel(Perfil.FUNCIONARIO);
+            }else {
+                usuario.getLogin().setNivel(Perfil.USUARIO);
+            }
 
             UsuarioDAO dao = new UsuarioDAO();
 
-            if (dao.cadastrar(usuario)) {
+            if (dao.cadastrar(usuario, modo)) {
                 request.setAttribute("msg", "Usuário cadastrado com sucesso!");
                 return "index.jsp";
             } else {

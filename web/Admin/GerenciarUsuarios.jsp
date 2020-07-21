@@ -6,6 +6,14 @@
 
     <p class="heading">Usuários Ativos</p>
 
+    <form action="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" method="post">
+        <input type="hidden" value="funcionario" name="modo" id="modo">
+
+        <button type="submit" class="btn btn-primary">
+            Cadastrar Funcionário <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
+        </button>
+    </form>
+
     <table id="usuariostable" class="table table-hover table-striped table-bordered">
 
         <thead class="thead">
@@ -40,50 +48,50 @@
             </c:forEach>
         </tbody>
     </table>
-</div>
 
-<script type="text/javascript">
-    function confirmaDelete(id) {
-        if (confirm('Tem certeza que deseja excluir este Usuário?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/controle/UsuarioDeletar?id=" + id;
+
+    <script type="text/javascript">
+        function confirmaDelete(id) {
+            if (confirm('Tem certeza que deseja excluir este Usuário?')) {
+                window.location.href = "${pageContext.servletContext.contextPath}/controle/UsuarioDeletar?id=" + id;
+            }
         }
-    }
 
-    $(document).ready(function () {
-        $('#usuariostable').dataTable({
-            "ordering": false,
-            "language": {
+        $(document).ready(function () {
+            $('#usuariostable').dataTable({
+                "ordering": false,
+                "language": {
 
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ Resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Pesquisar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                },
-                "select": {
-                    "rows": {
-                        "_": "Selecionado %d linhas",
-                        "0": "Nenhuma linha selecionada",
-                        "1": "Selecionado 1 linha"
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ Resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "select": {
+                        "rows": {
+                            "_": "Selecionado %d linhas",
+                            "0": "Nenhuma linha selecionada",
+                            "1": "Selecionado 1 linha"
+                        }
                     }
                 }
-            }
 
+            });
         });
-    });
-</script>
+    </script>
