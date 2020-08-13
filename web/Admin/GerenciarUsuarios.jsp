@@ -9,8 +9,8 @@
     <form action="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" method="post">
         <input type="hidden" value="funcionario" name="modo" id="modo">
 
-        <button type="submit" class="btn btn-success">
-            <i class="fas fa-plus"></i>&nbsp;&nbsp;Cadastrar Funcionário
+        <button type="submit" class="btn btn-primary">
+            Cadastrar Funcionário <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
         </button>
     </form>
 

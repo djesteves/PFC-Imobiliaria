@@ -5,6 +5,7 @@
  */
 package modelo.DAO;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -42,10 +43,12 @@ public class GeradorDeRelatoriosDAO {
 
             // exporta para pdf
             //JasperViewer.viewReport(print);
-            JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");
-            Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
+            JasperExportManager.exportReportToPdfFile(print, "C:/relatorio.pdf");
+            Runtime.getRuntime().exec("cmd /c start C:/relatorio.pdf");
 
+            File file = new File("C:/relatorio.pdf");
             ConnectionFactory.FecharConexao();
+            file.deleteOnExit();
 
         } catch (JRException e) {
             throw new RuntimeException("Erro ao gerar relatório", e);
