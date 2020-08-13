@@ -6,6 +6,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -68,8 +69,9 @@ public class AprovarImovel implements Command {
                 request.setAttribute("msgerro", "Ocorreu um erro ao tentar aprovar o imóvel");
                 return "index.jsp";
             }
-        } catch (NumberFormatException | MessagingException ex) {
+        } catch (SQLException | NumberFormatException | MessagingException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
 

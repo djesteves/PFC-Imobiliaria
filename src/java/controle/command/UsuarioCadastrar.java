@@ -3,11 +3,12 @@ package controle.command;
 import modelo.Usuario;
 import modelo.DAO.UsuarioDAO;
 import controle.Command;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
+import modelo.Login;
 import modelo.Perfil;
-import util.Criptografia;
 
 public class UsuarioCadastrar implements Command {
 
@@ -33,7 +34,7 @@ public class UsuarioCadastrar implements Command {
 
             //Login
             String mail = request.getParameter("mail");
-            String senha = Criptografia.criptografia(request.getParameter("senha"));
+            String senha = Login.criptografia(request.getParameter("senha"));
 
             //Endereço
             Usuario usuario = new Usuario();
@@ -56,12 +57,12 @@ public class UsuarioCadastrar implements Command {
             //Login
             usuario.getLogin().setEmail(mail);
             usuario.getLogin().setSenha(senha);
-            
-            //Funcionario
-            String modo = request.getParameter("modo");  
+
+            //Tipo de Usuario
+            String modo = request.getParameter("modo");
             if (modo.equalsIgnoreCase("funcionario")) {
                 usuario.getLogin().setNivel(Perfil.FUNCIONARIO);
-            }else {
+            } else {
                 usuario.getLogin().setNivel(Perfil.USUARIO);
             }
 
@@ -75,8 +76,9 @@ public class UsuarioCadastrar implements Command {
                 return "index.jsp";
             }
 
-        } catch (NumberFormatException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
 

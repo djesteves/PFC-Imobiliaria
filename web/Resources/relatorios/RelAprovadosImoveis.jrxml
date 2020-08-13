@@ -6,7 +6,7 @@
 	<parameter name="datainicio" class="java.lang.String"/>
 	<parameter name="datafinal" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select  nome, 
+		<![CDATA[select  titulo, 
 			 id_imovel, 
 			 valor, 
 			 to_char( i.data_cadastro, 'DD/MM/YYYY') as data_cadastro
@@ -15,7 +15,7 @@
 	 where status = 'Disponivel'
 	and to_char(i.data_cadastro, 'YYYY-MM-DD') between  $P{datainicio}  and  $P{datafinal}]]>
 	</queryString>
-	<field name="nome" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
 	<field name="id_imovel" class="java.lang.Integer"/>
 	<field name="valor" class="java.math.BigDecimal"/>
 	<field name="data_cadastro" class="java.lang.String"/>
@@ -41,12 +41,12 @@
 			<line>
 				<reportElement x="80" y="0" width="1" height="72" uuid="385eec8b-019b-4532-8825-f726d52a38c0"/>
 			</line>
-			<textField pattern="d-M-yyyy" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement x="385" y="50" width="69" height="15" uuid="0ded205d-e16c-4302-9dca-0ff37746f292"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{datainicio}]]></textFieldExpression>
 			</textField>
-			<textField pattern="d-M-yyyy" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement x="469" y="50" width="73" height="15" uuid="2a142cc1-77fd-4fef-911d-305fd6410fcf"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{datafinal}]]></textFieldExpression>
@@ -102,7 +102,7 @@
 				<reportElement x="2" y="0" width="256" height="15" uuid="7893ea7e-0849-40ef-8250-8e9f9395b09a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="715e6773-20cd-4b4b-bd38-c285ed6f0e3e"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="258" y="0" width="102" height="15" uuid="df5c1b43-30f8-4894-9be8-e5119b8b45f8">

@@ -10,17 +10,16 @@ import modelo.DAO.UsuarioDAO;
 import controle.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Login;
 import modelo.Sessao;
-import util.Criptografia;
 
 public class Logar implements Command {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-
         try {
             String email = request.getParameter("loginmail");
-            String senha = Criptografia.criptografia(request.getParameter("loginsenha"));
+            String senha = Login.criptografia(request.getParameter("loginsenha"));
 
             Usuario usuario = new Usuario();
             usuario.getLogin().setEmail(email);
@@ -39,6 +38,7 @@ public class Logar implements Command {
             }
         } catch (Exception ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

@@ -7,8 +7,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="../header.jsp" />
 
-<div class="container portfolio-block">
-    <div class="heading">
+<div class="container">
+    <div class="text-center">
         <c:if test="${imovel != null}">
             <p>Editar Imóvel</p>
         </c:if>
@@ -66,7 +66,6 @@
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Valor do Imóvel:</label>
                     <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="${imovel.valor}" maxlength="15" />
-           
                 </div>
 
                 <div class="form-group col-md-4">

@@ -20,7 +20,7 @@ public class UsuarioDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Usuario usuario, String modo) {
+    public boolean cadastrar(Usuario usuario, String modo) throws SQLException {
 
         String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
         String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
@@ -30,79 +30,76 @@ public class UsuarioDAO {
         String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
                 + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(SELECT_VERIFICACAO);
+        smt = connection.prepareStatement(SELECT_VERIFICACAO);
+        smt.setString(1, usuario.getLogin().getEmail());
+        smt.setString(2, usuario.getCpfcnpj());
+        rs = smt.executeQuery();
+
+        if (rs.next()) {
+            return false;
+        } else {
+            //Endereço
+            smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
+
+            smt.setString(1, usuario.getEndereco().getLogradouro());
+            smt.setString(2, usuario.getEndereco().getComplemento());
+            smt.setInt(3, usuario.getEndereco().getNumero());
+            smt.setString(4, usuario.getEndereco().getCidade());
+            smt.setString(5, usuario.getEndereco().getCep());
+            smt.setString(6, usuario.getEndereco().getBairro());
+            smt.setString(7, usuario.getEndereco().getEstado());
+            smt.executeUpdate();
+
+            rs = smt.getGeneratedKeys();
+            rs.next();
+            int idEndereco = rs.getInt(1);
+
+            //Usuario
+            smt = connection.prepareStatement(INSERTUSUARIO, Statement.RETURN_GENERATED_KEYS);
+
+            smt.setString(1, usuario.getNome());
+            smt.setTimestamp(2, timestamp);
+            smt.setString(3, usuario.getTel_celular());
+            smt.setString(4, usuario.getTel_residencial());
+            smt.setString(5, usuario.getCpfcnpj());
+            smt.setString(6, usuario.getRg());
+            smt.setString(7, usuario.getTipoPessoa());
+            smt.setInt(8, idEndereco);
+            smt.executeUpdate();
+
+            rs = smt.getGeneratedKeys();
+            rs.next();
+            int idUsuario = rs.getInt(1);
+
+            //Login
+            smt = connection.prepareStatement(INSERTLOGIN);
+
             smt.setString(1, usuario.getLogin().getEmail());
-            smt.setString(2, usuario.getCpfcnpj());
-            rs = smt.executeQuery();
+            smt.setString(2, usuario.getLogin().getSenha());
+            smt.setString(3, usuario.getLogin().getNivel().toString());
+            smt.setString(4, "Ativo");
+            smt.setInt(5, idUsuario);
 
-            if (rs.next()) {
-                return false;
-            } else {
-                //Endereço
-                smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
+            boolean rowInserted = smt.executeUpdate() > 0;
 
-                smt.setString(1, usuario.getEndereco().getLogradouro());
-                smt.setString(2, usuario.getEndereco().getComplemento());
-                smt.setInt(3, usuario.getEndereco().getNumero());
-                smt.setString(4, usuario.getEndereco().getCidade());
-                smt.setString(5, usuario.getEndereco().getCep());
-                smt.setString(6, usuario.getEndereco().getBairro());
-                smt.setString(7, usuario.getEndereco().getEstado());
-                smt.execute();
-
-                rs = smt.getGeneratedKeys();
-                rs.next();
-
-                //Usuario
-                smt = connection.prepareStatement(INSERTUSUARIO, Statement.RETURN_GENERATED_KEYS);
-
-                smt.setString(1, usuario.getNome());
-                smt.setTimestamp(2, timestamp);
-                smt.setString(3, usuario.getTel_celular());
-                smt.setString(4, usuario.getTel_residencial());
-                smt.setString(5, usuario.getCpfcnpj());
-                smt.setString(6, usuario.getRg());
-                smt.setString(7, usuario.getTipoPessoa());
-                smt.setInt(8, rs.getInt(1));
-                smt.execute();
-
-                rs = smt.getGeneratedKeys();
-                rs.next();
-
-                //Login
-                smt = connection.prepareStatement(INSERTLOGIN);
-
-                smt.setString(1, usuario.getLogin().getEmail());
-                smt.setString(2, usuario.getLogin().getSenha());
-                smt.setString(3, usuario.getLogin().getNivel().toString());
-                smt.setString(4, "Ativo");
-                smt.setInt(5, rs.getInt(1));
-
-                smt.execute();
-
-                //Funcionario
-                if (modo.equalsIgnoreCase("funcionario")) {
-                    smt = connection.prepareStatement(INSERTFUNCIONARIO);
-                    smt.setInt(1, rs.getInt(1));
-                    smt.execute();
-                }
-
-                smt.close();
-                rs.close();
-                connection.close();
-
-                return true;
+            //Funcionario
+            if (modo.equalsIgnoreCase("funcionario")) {
+                smt = connection.prepareStatement(INSERTFUNCIONARIO);
+                smt.setInt(1, idUsuario);
+                smt.executeUpdate();
             }
 
-        } catch (SQLException ex) {
-            System.err.println("Erro:" + ex);
-            return false;
+            smt.close();
+            connection.close();
+
+            return rowInserted;
         }
+
     }
 
-    public Sessao logar(Usuario usuario) {
+    public Sessao logar(Usuario usuario) throws SQLException {
 
         String SELECT_LOGIN = "SELECT * FROM Usuario U "
                 + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
@@ -110,24 +107,23 @@ public class UsuarioDAO {
                 + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
 
         Sessao sessao = null;
-        try (Connection connection = ConnectionFactory.getConexao()) {
-            smt = connection.prepareStatement(SELECT_LOGIN);
-            smt.setString(1, usuario.getLogin().getEmail());
-            smt.setString(2, usuario.getLogin().getSenha());
-            ResultSet resultado = smt.executeQuery();
-            if (resultado.next()) {
-                sessao = new Sessao(resultado.getString("email"), resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
-                connection.close();
-                resultado.close();
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erro:" + ex);
+        Connection connection = ConnectionFactory.getConexao();
+        smt = connection.prepareStatement(SELECT_LOGIN);
+        smt.setString(1, usuario.getLogin().getEmail());
+        smt.setString(2, usuario.getLogin().getSenha());
+        ResultSet resultado = smt.executeQuery();
+        if (resultado.next()) {
+            sessao = new Sessao(resultado.getString("email"), resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
+
         }
+
+        smt.close();
+        connection.close();
         return sessao;
 
     }
 
-    public Usuario getUsuario(int id) {
+    public Usuario getUsuario(int id) throws SQLException {
 
         String SELECT_DADOS = "SELECT * FROM Usuario U "
                 + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
@@ -135,45 +131,44 @@ public class UsuarioDAO {
                 + "WHERE U.id_usuario = ?";
 
         Usuario usuario = null;
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(SELECT_DADOS);
-            smt.setInt(1, id);
+        smt = connection.prepareStatement(SELECT_DADOS);
+        smt.setInt(1, id);
 
-            rs = smt.executeQuery();
-            if (rs.next()) {
-                usuario = new Usuario();
-                usuario.setNome(rs.getString("nome"));
-                usuario.setCpfcnpj(rs.getString("cpf_cnpj"));
-                usuario.setDataCadastro(rs.getDate("data_cadastro"));
-                usuario.setId_usuario(rs.getInt("id_usuario"));
-                usuario.setRg(rs.getString("rg"));
-                usuario.setTel_celular(rs.getString("tel_celular"));
-                usuario.setTel_residencial(rs.getString("tel_residencial"));
-                usuario.setTipoPessoa(rs.getString("tipo_pessoa"));
+        rs = smt.executeQuery();
+        if (rs.next()) {
+            usuario = new Usuario();
+            usuario.setNome(rs.getString("nome"));
+            usuario.setCpfcnpj(rs.getString("cpf_cnpj"));
+            usuario.setDataCadastro(rs.getDate("data_cadastro"));
+            usuario.setId_usuario(rs.getInt("id_usuario"));
+            usuario.setRg(rs.getString("rg"));
+            usuario.setTel_celular(rs.getString("tel_celular"));
+            usuario.setTel_residencial(rs.getString("tel_residencial"));
+            usuario.setTipoPessoa(rs.getString("tipo_pessoa"));
 
-                usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
-                usuario.getEndereco().setBairro(rs.getString("bairro"));
-                usuario.getEndereco().setCep(rs.getString("cep"));
-                usuario.getEndereco().setCidade(rs.getString("cidade"));
-                usuario.getEndereco().setComplemento(rs.getString("complemento"));
-                usuario.getEndereco().setEstado(rs.getString("estado"));
-                usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
-                usuario.getEndereco().setLogradouro(rs.getString("logradouro"));
-                usuario.getEndereco().setNumero(rs.getInt("numero"));
+            usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+            usuario.getEndereco().setBairro(rs.getString("bairro"));
+            usuario.getEndereco().setCep(rs.getString("cep"));
+            usuario.getEndereco().setCidade(rs.getString("cidade"));
+            usuario.getEndereco().setComplemento(rs.getString("complemento"));
+            usuario.getEndereco().setEstado(rs.getString("estado"));
+            usuario.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+            usuario.getEndereco().setLogradouro(rs.getString("logradouro"));
+            usuario.getEndereco().setNumero(rs.getInt("numero"));
 
-                usuario.getLogin().setEmail(rs.getString("email"));
+            usuario.getLogin().setEmail(rs.getString("email"));
 
-                connection.close();
-
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erro:" + ex);
         }
+
+        smt.close();
+        rs.close();
+        connection.close();
         return usuario;
     }
 
-    public boolean alterar(Usuario usuario) {
+    public boolean alterar(Usuario usuario) throws SQLException {
 
         String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
                 + " tel_residencial = ?"
@@ -186,60 +181,56 @@ public class UsuarioDAO {
                 + " WHERE id_endereco = ?";
 
         boolean rowUpdate = false;
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
+        smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
 
-            smt.setString(1, usuario.getLogin().getEmail());
-            smt.setInt(2, usuario.getId_usuario());
+        smt.setString(1, usuario.getLogin().getEmail());
+        smt.setInt(2, usuario.getId_usuario());
 
-            smt.executeUpdate();
+        smt.executeUpdate();
 
-            smt = connection.prepareStatement(UPDATE_DADOS);
+        smt = connection.prepareStatement(UPDATE_DADOS);
 
-            smt.setString(1, usuario.getNome());
-            smt.setString(2, usuario.getTel_celular());
-            smt.setString(3, usuario.getTel_residencial());
-            smt.setInt(4, usuario.getId_usuario());
+        smt.setString(1, usuario.getNome());
+        smt.setString(2, usuario.getTel_celular());
+        smt.setString(3, usuario.getTel_residencial());
+        smt.setInt(4, usuario.getId_usuario());
 
-            smt.executeUpdate();
+        smt.executeUpdate();
 
-            smt = connection.prepareStatement(UPDATE_ENDERECO);
+        smt = connection.prepareStatement(UPDATE_ENDERECO);
 
-            smt.setString(1, usuario.getEndereco().getLogradouro());
-            smt.setString(2, usuario.getEndereco().getComplemento());
-            smt.setInt(3, usuario.getEndereco().getNumero());
-            smt.setString(4, usuario.getEndereco().getCidade());
-            smt.setString(5, usuario.getEndereco().getCep());
-            smt.setString(6, usuario.getEndereco().getBairro());
-            smt.setString(7, usuario.getEndereco().getEstado());
-            smt.setInt(8, usuario.getEndereco().getId_endereco());
+        smt.setString(1, usuario.getEndereco().getLogradouro());
+        smt.setString(2, usuario.getEndereco().getComplemento());
+        smt.setInt(3, usuario.getEndereco().getNumero());
+        smt.setString(4, usuario.getEndereco().getCidade());
+        smt.setString(5, usuario.getEndereco().getCep());
+        smt.setString(6, usuario.getEndereco().getBairro());
+        smt.setString(7, usuario.getEndereco().getEstado());
+        smt.setInt(8, usuario.getEndereco().getId_endereco());
 
-            rowUpdate = smt.executeUpdate() > 0;
+        rowUpdate = smt.executeUpdate() > 0;
 
-            connection.close();
-        } catch (SQLException ex) {
-            System.err.println("Erro:" + ex);
-        }
+        smt.close();
+        connection.close();
         return rowUpdate;
     }
 
-    public boolean AlterarSenha(int id, Usuario usuario) {
+    public boolean AlterarSenha(int id, Usuario usuario) throws SQLException {
 
         String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
-        boolean rowUpdate = false;
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
-            smt.setString(1, usuario.getLogin().getSenha());
-            smt.setInt(2, id);
+        smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
+        smt.setString(1, usuario.getLogin().getSenha());
+        smt.setInt(2, id);
 
-            rowUpdate = smt.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.err.println("Erro:" + ex);
-            return false;
-        }
+        boolean rowUpdate = smt.executeUpdate() > 0;
+
+        smt.close();
+        connection.close();
         return rowUpdate;
     }
 }

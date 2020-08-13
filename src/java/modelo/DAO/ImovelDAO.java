@@ -27,57 +27,54 @@ public class ImovelDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Imovel imovel) {
+    public boolean cadastrar(Imovel imovel) throws SQLException {
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            //Endereço
-            String INSERTIMOVEL = "INSERT INTO Imovel VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
+        //Endereço
+        String INSERTIMOVEL = "INSERT INTO Imovel VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
 
-            smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
+        smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
 
-            smt.setString(1, imovel.getEndereco().getLogradouro());
-            smt.setString(2, imovel.getEndereco().getComplemento());
-            smt.setInt(3, imovel.getEndereco().getNumero());
-            smt.setString(4, imovel.getEndereco().getCidade());
-            smt.setString(5, imovel.getEndereco().getCep());
-            smt.setString(6, imovel.getEndereco().getBairro());
-            smt.setString(7, imovel.getEndereco().getEstado());
-            smt.execute();
+        smt.setString(1, imovel.getEndereco().getLogradouro());
+        smt.setString(2, imovel.getEndereco().getComplemento());
+        smt.setInt(3, imovel.getEndereco().getNumero());
+        smt.setString(4, imovel.getEndereco().getCidade());
+        smt.setString(5, imovel.getEndereco().getCep());
+        smt.setString(6, imovel.getEndereco().getBairro());
+        smt.setString(7, imovel.getEndereco().getEstado());
+        smt.execute();
 
-            rs = smt.getGeneratedKeys();
-            rs.next();
+        rs = smt.getGeneratedKeys();
+        rs.next();
+        int idImovel = rs.getInt(1);
 
-            //imovel
-            smt = connection.prepareStatement(INSERTIMOVEL);
-            smt.setString(1, imovel.getTitulo());
-            smt.setString(2, imovel.getDescricao());
-            smt.setString(3, "Em Análise");
-            smt.setDouble(4, imovel.getValor());
-            smt.setDouble(5, imovel.getArea_total());
-            smt.setDouble(6, imovel.getArea_edificada());
-            smt.setInt(7, imovel.getComodos());
-            smt.setInt(8, imovel.getVagas_garagem());
-            smt.setInt(9, imovel.getBanheiros());
-            smt.setTimestamp(10, timestamp);
-            smt.setString(11, imovel.getDiretorioimg());
-            smt.setString(12, imovel.getTipo_imovel());
-            smt.setInt(13, imovel.getUsuario().getId_usuario());
-            smt.setInt(14, rs.getInt(1));
-            smt.execute();
+        //imovel
+        smt = connection.prepareStatement(INSERTIMOVEL);
+        smt.setString(1, imovel.getTitulo());
+        smt.setString(2, imovel.getDescricao());
+        smt.setString(3, "Em Análise");
+        smt.setString(4, "Ativo");
+        smt.setDouble(5, imovel.getValor());
+        smt.setDouble(6, imovel.getArea_total());
+        smt.setDouble(7, imovel.getArea_edificada());
+        smt.setInt(8, imovel.getComodos());
+        smt.setInt(9, imovel.getVagas_garagem());
+        smt.setInt(10, imovel.getBanheiros());
+        smt.setTimestamp(11, timestamp);
+        smt.setString(12, imovel.getDiretorio_imagem());
+        smt.setString(13, imovel.getTipo_imovel());
+        smt.setInt(14, imovel.getUsuario().getId_usuario());
+        smt.setInt(15, idImovel);
+        boolean rowInserted = smt.executeUpdate() > 0;
 
-            smt.close();
-            connection.close();
-            return true;
-
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
-            return false;
-        }
+        smt.close();
+        connection.close();
+        return rowInserted;
     }
 
-    public List<Imovel> listarPorID(int id) {
+    public List<Imovel> listarPorID(int id) throws SQLException {
 
         String CONSULTAIMOVELUSUARIO = "SELECT * FROM Imovel I "
                 + " INNER JOIN Endereco E ON E.id_endereco = I.id_endereco"
@@ -86,49 +83,50 @@ public class ImovelDAO {
 
         List<Imovel> ArrImovel = null;
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(CONSULTAIMOVELUSUARIO);
-            smt.setInt(1, id);
-            rs = smt.executeQuery();
+        smt = connection.prepareStatement(CONSULTAIMOVELUSUARIO);
+        smt.setInt(1, id);
+        rs = smt.executeQuery();
 
-            ArrImovel = new ArrayList<>();
-            while (rs.next()) {
+        ArrImovel = new ArrayList<>();
+        while (rs.next()) {
 
-                //classe generica, esse e o modelo padrao pra pegar tudo;
-                Imovel imovel = new Imovel();
-                imovel.setId_imovel(rs.getInt("id_imovel"));
-                imovel.setComodos(rs.getInt("comodos"));
-                imovel.setBanheiros(rs.getInt("banheiros"));
-                imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setTipo_imovel(rs.getString("tipo_imovel"));
-                imovel.setDescricao(rs.getString("descricao"));
-                imovel.setStatus(rs.getString("status"));
-                imovel.setTitulo(rs.getString("titulo"));
-                imovel.setArea_total(rs.getDouble("area_total"));
-                imovel.setArea_edificada(rs.getDouble("area_edificada"));
-                imovel.setValor(rs.getDouble("valor"));
-                imovel.setDiretorioimg(rs.getString("imagemdir"));
-                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
-                imovel.getEndereco().setBairro(rs.getString("bairro"));
-                imovel.getEndereco().setCep(rs.getString("cep"));
-                imovel.getEndereco().setCidade(rs.getString("cidade"));
-                imovel.getEndereco().setComplemento(rs.getString("complemento"));
-                imovel.getEndereco().setEstado(rs.getString("estado"));
-                imovel.getEndereco().setId_endereco(rs.getInt("id_endereco"));
-                imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
-                imovel.getEndereco().setNumero(rs.getInt("numero"));
+            //classe generica, esse e o modelo padrao pra pegar tudo;
+            Imovel imovel = new Imovel();
+            imovel.setId_imovel(rs.getInt("id_imovel"));
+            imovel.setComodos(rs.getInt("comodos"));
+            imovel.setBanheiros(rs.getInt("banheiros"));
+            imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
+            imovel.setTipo_imovel(rs.getString("tipo_imovel"));
+            imovel.setDescricao(rs.getString("descricao"));
+            imovel.setStatus(rs.getString("status"));
+            imovel.setTitulo(rs.getString("titulo"));
+            imovel.setArea_total(rs.getDouble("area_total"));
+            imovel.setArea_edificada(rs.getDouble("area_edificada"));
+            imovel.setValor(rs.getDouble("valor"));
+            imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
+            imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+            imovel.getEndereco().setBairro(rs.getString("bairro"));
+            imovel.getEndereco().setCep(rs.getString("cep"));
+            imovel.getEndereco().setCidade(rs.getString("cidade"));
+            imovel.getEndereco().setComplemento(rs.getString("complemento"));
+            imovel.getEndereco().setEstado(rs.getString("estado"));
+            imovel.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+            imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
+            imovel.getEndereco().setNumero(rs.getInt("numero"));
 
-                ArrImovel.add(imovel);
-                connection.close();
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
+            ArrImovel.add(imovel);
         }
+
+        rs.close();
+        smt.close();
+        connection.close();
+
         return ArrImovel;
     }
 
-    public Imovel getImovel(int id) {
+    public Imovel getImovel(int id) throws SQLException {
 
         String SELECT_DADOSIMOVEL = "SELECT * FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
@@ -136,48 +134,44 @@ public class ImovelDAO {
                 + "WHERE I.id_imovel = ?";
 
         Imovel imovel = null;
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(SELECT_DADOSIMOVEL);
-            smt.setInt(1, id);
+        smt = connection.prepareStatement(SELECT_DADOSIMOVEL);
+        smt.setInt(1, id);
 
-            rs = smt.executeQuery();
-            if (rs.next()) {
-                imovel = new Imovel();
-                imovel.setArea_edificada(rs.getDouble("area_edificada"));
-                imovel.setArea_total(rs.getDouble("area_total"));
-                imovel.setBanheiros(rs.getInt("banheiros"));
-                imovel.setComodos(rs.getInt("comodos"));
-                imovel.setDescricao(rs.getString("descricao"));
-                imovel.setDiretorioimg(rs.getString("imagemdir"));
-                imovel.setId_imovel(rs.getInt("id_imovel"));
-                imovel.setStatus(rs.getString("status"));
-                imovel.setTipo_imovel(rs.getString("tipo_imovel"));
-                imovel.setTitulo(rs.getString("titulo"));
-                imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setValor(rs.getDouble("valor"));
-
-                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
-
-                imovel.getEndereco().setBairro(rs.getString("bairro"));
-                imovel.getEndereco().setCep(rs.getString("cep"));
-                imovel.getEndereco().setCidade(rs.getString("cidade"));
-                imovel.getEndereco().setComplemento(rs.getString("complemento"));
-                imovel.getEndereco().setEstado(rs.getString("estado"));
-                imovel.getEndereco().setId_endereco(rs.getInt("id_endereco"));
-                imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
-                imovel.getEndereco().setNumero(rs.getInt("numero"));
-
-                connection.close();
-
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
+        rs = smt.executeQuery();
+        if (rs.next()) {
+            imovel = new Imovel();
+            imovel.setArea_edificada(rs.getDouble("area_edificada"));
+            imovel.setArea_total(rs.getDouble("area_total"));
+            imovel.setBanheiros(rs.getInt("banheiros"));
+            imovel.setData_cadastro(rs.getDate("data_cadastro"));
+            imovel.setComodos(rs.getInt("comodos"));
+            imovel.setDescricao(rs.getString("descricao"));
+            imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
+            imovel.setId_imovel(rs.getInt("id_imovel"));
+            imovel.setStatus(rs.getString("status"));
+            imovel.setTipo_imovel(rs.getString("tipo_imovel"));
+            imovel.setTitulo(rs.getString("titulo"));
+            imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
+            imovel.setValor(rs.getDouble("valor"));
+            imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+            imovel.getEndereco().setBairro(rs.getString("bairro"));
+            imovel.getEndereco().setCep(rs.getString("cep"));
+            imovel.getEndereco().setCidade(rs.getString("cidade"));
+            imovel.getEndereco().setComplemento(rs.getString("complemento"));
+            imovel.getEndereco().setEstado(rs.getString("estado"));
+            imovel.getEndereco().setId_endereco(rs.getInt("id_endereco"));
+            imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
+            imovel.getEndereco().setNumero(rs.getInt("numero"));
         }
+        rs.close();
+        smt.close();
+        connection.close();
         return imovel;
     }
 
-    public boolean alterar(Imovel imovel) {
+    public boolean alterar(Imovel imovel) throws SQLException {
 
         String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
                 + " cidade = ?, cep = ?, bairro = ?, estado = ?"
@@ -187,145 +181,130 @@ public class ImovelDAO {
                 + " valor = ?, area_total = ?, area_edificada = ?, comodos = ?, vagas_garagem = ?, banheiros = ?, tipo_imovel = ?"
                 + " WHERE id_imovel = ?";
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_DADOS);
+        smt = connection.prepareStatement(UPDATE_DADOS);
 
-            smt.setString(1, imovel.getTitulo());
-            smt.setString(2, imovel.getDescricao());
-            smt.setDouble(3, imovel.getValor());
-            smt.setDouble(4, imovel.getArea_total());
-            smt.setDouble(5, imovel.getArea_edificada());
-            smt.setInt(6, imovel.getComodos());
-            smt.setInt(7, imovel.getVagas_garagem());
-            smt.setInt(8, imovel.getBanheiros());
-            smt.setString(9, imovel.getTipo_imovel());
-            smt.setInt(10, imovel.getId_imovel());
+        smt.setString(1, imovel.getTitulo());
+        smt.setString(2, imovel.getDescricao());
+        smt.setDouble(3, imovel.getValor());
+        smt.setDouble(4, imovel.getArea_total());
+        smt.setDouble(5, imovel.getArea_edificada());
+        smt.setInt(6, imovel.getComodos());
+        smt.setInt(7, imovel.getVagas_garagem());
+        smt.setInt(8, imovel.getBanheiros());
+        smt.setString(9, imovel.getTipo_imovel());
+        smt.setInt(10, imovel.getId_imovel());
 
-            smt.executeUpdate();
+        smt.executeUpdate();
 
-            smt = connection.prepareStatement(UPDATE_ENDERECO);
+        smt = connection.prepareStatement(UPDATE_ENDERECO);
 
-            smt.setString(1, imovel.getEndereco().getLogradouro());
-            smt.setString(2, imovel.getEndereco().getComplemento());
-            smt.setInt(3, imovel.getEndereco().getNumero());
-            smt.setString(4, imovel.getEndereco().getCidade());
-            smt.setString(5, imovel.getEndereco().getCep());
-            smt.setString(6, imovel.getEndereco().getBairro());
-            smt.setString(7, imovel.getEndereco().getEstado());
-            smt.setInt(8, imovel.getEndereco().getId_endereco());
+        smt.setString(1, imovel.getEndereco().getLogradouro());
+        smt.setString(2, imovel.getEndereco().getComplemento());
+        smt.setInt(3, imovel.getEndereco().getNumero());
+        smt.setString(4, imovel.getEndereco().getCidade());
+        smt.setString(5, imovel.getEndereco().getCep());
+        smt.setString(6, imovel.getEndereco().getBairro());
+        smt.setString(7, imovel.getEndereco().getEstado());
+        smt.setInt(8, imovel.getEndereco().getId_endereco());
 
-            smt.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
-            return false;
-        }
+        boolean rowUpdate = smt.executeUpdate() > 0;
+
+        smt.close();
+        connection.close();
+        return rowUpdate;
     }
 
-    public List<Imovel> imoveisEmAnalise() {
+    public List<Imovel> imoveisEmAnalise() throws SQLException {
 
         String SELECT_APROVARIMOVEIS = "SELECT * FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "WHERE Status = 'Em Análise'";
 
         List<Imovel> listAprovarImovel = null;
-        try (Connection connection = ConnectionFactory.getConexao()) {
-            listAprovarImovel = new ArrayList<>();
-            smt = connection.prepareStatement(SELECT_APROVARIMOVEIS);
-            rs = smt.executeQuery();
-            while (rs.next()) {
-                Imovel imovel = new Imovel();
-                imovel.setId_imovel(rs.getInt("id_imovel"));
-                imovel.setTitulo(rs.getString("titulo"));
-                imovel.setValor(rs.getDouble("valor"));
-                imovel.setStatus(rs.getString("status"));
-                imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+        Connection connection = ConnectionFactory.getConexao();
+        listAprovarImovel = new ArrayList<>();
+        smt = connection.prepareStatement(SELECT_APROVARIMOVEIS);
+        rs = smt.executeQuery();
+        while (rs.next()) {
+            Imovel imovel = new Imovel();
+            imovel.setId_imovel(rs.getInt("id_imovel"));
+            imovel.setTitulo(rs.getString("titulo"));
+            imovel.setValor(rs.getDouble("valor"));
+            imovel.setStatus(rs.getString("status"));
+            imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
 
-                listAprovarImovel.add(imovel);
-            }
-            smt.close();
-            connection.close();
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
+            listAprovarImovel.add(imovel);
         }
+        rs.close();
+        smt.close();
+        connection.close();
         return listAprovarImovel;
     }
 
-    public boolean aprovarImovel(int id) {
+    public boolean aprovarImovel(int id) throws SQLException {
 
         String UPDATE_APROVARIMOVEIS = "UPDATE Imovel I "
                 + "SET Status = 'Disponivel' "
                 + "WHERE id_imovel = ?";
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_APROVARIMOVEIS);
+        smt = connection.prepareStatement(UPDATE_APROVARIMOVEIS);
 
-            smt.setInt(1, id);
-            boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.setInt(1, id);
+        boolean rowUpdate = smt.executeUpdate() > 0;
 
-            smt.close();
-            connection.close();
-
-            return rowUpdate;
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
-            return false;
-        }
+        smt.close();
+        connection.close();
+        return rowUpdate;
     }
 
-    public boolean deletarImovel(int id) {
+    public boolean deletarImovel(int id) throws SQLException {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
                 + "SET Status = 'Inativo' "
                 + "WHERE id_imovel = ?";
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
+        smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
-            smt.setInt(1, id);
-            boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.setInt(1, id);
+        boolean rowUpdate = smt.executeUpdate() > 0;
 
-            smt.close();
-            connection.close();
-            return rowUpdate;
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
-            return false;
-        }
+        smt.close();
+        connection.close();
+        return rowUpdate;
     }
 
-    public boolean reprovarImovel(int id) {
+    public boolean reprovarImovel(int id) throws SQLException {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
                 + "SET Status = 'Reprovado' "
                 + "WHERE id_imovel = ?";
 
-        try (Connection connection = ConnectionFactory.getConexao()) {
+        Connection connection = ConnectionFactory.getConexao();
 
-            smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
+        smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
-            smt.setInt(1, id);
-            boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.setInt(1, id);
+        boolean rowUpdate = smt.executeUpdate() > 0;
 
-            smt.close();
-            connection.close();
-            return rowUpdate;
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
-            return false;
-        }
+        smt.close();
+        connection.close();
+        return rowUpdate;
+
     }
 
     public List<Imovel> listarImoveis(String[] Pesquisa) throws Exception {
-        
+
         String SELECT_IMOVEIS = "SELECT * FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
                 + "WHERE I.status = 'Disponivel'";
-        
+
         if (!"null".equals(Pesquisa[0])) {
             SELECT_IMOVEIS += " AND comodos = " + Pesquisa[0];
         }
@@ -333,7 +312,7 @@ public class ImovelDAO {
         if (!"null".equals(Pesquisa[1])) {
             SELECT_IMOVEIS += " AND valor <= " + Pesquisa[1];
         }
-        
+
         Imovel imovel = null;
         List<Imovel> listImoveis = null;
         try (Connection connection = ConnectionFactory.getConexao()) {
@@ -349,7 +328,7 @@ public class ImovelDAO {
                 imovel.setBanheiros(rs.getInt("banheiros"));
                 imovel.setComodos(rs.getInt("comodos"));
                 imovel.setDescricao(rs.getString("descricao"));
-                imovel.setDiretorioimg(rs.getString("imagemdir"));
+                imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
                 imovel.setId_imovel(rs.getInt("id_imovel"));
                 imovel.setStatus(rs.getString("status"));
                 imovel.setTipo_imovel(rs.getString("tipo_imovel"));
@@ -368,12 +347,12 @@ public class ImovelDAO {
 
                 listImoveis.add(imovel);
 
-                connection.close();
-
             }
-        } catch (SQLException ex) {
-            System.err.println("Erro: " + ex);
+
+            rs.close();
+            smt.close();
+            connection.close();
+            return listImoveis;
         }
-        return listImoveis;
     }
 }

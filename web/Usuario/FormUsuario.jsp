@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../header.jsp" />
 
-<div class="portfolio-block">
-    <div class="heading">
+<div class="container">
+    <div class="text-center">
         <c:if test="${usuario != null}">
             <p>Editar Usuário</p>
         </c:if>
@@ -11,14 +11,13 @@
         </c:if>
     </div>
 
-
     <c:if test="${usuario != null}">
 
-        <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" name="form_cadastro" class="formulario" id="formulario">
+        <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" class="formulario">
             <input type="hidden" name="id" value="<c:out value='${usuario.id_usuario}' />" />
             <input type="hidden" name="ide" value="<c:out value='${usuario.endereco.id_endereco}' />" />
         </c:if>
-        <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" name="form_cadastro" class="formulario" id="formulario">
+        <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" class="formulario">
             <div class="form-row">
                 <c:if test="${usuario == null}">
                     <div class="form-group col-md-6">
@@ -26,7 +25,7 @@
                     <c:if test="${usuario != null}">
                         <div class="form-group col-md-12">
                         </c:if>
-                        <input type="hidden" value="<%=request.getParameter("modo")%>" class="form-control" name="modo" id="modo" required/>
+                        <input type="hidden" value="<%=request.getParameter("modo")%>" class="form-control" name="modo" id="modo"/>
                         <label for="mail">E-mail:</label>
                         <input type="email" value="<c:out value='${usuario.login.email}' />" class="form-control" name="mail" id="mail" required/>
                     </div>
@@ -34,9 +33,6 @@
                         <div class="form-group col-md-6">
                             <label for="senha">Senha:</label>
                             <input type="password" class="form-control" name="senha" id="senha" required/>
-                            <small id="dicasenha" class="form-text text-muted">
-                                Sua senha deve ter entre 8 e 20 caracteres, os quais devem ser letras e números, sem espaços, caracteres especiais ou emojis.
-                            </small>
                         </div>
                     </c:if>
 
@@ -60,7 +56,7 @@
                     </div>
                     <div id="divcpfcnpj" class="form-group col-md-4">
                         <label for="cpf">CPF/CNPJ:</label>
-                        <input type="text" class="form-control" value="<c:out value='${usuario.cpfcnpj}' />" name="cpfcnpj" OnKeyUp="cnpj_cpf(this.name, this.value, 'form_cadastro')" id="cpfcnpj" maxlength="18" required/>
+                        <input type="text" class="form-control" value="<c:out value='${usuario.cpfcnpj}' />" name="cpfcnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='execValidaCpfCnpj(this.value)' id="cpfcnpj" maxlength="18" required/>
                     </div>
                     <div class="form-group col-md-4" >
                         <label for="tel_celular">Telefone celular:</label>
@@ -142,13 +138,14 @@
 </div>	
 
 <script>
-    $(document).ready(function () {
-        $("#tppessoa").val("<c:out value='${usuario.tipoPessoa}' />");
-        $("#estado").val("<c:out value='${usuario.endereco.estado}' />");
-        var a = '<c:out value='${usuario}' />';
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('tppessoa').value = "<c:out value='${usuario.tipoPessoa}' />";
+        document.getElementById('estado').value = "<c:out value='${usuario.endereco.estado}' />";
+
+        let a = "<c:out value='${usuario}' />";
         if (a !== "") {
-            $('#cpfcnpj').prop('readOnly', true);
-            $("#tppessoa").prop("disabled", true);
+            document.getElementById('cpfcnpj').readOnly = true;
+            document.getElementById("tppessoa").disabled = true;
         }
     });
 </script>

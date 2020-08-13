@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02/08/2019, 02:26:51
+    Author     : Diego
+*/
+
+.navbar-gradient {
+    background:linear-gradient(120deg,#7f70f5,#0ea0ff);
+    color:#fff
+}
+
+.formulario {
+    max-width:950px;
+    padding:20px;
+    padding-bottom:60px;
+    padding-top:60px;
+    margin:auto;
+    box-shadow:0 2px 10px rgba(0,0,0,.1)
+}

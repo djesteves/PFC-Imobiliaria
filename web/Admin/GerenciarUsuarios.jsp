@@ -2,15 +2,17 @@
 <jsp:include page="/header.jsp" />
 
 
-<div class="table-responsive container portfolio-block">
+<div class="table-responsive container">
 
-    <p class="heading">Usuários Ativos</p>
+    <div class="text-center">
+        <p>Usuários Ativos</p>
+    </div>
 
     <form action="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" method="post">
         <input type="hidden" value="funcionario" name="modo" id="modo">
 
-        <button type="submit" class="btn btn-primary">
-            Cadastrar Funcionário <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
+        <button type="submit" class="btn btn-success">
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Cadastrar Funcionário
         </button>
     </form>
 
@@ -48,7 +50,6 @@
             </c:forEach>
         </tbody>
     </table>
-
 
     <script type="text/javascript">
         function confirmaDelete(id) {

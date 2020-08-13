@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -31,7 +32,7 @@ import util.EnviaEmail;
 
 /**
  *
- * @author Diieg
+ * @author Diego
  */
 public class ImovelCadastrar implements Command {
 
@@ -49,7 +50,7 @@ public class ImovelCadastrar implements Command {
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //
             InputStream fileContent = filePart.getInputStream();
 
-            imovel.setDiretorioimg(sessao.getId_usuario() + File.separator + fileName);
+            imovel.setDiretorio_imagem(sessao.getId_usuario() + File.separator + fileName);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -156,8 +157,9 @@ public class ImovelCadastrar implements Command {
                 request.setAttribute("msgerro", "Ocorreu um erro ao tentar cadastrar o imóvel, tente novamente");
                 return "index.jsp";
             }
-        } catch (NumberFormatException | IOException | ServletException | MessagingException ex) {
+        } catch (SQLException | NumberFormatException | IOException | ServletException | MessagingException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

@@ -5,14 +5,14 @@
 <jsp:include page="../header.jsp" />
 
 
-<div class="container portfolio-block">
+<div class="container">
 
     <div class="row">
         <c:forEach var="i" items="${listaImovel}">
-            <div class="col-sm-6 col-xl-4 mb-3">
+            <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
 
-                    <img class="card-img-top" src="../Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
+                    <img class="card-img-top" src="../Resources/upload/<c:out value='${i.diretorio_imagem}' />" alt="Imagem de capa do card" height="225" width="210">
                     <div class="card-body">
                         <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
                         <p class="card-text"><c:out value='${i.descricao}' /></p>
@@ -32,7 +32,9 @@
     </div>
 
     <c:if test="${empty listaImovel}">
-        <p class="heading"> <strong> Nenhum Imóvel Cadastrado </strong> </p>
+        <div class="text-center">
+            <p><strong> Nenhum Imóvel Cadastrado </strong> </p>
+        </div>
     </c:if>
 
 </div>

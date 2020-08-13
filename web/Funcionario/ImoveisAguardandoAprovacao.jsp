@@ -3,9 +3,11 @@
 <jsp:include page="/header.jsp" />
 
 
-<div class="table-responsive container portfolio-block">
+<div class="table-responsive container">
 
-    <p class="heading">Aprovar Imóveis</p>
+    <div class="text-center">
+        <p>Aprovar Imóveis</p>
+    </div>
 
     <table id="usuariostable" class="table table-hover table-striped table-bordered">
 
@@ -27,7 +29,7 @@
                         <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/controle/AprovarImovel?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-check"></i></a>
 
                         <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(${imovel.id_imovel})"><i class="fas fa-times"></i></a>
-                        
+
                     </td>
                     <td><c:out value="${imovel.id_imovel}" /></td>
                     <td><c:out value="${imovel.titulo}" /></td>

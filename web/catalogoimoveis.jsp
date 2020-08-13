@@ -7,17 +7,15 @@
 <%@page import="modelo.Imovel"%>
 <jsp:include page="header.jsp" />
 
-<div class="container-fluid portfolio-block">
-    <div class="heading">
-
+<div class="container">
+    <div class="text-center">
         <p>Catálogo de Imóveis</p>
-
     </div>
-    <div class="row">
 
-        <div class="col-md-4 col-lg-3 mb-3" data-aos="fade-down" data-aos-delay="200">
-            <form action="<%=request.getContextPath()%>/controle/ImoveisListar" method="post">
-                <div class="heading">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-down" data-aos-delay="200">
+            <form action="<%=request.getContextPath()%>/controle/ImoveisListar" class="formulario" method="post">
+                <div class="text-center">
                     <p>Filtros de Busca</p>
                 </div>
 
@@ -41,19 +39,17 @@
 
                 <hr>
 
-                <button type="submit" class="btn btn-primary my-1">Pesquisar</button>
-
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary my-1">Pesquisar</button>
+                </div>
             </form>
-
         </div>
-
         <div class="col-md-8 col-lg-9" data-aos="fade-left" data-aos-delay="200">
-
             <div class="row">
                 <c:forEach var="i" items="${listaImoveis}">
                     <div class="col-sm-6 col-xl-4 mb-3 align-items-center">
                         <div class="card">
-                            <img class="card-img-top" src="../Resources/upload/${i.diretorioimg}" alt="Imagem de capa do card" height="225" width="210">
+                            <img class="card-img-top" src="../Resources/upload/<c:out value='${i.diretorio_imagem}' />" alt="Imagem de capa do card" height="225" width="210">
                             <div class="card-body">
                                 <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
                                 <p class="card-text"><c:out value='${i.descricao}' /></p>
@@ -64,15 +60,14 @@
                         </div>
                     </div>
                 </c:forEach>
-
-                <c:if test="${empty listaImoveis}">
-                    <p class="heading"> <strong> Nenhum Imóvel Cadastrado </strong> </p>
-                </c:if>
             </div>
+            <c:if test="${empty listaImoveis}">
+                <div class="text-center">
+                    <p><strong> Nenhum Imóvel Cadastrado </strong></p>
+                </div>
+            </c:if>
         </div>
-
     </div>
-
 </div>
 
 

@@ -1,4 +1,3 @@
-
 package controle.command;
 
 import controle.Command;

@@ -7,7 +7,6 @@ package controle.command;
 
 import controle.Command;
 import java.util.List;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.DAO.ImovelDAO;
@@ -20,7 +19,7 @@ import modelo.Imovel;
 public class ImoveisListar implements Command {
 
     @Override
-    public String executar(HttpServletRequest request, HttpServletResponse response){
+    public String executar(HttpServletRequest request, HttpServletResponse response) {
         try {
             ImovelDAO dao = new ImovelDAO();
 
@@ -34,6 +33,7 @@ public class ImoveisListar implements Command {
             return "catalogoimoveis.jsp";
         } catch (Exception ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

@@ -1,6 +1,6 @@
 <jsp:include page="header.jsp" />
 
-<div class="container portfolio-block">
+<div class="container">
         <h4>Acesso</h4>
         <hr>
         <p>Para acessar está pagina é necessario possuir permissão de acesso!</p>

@@ -6,6 +6,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,14 +21,20 @@ public class UsuarioListar implements Command {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-        
-        AdminDAO AdminDAO = new AdminDAO();
 
-        List<Usuario> listUsuario = AdminDAO.listarUsuarios();
+        try {
+            AdminDAO AdminDAO = new AdminDAO();
 
-        request.setAttribute("listUsuario", listUsuario);
-        return "Admin/GerenciarUsuarios.jsp";
-        
+            List<Usuario> listUsuario = AdminDAO.listarUsuarios();
+
+            request.setAttribute("listUsuario", listUsuario);
+            return "Admin/GerenciarUsuarios.jsp";
+        } catch (SQLException ex) {
+            request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
+            return "index.jsp";
+        }
+
     }
 
 }

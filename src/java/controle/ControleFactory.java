@@ -1,8 +1,6 @@
 package controle;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,10 +19,9 @@ public class ControleFactory extends HttpServlet {
             String url = request.getRequestURI();
 
             url = url.replace(request.getContextPath() + "/controle/", "").replaceAll("/", ".");
-         
+
             //usa Java Reflection para invocar a classe dinamicamente com o nome da URL
             String nomeDaClasse = "controle.command." + url;
-            
 
             Class classeAction = Class.forName(nomeDaClasse);
             Command commandAction = (Command) classeAction.newInstance();
@@ -34,10 +31,8 @@ public class ControleFactory extends HttpServlet {
 
             request.getRequestDispatcher("/" + urlRetorno).forward(request, response);
         } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | ServletException ex) {
-            Logger.getLogger(ControleFactory.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             request.getRequestDispatcher("/index.jsp").forward(request, response);
-
         }
 
     }

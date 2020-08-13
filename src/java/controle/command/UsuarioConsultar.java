@@ -1,6 +1,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,8 +38,9 @@ public class UsuarioConsultar implements Command {
                 request.setAttribute("usuario", usuario);
                 return "Usuario/FormUsuario.jsp";
             }
-        } catch (NumberFormatException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

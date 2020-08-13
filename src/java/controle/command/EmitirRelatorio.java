@@ -12,7 +12,8 @@ import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.DAO.GeradorDeRelatoriosDAO;
+import modelo.DAO.RelatorioDAO;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  *
@@ -27,21 +28,22 @@ public class EmitirRelatorio implements Command {
             String relatorio = request.getParameter("nomerel");
             // acha jrxml dentro da aplicação
             ServletContext contexto = request.getServletContext();
-            String jrxml = contexto.getRealPath("Resources/relatorios/"+relatorio+".jrxml");
+            String jrxml = contexto.getRealPath("Resources/relatorios/" + relatorio + ".jrxml");
             // prepara parâmetros
             Map<String, Object> parametros = new HashMap<>();
-            
-            if("RelAprovadosImoveis".equalsIgnoreCase(relatorio)){
+
+            if ("RelAprovadosImoveis".equalsIgnoreCase(relatorio)) {
                 parametros.put("datainicio", request.getParameter("datainicio"));
                 parametros.put("datafinal", request.getParameter("datafinal"));
             }
-            
+
             // gera relatório
-            GeradorDeRelatoriosDAO gerador = new GeradorDeRelatoriosDAO();
+            RelatorioDAO gerador = new RelatorioDAO();
             gerador.geraPdf(jrxml, parametros);
             return "Admin/Dashboard.jsp";
-        } catch (IOException ex) {
+        } catch (JRException | IOException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
 

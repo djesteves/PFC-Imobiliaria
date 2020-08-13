@@ -10,7 +10,7 @@ public class Usuario {
     private String tel_celular;
     private String tel_residencial;
     private String cpfcnpj;
-       
+
     private String rg;
     private String tipoPessoa;
     private Login login;
@@ -100,10 +100,4 @@ public class Usuario {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
-
-
-    
-    
-
 }

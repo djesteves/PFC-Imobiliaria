@@ -6,6 +6,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,7 +16,7 @@ import modelo.Sessao;
 
 /**
  *
- * @author tr0j4nh4x
+ * @author Diego
  */
 public class ImovelDeletar implements Command {
 
@@ -51,8 +52,9 @@ public class ImovelDeletar implements Command {
                     return "index.jsp";
                 }
             }
-        } catch (NumberFormatException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

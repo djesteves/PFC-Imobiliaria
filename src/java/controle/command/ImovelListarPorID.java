@@ -22,7 +22,6 @@ public class ImovelListarPorID implements Command {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-
         try {
             HttpSession usuarioLogado = request.getSession();
             Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
@@ -36,6 +35,7 @@ public class ImovelListarPorID implements Command {
 
         } catch (Exception ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
     }

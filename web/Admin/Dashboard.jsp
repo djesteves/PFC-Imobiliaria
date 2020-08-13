@@ -6,7 +6,7 @@
 
 <jsp:include page="/header.jsp" />
 
-<div class="container portfolio-block"> 
+<div class="container"> 
     <a class="btn btn-primary" href="<%=request.getContextPath()%>/controle/UsuarioListar"> Gerenciar Usuários </a>
     <br>
     <br>
@@ -19,7 +19,7 @@
             Relatórios
         </button>
         <div class="dropdown-menu">
-            <a class="dropdown-item" data-toggle="modal" data-target="#modalRelAprovadosImoveis">Imóveis Aprovados por Período </a>
+            <a class="dropdown-item" data-toggle="modal" data-target="#modalRelAprovadosImoveis">Imóveis aprovados por período</a>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Imóveis Aprovados por Período</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Imóveis aprovados por período</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -55,3 +55,5 @@
         </div>
     </div>
 </div>
+
+<jsp:include page="/footer.jsp" />                    

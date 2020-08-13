@@ -3,43 +3,29 @@
 <html>
     <head>
         <title>Imobiliária</title>
-        <!-- Meta tags Obrigatórias -->
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel="shortcut icon" href="<%=request.getContextPath()%>/Resources/img/icon_imob.png">
 
-        <!-- Fontes do Site -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
-
-        <!-- Bootstrap -->
-        <link href="<%=request.getContextPath()%>/Resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Data Tables -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
-        <!-- Data AOS -->
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <link href="<%=request.getContextPath()%>/Resources/css/Style.css" rel="stylesheet" type="text/css"/>
-        <!-- Outros CSS -->
-        <link href="<%=request.getContextPath()%>/Resources/fonts/ionicons.min.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+        <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet" type="text/css"/>
 
-
-        <!-- Scripts -->
-        <script charset="UTF-8" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="<%=request.getContextPath()%>/Resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-        <script charset="UTF-8" src="https://kit.fontawesome.com/7982155587.js" crossorigin="anonymous"></script>
-        <script charset="UTF-8" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <!-- Scripts Data Tables -->
-        <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-        <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-        <script charset="UTF-8" src="<%=request.getContextPath()%>/Resources/js/wsviacep.js" type="text/javascript"></script>
-        <script charset="UTF-8" src="<%=request.getContextPath()%>/Resources/js/scriptJS.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/7982155587.js" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <script src="<%=request.getContextPath()%>/Resources/js/wsviacep.js"></script>
+        <script src="<%=request.getContextPath()%>/Resources/js/script.js"></script>
     </head>
     <body>
         <header>
-
             <c:if test="${msg != null}">
                 <script>
                     var mensagem = "${msg}";
@@ -53,21 +39,15 @@
                     mostraDialogo(mensagem, "danger", 3000);
                 </script>
             </c:if> 
-
-
-            <nav class="navbar navbar-dark navbar-expand-lg bg-white portfolio-navbar gradient">
-                <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+            <nav class="navbar navbar-dark navbar-expand-lg bg-white navbar-gradient mb-4">
                 <div class="container">
-
                     <a class="navbar-brand logo" href="<%=request.getContextPath()%>/index.jsp">Imobiliária</a>
-
-
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite" aria-controls="navbarSite" aria-expanded="false" aria-label="Navegação">
                         <span class="navbar-toggler-icon"></span>       
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
                         <ul class="nav navbar-nav ml-auto ">
-                            <li class="nav-item text-center" role="presentation"><a class="nav-link active" href="<%=request.getContextPath()%>/controle/ImoveisListar"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
+                            <li class="nav-item text-center" role="presentation"><a class="nav-link active mr-2" href="<%=request.getContextPath()%>/controle/ImoveisListar"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
 
                             <c:if test="${usuarioLogado == null}">
                                 <li class="nav-item dropdown text-center">
@@ -86,7 +66,7 @@
                                                 <label for="senha">Senha:</label>
                                                 <input type="password" class="form-control" name ="loginsenha" placeholder="Senha" id="loginsenha" required/>
                                             </div>
-
+                                            
                                             <button type="submit" class="btn btn-primary">Entrar</button>
                                         </form>
                                         <div class="dropdown-divider"></div>
@@ -102,7 +82,6 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
-
 
                                         <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioConsultar?id=<c:out value='${usuarioLogado.id_usuario}' />">
                                             <i class="fas fa-user-cog"></i>

@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    public static String status = "Não conectou...";
 
     public ConnectionFactory() {
     }
@@ -23,24 +22,14 @@ public class ConnectionFactory {
 
             connection = DriverManager.getConnection(url, username, password);
 
-            if (connection != null) {
-                status = ("Conectado com sucesso!");
-            } else {
-                status = ("Não foi possivel realizar a conexão");
-            }
-            
             return connection;
         } catch (ClassNotFoundException e) {
-            System.out.println("O driver expecificado nao foi encontrado."+e);
+            System.out.println("O driver expecificado nao foi encontrado." + e);
             return null;
         } catch (SQLException e) {
-            System.out.println("Nao foi possivel conectar ao Banco de Dados."+e);
+            System.out.println("Nao foi possivel conectar ao Banco de Dados." + e);
             return null;
         }
-    }
-
-    public static String statusConection() {
-        return status;
     }
 
     public static boolean FecharConexao() {
@@ -48,14 +37,8 @@ public class ConnectionFactory {
             ConnectionFactory.getConexao().close();
             return true;
         } catch (SQLException e) {
-            System.out.println("Nao foi possivel encerrar a conexao ao Banco de Dados."+e);
+            System.out.println("Nao foi possivel encerrar a conexao ao Banco de Dados." + e);
             return false;
         }
     }
-
-    public static java.sql.Connection ReiniciarConexao() {
-        FecharConexao();
-        return ConnectionFactory.getConexao();
-    }
-
 }

@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.sql.Date;
+
 /**
  *
  * @author Diieg
@@ -15,6 +17,7 @@ public class Imovel {
     private double area_total;
     private double area_edificada;
     private double valor;
+    private Date data_cadastro;
     private int comodos;
     private int banheiros;
     private int vagas_garagem;
@@ -22,61 +25,13 @@ public class Imovel {
     private String descricao;
     private String status;
     private String titulo;
-    private String diretorioimg;
+    private String diretorio_imagem;
     private Endereco endereco;
     private Usuario usuario;
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 
     public Imovel() {
         this.endereco = new Endereco();
         this.usuario = new Usuario();
-    }
-    
-    public String getDiretorioimg() {
-        return diretorioimg;
-    }
-
-    public void setDiretorioimg(String diretorioimg) {
-        this.diretorioimg = diretorioimg;
-    }
-    
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public double getArea_edificada() {
-        return area_edificada;
-    }
-
-    public void setArea_edificada(double area_edificada) {
-        this.area_edificada = area_edificada;
-    }
-
-    public int getBanheiros() {
-        return banheiros;
-    }
-
-    public void setBanheiros(int banheiros) {
-        this.banheiros = banheiros;
     }
 
     public int getId_imovel() {
@@ -95,12 +50,44 @@ public class Imovel {
         this.area_total = area_total;
     }
 
+    public double getArea_edificada() {
+        return area_edificada;
+    }
+
+    public void setArea_edificada(double area_edificada) {
+        this.area_edificada = area_edificada;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public Date getData_cadastro() {
+        return data_cadastro;
+    }
+
+    public void setData_cadastro(Date data_cadastro) {
+        this.data_cadastro = data_cadastro;
+    }
+
     public int getComodos() {
         return comodos;
     }
 
     public void setComodos(int comodos) {
         this.comodos = comodos;
+    }
+
+    public int getBanheiros() {
+        return banheiros;
+    }
+
+    public void setBanheiros(int banheiros) {
+        this.banheiros = banheiros;
     }
 
     public int getVagas_garagem() {
@@ -135,6 +122,22 @@ public class Imovel {
         this.status = status;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDiretorio_imagem() {
+        return diretorio_imagem;
+    }
+
+    public void setDiretorio_imagem(String diretorio_imagem) {
+        this.diretorio_imagem = diretorio_imagem;
+    }
+
     public Endereco getEndereco() {
         return endereco;
     }
@@ -143,7 +146,11 @@ public class Imovel {
         this.endereco = endereco;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-    
-
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

@@ -11,10 +11,15 @@ package modelo;
  */
 public class Funcionario {
 
+    private int id_funcionario;
     private Usuario usuario;
+    
+    public int getId_funcionario() {
+        return id_funcionario;
+    }
 
-    public Funcionario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setId_funcionario(int id_funcionario) {
+        this.id_funcionario = id_funcionario;
     }
 
     public Usuario getUsuario() {

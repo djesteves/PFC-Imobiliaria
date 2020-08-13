@@ -6,6 +6,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -74,8 +75,9 @@ public class ReprovarImovel implements Command {
                 request.setAttribute("msgerro", msg);
                 return "index.jsp";
             }
-        } catch (NumberFormatException | MessagingException ex) {
+        } catch (SQLException | NumberFormatException | MessagingException ex) {
             request.setAttribute("msgerro", ex.getMessage());
+            System.err.println(ex.getMessage());
             return "index.jsp";
         }
 

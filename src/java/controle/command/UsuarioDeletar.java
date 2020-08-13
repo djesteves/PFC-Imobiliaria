@@ -6,6 +6,7 @@
 package controle.command;
 
 import controle.Command;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,11 +42,17 @@ public class UsuarioDeletar implements Command {
         } else {
             AdminDAO dao = new AdminDAO();
 
-            if (dao.excluirUsuario(id)) {
-                request.setAttribute("msg", "Usuário removido com sucesso!");
-                return "index.jsp";
-            } else {
-                request.setAttribute("msgerro", "Não foi possivel a excluir o usuário");
+            try {
+                if (dao.excluirUsuario(id)) {
+                    request.setAttribute("msg", "Usuário removido com sucesso!");
+                    return "index.jsp";
+                } else {
+                    request.setAttribute("msgerro", "Não foi possivel a excluir o usuário");
+                    return "index.jsp";
+                }
+            } catch (SQLException ex) {
+                request.setAttribute("msgerro", ex.getMessage());
+                System.err.println(ex.getMessage());
                 return "index.jsp";
             }
         }
