@@ -42,8 +42,8 @@ public class RelatorioDAO {
         //JasperViewer.viewReport(print);
         
         // exporta para pdf executando na maquina - cliente
-        JasperExportManager.exportReportToPdfFile(print, "C:\\temp\\relatorio.pdf");
-        Runtime.getRuntime().exec("cmd /c start C:\\temp\\relatorio.pdf");
+        JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");
+        Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
 
         ConnectionFactory.FecharConexao();
 

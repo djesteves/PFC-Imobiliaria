@@ -72,7 +72,7 @@ public class ImovelCadastrar implements Command {
             // caso o diretorio nao exista o bloco abaixo cria o mesmo
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                uploadDir.mkdirs();
             }
 
             //converte o array de bytes em file e grava no diretorio
