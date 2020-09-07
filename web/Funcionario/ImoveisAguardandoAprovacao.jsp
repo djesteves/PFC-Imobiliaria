@@ -2,40 +2,38 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jsp:include page="/header.jsp" />
 
-
 <div class="table-responsive container">
 
     <div class="text-center">
         <p>Aprovar Imóveis</p>
     </div>
 
-    <table id="usuariostable" class="table table-hover table-striped table-bordered">
+    <table id="usuariostable" class="table table-sm table-striped table-bordered">
 
-        <thead class="thead">
+        <thead class="thead table-primary">
             <tr>
                 <th scope="col">Ações</th>
                 <th scope="col">ID Imóvel</th>
-                <th scope="col">Titulo</th>
+                <th scope="col">Usr Cadastro</th>
+                <th scope="col">Dt Cadastro</th>
                 <th scope="col">Valor</th>
-                <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach var="imovel" items="${ImoveisEmAnalise}">
                 <tr>
                     <td>
-                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/ImovelConsultar?id=<c:out value='${imovel.id_imovel}' />&idu=<c:out value='${imovel.usuario.id_usuario}' />"><i class="fas fa-eye"></i></a>
+                        <a title="Consultar Imóvel" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/ImovelListarPorID?id=<c:out value='${imovel.id_imovel}' />&idu=<c:out value='${imovel.usuario.id_usuario}' />"><i class="fas fa-eye"></i></a>
 
-                        <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/controle/AprovarImovel?id=<c:out value='${imovel.id_imovel}' />"><i class="fas fa-check"></i></a>
+                        <a title="Aprovar Imóvel" class="btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=<c:out value='${imovel.id_imovel}' />&email=<c:out value='${imovel.usuario.login.email}' />"><i class="fas fa-check"></i></a>
 
                         <a title="Reprovar Imóvel" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(${imovel.id_imovel})"><i class="fas fa-times"></i></a>
 
                     </td>
                     <td><c:out value="${imovel.id_imovel}" /></td>
-                    <td><c:out value="${imovel.titulo}" /></td>
-                    <!--<td>R$<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/></td>-->
-                    <td>R$<c:out value="${imovel.valor}" /></td>
-                    <td><c:out value="${imovel.status}" /></td>
+                    <td><c:out value="${imovel.usuario.nome}" /></td>
+                    <td><c:out value="${imovel.data_cadastro}" /></td>
+                    <td><fmt:formatNumber minFractionDigits="2" type="currency" value="${imovel.valor}"/>
                 </tr>
             </c:forEach>
         </tbody>
@@ -45,7 +43,7 @@
 <script type="text/javascript">
     function confirmaDelete(id) {
         if (confirm('Tem certeza que deseja reprovar este imóvel?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/controle/ReprovarImovel?id=" + id;
+            window.location.href = "${pageContext.servletContext.contextPath}/Controle/ImovelReprovar?id=" + id;
         }
     }
 

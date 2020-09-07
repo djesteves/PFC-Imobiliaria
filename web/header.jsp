@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="cliente" class="modelo.Usuario"/>
+
 <html>
     <head>
         <title>Imobiliária</title>
@@ -47,7 +47,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
                         <ul class="nav navbar-nav ml-auto ">
-                            <li class="nav-item text-center" role="presentation"><a class="nav-link active mr-2" href="<%=request.getContextPath()%>/controle/ImoveisListar"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
+                            <li class="nav-item text-center" role="presentation"><a class="nav-link active mr-2" href="<%=request.getContextPath()%>/Controle/ImovelListarAprovados"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
 
                             <c:if test="${usuarioLogado == null}">
                                 <li class="nav-item dropdown text-center">
@@ -56,7 +56,7 @@
                                         Login
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogin">
-                                        <form class="px-4 py-3" action="<%=request.getContextPath()%>/controle/Logar" method="post">
+                                        <form class="px-4 py-3" action="<%=request.getContextPath()%>/Controle/Logar" method="post">
 
                                             <div class="form-group">
                                                 <label for="mail">E-mail:</label>
@@ -83,12 +83,12 @@
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioConsultar?id=<c:out value='${usuarioLogado.id_usuario}' />">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/UsuarioListarPorID?id=<c:out value='${usuarioLogado.id_usuario}' />">
                                             <i class="fas fa-user-cog"></i>
                                             Gerenciar Conta
                                         </a>
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/ImovelListarPorID">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/ImovelListarPorIDAtivos">
                                             <i class="fas fa-city"></i>
                                             Gerenciar Imóveis
                                         </a>
@@ -107,7 +107,7 @@
 
                                         <hr >
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/Deslogar">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/Deslogar">
                                             <i class="fas fa-sign-out-alt"></i>
                                             Deslogar
                                         </a>

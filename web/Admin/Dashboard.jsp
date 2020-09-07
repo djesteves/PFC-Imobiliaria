@@ -7,10 +7,10 @@
 <jsp:include page="/header.jsp" />
 
 <div class="container"> 
-    <a class="btn btn-primary" href="<%=request.getContextPath()%>/controle/UsuarioListar"> Gerenciar Usuários </a>
+    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Controle/UsuarioListarAtivos"> Gerenciar Usuários </a>
     <br>
     <br>
-    <a class="btn btn-primary" href="<%=request.getContextPath()%>/controle/ImoveisEmAnalise"> Aprovar Imóveis </a>
+    <a class="btn btn-primary" href="<%=request.getContextPath()%>/Controle/ImovelEmAnalise"> Aprovar Imóveis </a>
     <br>
     <br>
 
@@ -33,7 +33,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<%=request.getContextPath()%>/controle/EmitirRelatorio" method="post">
+                    <form action="<%=request.getContextPath()%>/Controle/EmitirRelatorio" method="post">
                         <input type="hidden" id="nomerel" name="nomerel" value="RelAprovadosImoveis">
                         <div class="form-row">
                             <div class="col">

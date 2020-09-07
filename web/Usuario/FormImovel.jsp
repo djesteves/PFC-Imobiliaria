@@ -19,13 +19,13 @@
 
     <c:if test="${imovel != null}">
 
-        <form action="<%=request.getContextPath()%>/controle/ImovelAlterar" method="post" name="form_cadastro" class="formulario" id="formulario">
+        <form action="<%=request.getContextPath()%>/Controle/ImovelAlterar" method="post" name="form_cadastro" class="formulario" id="formulario">
             <input type="hidden" name="id" value="<c:out value='${imovel.id_imovel}' />" />
             <input type="hidden" name="idu" value="<c:out value='${imovel.usuario.id_usuario}' />" />
             <input type="hidden" name="ide" value="<c:out value='${imovel.endereco.id_endereco}' />" />
         </c:if>
         <c:if test="${usuario == null}">
-            <form action="<%=request.getContextPath()%>/controle/ImovelCadastrar" method="post" enctype="multipart/form-data" class="formulario" id="formulario">
+            <form action="<%=request.getContextPath()%>/Controle/ImovelCadastrar" method="post" enctype="multipart/form-data" class="formulario" id="formulario">
             </c:if>
 
 

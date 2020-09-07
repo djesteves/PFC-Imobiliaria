@@ -16,9 +16,9 @@
         </button>
     </form>
 
-    <table id="usuariostable" class="table table-hover table-striped table-bordered">
+    <table id="usuariostable" class="table table-sm table-striped table-bordered">
 
-        <thead class="thead">
+        <thead class="thead table-primary">
             <tr>
                 <th scope="col">Ações</th>
                 <th scope="col">ID Usuario</th>
@@ -35,7 +35,7 @@
                         <td>
                             <a title="Deletar Usuário" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(<c:out value="${usuario.id_usuario}" />)"><i class="fas fa-trash-alt"></i></a>
 
-                            <a title="Editar Usuário" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/controle/UsuarioConsultar?id=<c:out value='${usuario.id_usuario}' />"><i class="fas fa-user-edit"></i></a>
+                            <a title="Editar Usuário" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/UsuarioListarPorID?id=<c:out value='${usuario.id_usuario}' />"><i class="fas fa-user-edit"></i></a>
                         </td>
                     </c:if>
                     <c:if test = "${usuario.login.nivel == 'ADMINISTRADOR'}">
@@ -54,7 +54,7 @@
     <script type="text/javascript">
         function confirmaDelete(id) {
             if (confirm('Tem certeza que deseja excluir este Usuário?')) {
-                window.location.href = "${pageContext.servletContext.contextPath}/controle/UsuarioDeletar?id=" + id;
+                window.location.href = "${pageContext.servletContext.contextPath}/Controle/UsuarioExcluir?id=" + id;
             }
         }
 

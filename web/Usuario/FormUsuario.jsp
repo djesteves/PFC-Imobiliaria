@@ -13,11 +13,11 @@
 
     <c:if test="${usuario != null}">
 
-        <form action="<%=request.getContextPath()%>/controle/UsuarioAlterar" method="post" class="formulario">
+        <form action="<%=request.getContextPath()%>/Controle/UsuarioAlterar" method="post" class="formulario">
             <input type="hidden" name="id" value="<c:out value='${usuario.id_usuario}' />" />
             <input type="hidden" name="ide" value="<c:out value='${usuario.endereco.id_endereco}' />" />
         </c:if>
-        <form action="<%=request.getContextPath()%>/controle/UsuarioCadastrar" method="post" class="formulario">
+        <form action="<%=request.getContextPath()%>/Controle/UsuarioCadastrar" method="post" class="formulario">
             <div class="form-row">
                 <c:if test="${usuario == null}">
                     <div class="form-group col-md-6">

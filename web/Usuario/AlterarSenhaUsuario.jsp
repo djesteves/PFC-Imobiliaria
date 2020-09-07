@@ -7,7 +7,7 @@
     </div>
 
 
-    <form action="<%=request.getContextPath()%>/controle/AlterarSenha" method="post" class="formulario">
+    <form action="<%=request.getContextPath()%>/Controle/AlterarSenha" method="post" class="formulario">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="senha">Senha:</label>

@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="modelo.Imovel"%>
 <jsp:include page="../header.jsp" />
 
 
@@ -22,8 +21,8 @@
                             <p class="card-text"><c:out value='${i.status}' /></p>
                         </div>   
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
-                            <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelConsultar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                            <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/controle/ImovelDeletar?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
+                            <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelListarPorID?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-primary"><i class="far fa-edit"></i></a>
+                            <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelExcluir?id=<c:out value='${i.id_imovel}' />&idu=<c:out value='${i.usuario.id_usuario}' />" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>

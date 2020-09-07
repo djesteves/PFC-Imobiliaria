@@ -2,9 +2,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="pt-BR" />
 
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="modelo.Imovel"%>
 <jsp:include page="header.jsp" />
 
 <div class="container">
@@ -14,7 +11,7 @@
 
     <div class="row">
         <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-down" data-aos-delay="200">
-            <form action="<%=request.getContextPath()%>/controle/ImoveisListar" class="formulario" method="post">
+            <form action="<%=request.getContextPath()%>/Controle/ImovelListarAprovados" class="formulario" method="post">
                 <div class="text-center">
                     <p>Filtros de Busca</p>
                 </div>
