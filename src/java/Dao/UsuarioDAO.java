@@ -115,8 +115,10 @@ public class UsuarioDAO {
         smt.setString(2, usuario.getLogin().getSenha());
         ResultSet resultado = smt.executeQuery();
         if (resultado.next()) {
-            sessao = new Sessao(resultado.getString("email"), resultado.getString("nome"), resultado.getInt("id_usuario"), Perfil.valueOf(resultado.getString("nivel_acesso")));
-
+            sessao = new Sessao(resultado.getString("nome"),
+                    resultado.getInt("id_usuario"),
+                    Perfil.valueOf(resultado.getString("nivel_acesso")),
+                    resultado.getString("email"));
         }
 
         smt.close();

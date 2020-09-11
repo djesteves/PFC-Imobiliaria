@@ -16,22 +16,11 @@ public class Sessao {
     private Perfil nivel;
     private String email;
 
-    public Sessao(){
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public Sessao(String email, String nome, int id_usuario, Perfil nivel) {
-        this.email = email;
+    public Sessao(String nome, int id_usuario, Perfil nivel, String email) {
         this.nome = nome;
         this.id_usuario = id_usuario;
         this.nivel = nivel;
+        this.email = email;
     }
 
     public String getNome() {
@@ -57,5 +46,15 @@ public class Sessao {
     public void setNivel(Perfil nivel) {
         this.nivel = nivel;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+   
 
 }

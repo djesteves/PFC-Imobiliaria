@@ -28,8 +28,6 @@ import Dao.ImovelDAO;
 import Modelo.Imovel;
 import Modelo.Sessao;
 import Util.EnviaEmail;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 /**
  *
@@ -88,7 +86,7 @@ public class ImovelCadastrar implements ICommand {
             imovel.setBanheiros(Integer.parseInt(request.getParameter("banheiro")));
             imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem")));
             
-            imovel.setValor(new BigDecimal(request.getParameter("valorimovel")));
+            imovel.setValor(Double.parseDouble(request.getParameter("valorimovel")));
             imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal")));
             imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada")));
             imovel.setTipo_imovel(request.getParameter("tpimovel"));
@@ -124,9 +122,7 @@ public class ImovelCadastrar implements ICommand {
                 message.setRecipients(Message.RecipientType.TO, toUser);
                 message.setSubject(assunto);// Assunto
                 message.setContent(msgemail, "text/html");
-                /**
-                 * Método para enviar a mensagem criada
-                 */
+      
                 Transport.send(message);
 
                 System.out.println("Email enviado com sucesso !");

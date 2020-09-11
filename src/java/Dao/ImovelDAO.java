@@ -56,7 +56,7 @@ public class ImovelDAO {
         smt.setString(2, imovel.getDescricao());
         smt.setString(3, "Em Análise");
         smt.setString(4, "Ativo");
-        smt.setBigDecimal(5, imovel.getValor());
+        smt.setDouble(5, imovel.getValor());
         smt.setDouble(6, imovel.getArea_total());
         smt.setDouble(7, imovel.getArea_edificada());
         smt.setInt(8, imovel.getComodos());
@@ -104,7 +104,7 @@ public class ImovelDAO {
             imovel.setTitulo(rs.getString("titulo"));
             imovel.setArea_total(rs.getDouble("area_total"));
             imovel.setArea_edificada(rs.getDouble("area_edificada"));
-            imovel.setValor(rs.getBigDecimal("valor"));
+            imovel.setValor(rs.getDouble("valor"));
             imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
@@ -154,7 +154,7 @@ public class ImovelDAO {
             imovel.setTipo_imovel(rs.getString("tipo_imovel"));
             imovel.setTitulo(rs.getString("titulo"));
             imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-            imovel.setValor(rs.getBigDecimal("valor"));
+            imovel.setValor(rs.getDouble("valor"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
             imovel.getEndereco().setCep(rs.getString("cep"));
@@ -187,7 +187,7 @@ public class ImovelDAO {
 
         smt.setString(1, imovel.getTitulo());
         smt.setString(2, imovel.getDescricao());
-        smt.setBigDecimal(3, imovel.getValor());
+        smt.setDouble(3, imovel.getValor());
         smt.setDouble(4, imovel.getArea_total());
         smt.setDouble(5, imovel.getArea_edificada());
         smt.setInt(6, imovel.getComodos());
@@ -234,7 +234,7 @@ public class ImovelDAO {
             Imovel imovel = new Imovel();
             imovel.setId_imovel(rs.getInt("id_imovel"));
             imovel.setData_cadastro(rs.getDate("data_cadastro"));
-            imovel.setValor(rs.getBigDecimal("valor"));
+            imovel.setValor(rs.getDouble("valor"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getUsuario().setNome(rs.getString("nome"));
             imovel.getUsuario().getLogin().setEmail(rs.getString("email"));
@@ -339,7 +339,7 @@ public class ImovelDAO {
                 imovel.setTipo_imovel(rs.getString("tipo_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setValor(rs.getBigDecimal("valor"));
+                imovel.setValor(rs.getDouble("valor"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
                 imovel.getEndereco().setCep(rs.getString("cep"));

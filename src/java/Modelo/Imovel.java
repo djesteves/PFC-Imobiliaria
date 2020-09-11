@@ -5,7 +5,6 @@
  */
 package Modelo;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -17,7 +16,7 @@ public class Imovel {
     private int id_imovel;
     private double area_total;
     private double area_edificada;
-    private BigDecimal valor;
+    private double valor;
     private Date data_cadastro;
     private int comodos;
     private int banheiros;
@@ -60,11 +59,11 @@ public class Imovel {
         this.area_edificada = area_edificada;
     }
 
-    public BigDecimal getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(BigDecimal valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

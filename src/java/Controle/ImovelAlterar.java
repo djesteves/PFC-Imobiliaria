@@ -13,7 +13,6 @@ import Dao.ImovelDAO;
 import Modelo.Imovel;
 import Modelo.Perfil;
 import Modelo.Sessao;
-import java.math.BigDecimal;
 
 /**
  *
@@ -50,7 +49,7 @@ public class ImovelAlterar implements ICommand {
                 imovel.setTipo_imovel(request.getParameter("tpimovel"));
                 imovel.setTitulo(request.getParameter("titulo"));
                 imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem")));
-                imovel.setValor(new BigDecimal(request.getParameter("valorimovel")));
+                imovel.setValor(Double.parseDouble(request.getParameter("valorimovel")));
 
                 imovel.getEndereco().setId_endereco(Integer.parseInt(request.getParameter("ide")));
                 imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
