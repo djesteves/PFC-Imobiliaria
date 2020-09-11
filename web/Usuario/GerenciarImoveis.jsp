@@ -1,8 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
 <jsp:include page="../header.jsp" />
-
 
 <div class="container">
 

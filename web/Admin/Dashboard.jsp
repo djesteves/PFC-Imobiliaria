@@ -32,9 +32,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="<%=request.getContextPath()%>/Controle/EmitirRelatorio" method="post">
-                        <input type="hidden" id="nomerel" name="nomerel" value="RelAprovadosImoveis">
+                <form action="<%=request.getContextPath()%>/Controle/EmitirRelatorio" method="post">
+                    <div class="modal-body">
+
+                        <input type="hidden" id="nomerel" name="nomerel" value="ImoveisAprovados">
                         <div class="form-row">
                             <div class="col">
                                 <label for="datainicio">Data Inicial</label>
@@ -45,12 +46,13 @@
                                 <input type="date" id="datafinal" name="datafinal" required>
                             </div>
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Confirmar</button>
-                    </form>
-                </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

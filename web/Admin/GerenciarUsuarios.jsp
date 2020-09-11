@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="/header.jsp" />
 
-
 <div class="table-responsive container">
 
     <div class="text-center">

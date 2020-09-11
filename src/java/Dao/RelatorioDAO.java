@@ -19,8 +19,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
+
 import Util.ConnectionFactory;
+import net.sf.jasperreports.engine.JasperExportManager;
 
 /**
  *
@@ -39,16 +40,10 @@ public class RelatorioDAO {
         // preenche relatorio
         JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
 
-        //imprimi utilizando a engine do jasperviewer (só em modo dev)
-        //JasperViewer.viewReport(print);
-        //não usar, sempre que fecha o jasperviewer ele invoca o metodo de destroy da servlet
-        
-        // exporta para pdf executando na maquina - cliente
+        // exporta para pdf e executa
         JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");
         Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
 
         conexao.close();
-
     }
-
 }
