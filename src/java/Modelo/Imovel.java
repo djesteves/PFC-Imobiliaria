@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 /**
@@ -16,7 +17,7 @@ public class Imovel {
     private int id_imovel;
     private double area_total;
     private double area_edificada;
-    private double valor;
+    private BigDecimal valor;
     private Date data_cadastro;
     private int comodos;
     private int banheiros;
@@ -25,6 +26,7 @@ public class Imovel {
     private String descricao;
     private String status;
     private String titulo;
+    private String obs;
     private String diretorio_imagem;
     private Endereco endereco;
     private Usuario usuario;
@@ -58,11 +60,11 @@ public class Imovel {
         this.area_edificada = area_edificada;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 
@@ -88,6 +90,14 @@ public class Imovel {
 
     public void setBanheiros(int banheiros) {
         this.banheiros = banheiros;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public int getVagas_garagem() {

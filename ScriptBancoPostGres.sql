@@ -32,9 +32,10 @@ CREATE TABLE Imovel(
 id_imovel SERIAL PRIMARY KEY,
 titulo VARCHAR(255) NOT NULL,
 descricao VARCHAR(255),
+Obs VARCHAR(1000),
 status VARCHAR(255) NOT NULL,
 situacao VARCHAR(255) NOT NULL,
-valor NUMERIC(8,2) NOT NULL,
+valor NUMERIC(16,2) NOT NULL,
 area_total NUMERIC(8,2) NOT NULL,
 area_edificada NUMERIC(8,2) NOT NULL,
 comodos INTEGER NOT NULL,
@@ -60,7 +61,7 @@ CONSTRAINT fk_login_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuar
 
 CREATE TABLE Contrato(
 id_contrato SERIAL PRIMARY KEY,
-valor_fechado NUMERIC(10,8) NOT NULL,
+valor_fechado NUMERIC(16,2) NOT NULL,
 data_contrato DATE,
 id_imovel INTEGER,
 id_usuario INTEGER,

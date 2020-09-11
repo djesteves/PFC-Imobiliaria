@@ -14,8 +14,8 @@
     <c:if test="${usuario != null}">
 
         <form action="<%=request.getContextPath()%>/Controle/UsuarioAlterar" method="post" class="formulario">
-            <input type="hidden" name="id" value="<c:out value='${usuario.id_usuario}' />" />
-            <input type="hidden" name="ide" value="<c:out value='${usuario.endereco.id_endereco}' />" />
+            <input type="hidden" name="id" value="${usuario.id_usuario}" />
+            <input type="hidden" name="ide" value="${usuario.endereco.id_endereco}" />
         </c:if>
         <form action="<%=request.getContextPath()%>/Controle/UsuarioCadastrar" method="post" class="formulario">
             <div class="form-row">
@@ -27,7 +27,7 @@
                         </c:if>
                         <input type="hidden" value="<%=request.getParameter("modo")%>" class="form-control" name="modo" id="modo"/>
                         <label for="mail">E-mail:</label>
-                        <input type="email" value="<c:out value='${usuario.login.email}' />" class="form-control" name="mail" id="mail" required/>
+                        <input type="email" value="${usuario.login.email}" class="form-control" name="mail" id="mail" required/>
                     </div>
                     <c:if test="${usuario == null}">
                         <div class="form-group col-md-6">
@@ -40,12 +40,12 @@
 
                 <div class="form-group">
                     <label for="name">Nome:</label>
-                    <input type="text" class="form-control" name="name" id="name" value="<c:out value='${usuario.nome}' />" maxlength="255" required/>
+                    <input type="text" class="form-control" name="name" id="name" value="${usuario.nome}" maxlength="255" required/>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="rg">RG:</label>
-                        <input type="text" class="form-control" name="rg" id="rg" value="<c:out value='${usuario.rg}' />" required maxlength="20" required/>
+                        <input type="text" class="form-control" name="rg" id="rg" value="${usuario.rg}" required maxlength="20" required/>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="tppessoa">Tipo de Pessoa:</label>
@@ -56,34 +56,34 @@
                     </div>
                     <div id="divcpfcnpj" class="form-group col-md-4">
                         <label for="cpf">CPF/CNPJ:</label>
-                        <input type="text" class="form-control" value="<c:out value='${usuario.cpfcnpj}' />" name="cpfcnpj" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='execValidaCpfCnpj(this.value)' id="cpfcnpj" maxlength="18" required/>
+                        <input type="text" class="form-control" value="${usuario.cpfcnpj}" name="cpfcnpj" onkeypress='mascaraMutuario(this, cpfCnpj)' onblur='execValidaCpfCnpj(this.value)' id="cpfcnpj" maxlength="18" required/>
                     </div>
                     <div class="form-group col-md-4" >
                         <label for="tel_celular">Telefone celular:</label>
-                        <input type="text" class="form-control" name="tel_celular" id="tel_celular" value="<c:out value='${usuario.tel_celular}' />" required/>
+                        <input type="text" class="form-control" name="tel_celular" id="tel_celular" value="${usuario.tel_celular}" required/>
                     </div>
                     <div class="form-group col-md-4" >
                         <label for="contato">Telefone residencial:</label>
-                        <input type="text" class="form-control" name="tel_residencial" id="tel_residencial" value="<c:out value='${usuario.tel_residencial}' />"/>
+                        <input type="text" class="form-control" name="tel_residencial" id="tel_residencial" value="${usuario.tel_residencial}"/>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="logradouro">Logradouro:</label>
-                        <input type="text" class="form-control" name="logradouro" id="logradouro" value="<c:out value='${usuario.endereco.logradouro}' />" placeholder="" required>
+                        <input type="text" class="form-control" name="logradouro" id="logradouro" value="${usuario.endereco.logradouro}" placeholder="" required>
                     </div>
                     <div class="form-group col-md-2">
                         <label for="numero">Número:</label>
-                        <input type="text" class="form-control" name="numero" id="numero" value="<c:out value='${usuario.endereco.numero}' />" placeholder="" required>
+                        <input type="text" class="form-control" name="numero" id="numero" value="${usuario.endereco.numero}" placeholder="" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="complemento">Complemento:</label>
-                        <input type="text" class="form-control" name="complemento" id="complemento" value="<c:out value='${usuario.endereco.complemento}' />" placeholder="">
+                        <input type="text" class="form-control" name="complemento" id="complemento" value="${usuario.endereco.complemento}" placeholder="">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="cidade">Cidade:</label>
-                        <input type="text" class="form-control" name="cidade" id="cidade" value="<c:out value='${usuario.endereco.cidade}' />" required>
+                        <input type="text" class="form-control" name="cidade" id="cidade" value="${usuario.endereco.cidade}" required>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="estado">Estado:</label>
@@ -120,11 +120,11 @@
                     <div class="form-group col-md-2">
                         <label for="cep">CEP:</label>
                         <input type="text" size="10" maxlength="9"
-                               onblur="pesquisacep(this.value);" class="form-control" value="<c:out value='${usuario.endereco.cep}' />" name="cep" id="cep" required>
+                               onblur="pesquisacep(this.value);" class="form-control" value="${usuario.endereco.cep}" name="cep" id="cep" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="bairro">Bairro:</label>
-                        <input type="text" class="form-control" name="bairro" value="<c:out value='${usuario.endereco.bairro}' />" id="bairro" required>
+                        <input type="text" class="form-control" name="bairro" value="${usuario.endereco.bairro}" id="bairro" required>
                     </div>
                 </div>
 

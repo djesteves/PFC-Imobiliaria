@@ -14,7 +14,7 @@ import Modelo.Perfil;
 import Modelo.Sessao;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Funcionario/*", "/Controle/ImovelAprovar", "/Controle/ImovelReprovar" })
+@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Funcionario/*", "/Controle/ImovelAprovar", "/Controle/ImovelEmAnalise" ,"/Controle/ImovelReprovar" })
 public class AcessoFunc implements Filter {
 
     @Override

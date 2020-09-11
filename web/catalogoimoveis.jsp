@@ -46,10 +46,10 @@
                 <c:forEach var="i" items="${listaImoveis}">
                     <div class="col-sm-6 col-xl-4 mb-3 align-items-center">
                         <div class="card">
-                            <img class="card-img-top" src="../Resources/upload/<c:out value='${i.diretorio_imagem}' />" alt="Imagem de capa do card" height="225" width="210">
+                            <img class="card-img-top img-fluid" src="../Resources/upload/${i.diretorio_imagem}" alt="Imagem do Imóvel" height="225" width="210">
                             <div class="card-body">
-                                <h2 class="card-title"><c:out value='${i.titulo}' /></h2>
-                                <p class="card-text"><c:out value='${i.descricao}' /></p>
+                                <h2 class="card-title">${i.titulo}</h2>
+                                <p class="card-text">${i.descricao}</p>
                             </div>
                             <div class="card-footer">
                                 <p class="card-text float-right"><fmt:formatNumber value="${i.valor}" minFractionDigits="2" type="currency" /></p>

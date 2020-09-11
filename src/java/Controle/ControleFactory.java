@@ -22,15 +22,12 @@ public class ControleFactory extends HttpServlet {
 
             //usa Java Reflection para invocar a classe dinamicamente com o nome da URL
             String nomeDaClasse = "Controle." + url;
-            
-            
 
             Class classeAction = Class.forName(nomeDaClasse);
             ICommand commandAction = (ICommand) classeAction.newInstance();
 
             //Executa o comando e redireciona a resposta
             String urlRetorno = commandAction.executar(request, response);
-            System.err.println(urlRetorno);
 
             request.getRequestDispatcher("/" + urlRetorno).forward(request, response);
         } catch (IOException | ClassNotFoundException | IllegalAccessException | InstantiationException | ServletException ex) {

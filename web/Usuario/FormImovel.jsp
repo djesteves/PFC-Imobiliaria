@@ -42,30 +42,30 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="comodos">Quantidade de Comodos:</label>
-                    <input type="text" class="form-control" name="comodos" id="comodos"   value="<c:out value='${imovel.comodos}' />" maxlength="2" required />
+                    <input type="text" class="form-control" name="comodos" id="comodos"   value="${imovel.comodos}" maxlength="2" required />
                 </div>
                 <div class="form-group col-md-4">
                     <label for="banheiro">Quantidade de Banheiros/Suítes:</label>
-                    <input type="text" class="form-control" name="banheiro" id="banheiro"  value="<c:out value='${imovel.banheiros}' />" maxlength="2" required/>
+                    <input type="text" class="form-control" name="banheiro" id="banheiro"  value="${imovel.banheiros}" maxlength="2" required/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="garagem">Quantidade de Vagas na Garagem:</label>
-                    <input type="text" class="form-control" name="garagem" id="garagem"  value="<c:out value='${imovel.vagas_garagem}' />" maxlength="2" required/>
+                    <input type="text" class="form-control" name="garagem" id="garagem"  value="${imovel.vagas_garagem}" maxlength="2" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areatotal">Área Total:</label>
-                    <input type="text" class="form-control" name="areatotal" id="areatotal"   value="<c:out value='${imovel.area_total}' />" maxlength="5" required/>
+                    <input type="text" class="form-control" name="areatotal" id="areatotal" value="<fmt:formatNumber minFractionDigits="2" value="${imovel.area_total}"/>" maxlength="5" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Área Edificada:</label>
-                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<c:out value='${imovel.area_edificada}' />"  maxlength="5" required/>
+                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<fmt:formatNumber minFractionDigits="2" value="${imovel.area_edificada}"/>"  maxlength="5" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Valor do Imóvel:</label>
-                    <input type="text" class="form-control" name="valorimovel" id="valorimovel"  value="${imovel.valor}" maxlength="15" required/>
+                    <input type="text" class="form-control" name="valorimovel" id="valorimovel" value="<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/>" maxlength="15" required/>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -84,19 +84,19 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="logradouro">Logradouro:</label>
-                    <input type="text" class="form-control" name="logradouro" id="logradouro" value="<c:out value='${imovel.endereco.logradouro}' />" placeholder="" required>
+                    <input type="text" class="form-control" name="logradouro" id="logradouro" value="${imovel.endereco.logradouro}" placeholder="" required>
                 </div>
                 <div class="form-group col-md-2">
                     <label for="numero">Número:</label>
-                    <input type="text" class="form-control" name="numero" id="numero" value="<c:out value='${imovel.endereco.numero}' />" placeholder="" required>
+                    <input type="text" class="form-control" name="numero" id="numero" value="${imovel.endereco.numero}" placeholder="" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="complemento">Complemento:</label>
-                    <input type="text" class="form-control" name="complemento" id="complemento" value="<c:out value='${imovel.endereco.complemento}' />" placeholder="">
+                    <input type="text" class="form-control" name="complemento" id="complemento" value="${imovel.endereco.complemento}" placeholder="">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="cidade">Cidade:</label>
-                    <input type="text" class="form-control" name="cidade" id="cidade" value="<c:out value='${imovel.endereco.cidade}' />" required>
+                    <input type="text" class="form-control" name="cidade" id="cidade" value="${imovel.endereco.cidade}" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="estado">Estado:</label>
@@ -134,11 +134,11 @@
                 <div class="form-group col-md-2">
                     <label for="cep">CEP:</label>
                     <input type="text" size="10" maxlength="9"
-                           onblur="pesquisacep(this.value);" class="form-control" value="<c:out value='${imovel.endereco.cep}' />" name="cep" id="cep" required>
+                           onblur="pesquisacep(this.value);" class="form-control" value="${imovel.endereco.cep}" name="cep" id="cep" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="bairro">Bairro:</label>
-                    <input type="text" class="form-control" name="bairro" value="<c:out value='${imovel.endereco.bairro}' />" id="bairro" required>
+                    <input type="text" class="form-control" name="bairro" value="${imovel.endereco.bairro}" id="bairro" required>
                 </div>
             </div>
             <c:if test="${imovel == null}">

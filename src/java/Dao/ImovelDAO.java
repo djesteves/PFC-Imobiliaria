@@ -56,7 +56,7 @@ public class ImovelDAO {
         smt.setString(2, imovel.getDescricao());
         smt.setString(3, "Em Análise");
         smt.setString(4, "Ativo");
-        smt.setDouble(5, imovel.getValor());
+        smt.setBigDecimal(5, imovel.getValor());
         smt.setDouble(6, imovel.getArea_total());
         smt.setDouble(7, imovel.getArea_edificada());
         smt.setInt(8, imovel.getComodos());
@@ -104,7 +104,7 @@ public class ImovelDAO {
             imovel.setTitulo(rs.getString("titulo"));
             imovel.setArea_total(rs.getDouble("area_total"));
             imovel.setArea_edificada(rs.getDouble("area_edificada"));
-            imovel.setValor(rs.getDouble("valor"));
+            imovel.setValor(rs.getBigDecimal("valor"));
             imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
@@ -154,7 +154,7 @@ public class ImovelDAO {
             imovel.setTipo_imovel(rs.getString("tipo_imovel"));
             imovel.setTitulo(rs.getString("titulo"));
             imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-            imovel.setValor(rs.getDouble("valor"));
+            imovel.setValor(rs.getBigDecimal("valor"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
             imovel.getEndereco().setCep(rs.getString("cep"));
@@ -187,7 +187,7 @@ public class ImovelDAO {
 
         smt.setString(1, imovel.getTitulo());
         smt.setString(2, imovel.getDescricao());
-        smt.setDouble(3, imovel.getValor());
+        smt.setBigDecimal(3, imovel.getValor());
         smt.setDouble(4, imovel.getArea_total());
         smt.setDouble(5, imovel.getArea_edificada());
         smt.setInt(6, imovel.getComodos());
@@ -218,10 +218,12 @@ public class ImovelDAO {
 
     public List<Imovel> emAnalise() throws SQLException {
 
-        String SELECT_APROVARIMOVEIS = "SELECT * FROM Imovel I "
+        String SELECT_APROVARIMOVEIS = "SELECT I.id_imovel, I.data_cadastro,"
+                + " I.valor, U.Nome, U.id_usuario, L.email FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "INNER JOIN Login L ON L.id_usuario = I.id_usuario "
-                + "WHERE Status = 'Em Análise'";
+                + "WHERE Status = 'Em Análise' "
+                + "ORDER BY I.data_cadastro";
 
         List<Imovel> listAprovarImovel = null;
         Connection connection = ConnectionFactory.getConexao();
@@ -232,7 +234,7 @@ public class ImovelDAO {
             Imovel imovel = new Imovel();
             imovel.setId_imovel(rs.getInt("id_imovel"));
             imovel.setData_cadastro(rs.getDate("data_cadastro"));
-            imovel.setValor(rs.getDouble("valor"));
+            imovel.setValor(rs.getBigDecimal("valor"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getUsuario().setNome(rs.getString("nome"));
             imovel.getUsuario().getLogin().setEmail(rs.getString("email"));
@@ -281,17 +283,18 @@ public class ImovelDAO {
         return rowUpdate;
     }
 
-    public boolean reprovar(int id) throws SQLException {
-
+    public boolean reprovar(Imovel imovel) throws SQLException {
+        
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
-                + "SET Status = 'Reprovado' "
+                + "SET Status = 'Reprovado', Obs = ?"
                 + "WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
-        smt.setInt(1, id);
+        smt.setString(1, imovel.getObs());
+        smt.setInt(2, imovel.getId_imovel());
         boolean rowUpdate = smt.executeUpdate() > 0;
 
         smt.close();
@@ -336,7 +339,7 @@ public class ImovelDAO {
                 imovel.setTipo_imovel(rs.getString("tipo_imovel"));
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
-                imovel.setValor(rs.getDouble("valor"));
+                imovel.setValor(rs.getBigDecimal("valor"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
                 imovel.getEndereco().setCep(rs.getString("cep"));

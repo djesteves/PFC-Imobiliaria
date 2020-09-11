@@ -38,9 +38,10 @@ public class RelatorioDAO {
 
         // preenche relatorio
         JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
-        
+
         //imprimi utilizando a engine do jasperviewer (só em modo dev)
         //JasperViewer.viewReport(print);
+        //não usar, sempre que fecha o jasperviewer ele invoca o metodo de destroy da servlet
         
         // exporta para pdf executando na maquina - cliente
         JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");

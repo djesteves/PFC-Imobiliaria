@@ -33,19 +33,19 @@
                 <tr>
                     <c:if test = "${usuario.login.nivel != 'ADMINISTRADOR'}">
                         <td>
-                            <a title="Deletar Usuário" class="btn-sm btn-danger" href="#" onClick="confirmaDelete(<c:out value="${usuario.id_usuario}" />)"><i class="fas fa-trash-alt"></i></a>
+                            <a title="Deletar Usuário" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${usuario.id_usuario})"><i class="fas fa-trash-alt"></i></a>
 
-                            <a title="Editar Usuário" class="btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/UsuarioListarPorID?id=<c:out value='${usuario.id_usuario}' />"><i class="fas fa-user-edit"></i></a>
+                            <a title="Editar Usuário" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/UsuarioListarPorID?id=${usuario.id_usuario}"><i class="fas fa-user-edit"></i></a>
                         </td>
                     </c:if>
                     <c:if test = "${usuario.login.nivel == 'ADMINISTRADOR'}">
                         <td></td>
                     </c:if>
-                    <td><c:out value="${usuario.id_usuario}" /></td>
-                    <td><c:out value="${usuario.nome}" /></td>
-                    <td><c:out value="${usuario.cpfcnpj}" /></td>
-                    <td><c:out value="${usuario.login.nivel}" /></td>
-                    <td><c:out value="${usuario.login.situacao}" /></td>
+                    <td>${usuario.id_usuario}</td>
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.cpfcnpj}</td>
+                    <td>${usuario.login.nivel}</td>
+                    <td>${usuario.login.situacao}</td>
                 </tr>
             </c:forEach>
         </tbody>

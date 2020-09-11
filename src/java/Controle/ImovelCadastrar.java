@@ -28,6 +28,8 @@ import Dao.ImovelDAO;
 import Modelo.Imovel;
 import Modelo.Sessao;
 import Util.EnviaEmail;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -80,45 +82,25 @@ public class ImovelCadastrar implements ICommand {
                 fos.write(bytes);
             }
 
-            //Imovel Requests
-            String titulo = request.getParameter("titulo");
-            String descricao = request.getParameter("descricao");
-            int comodos = Integer.parseInt(request.getParameter("comodos"));
-            int banheiro = Integer.parseInt(request.getParameter("banheiro"));
-            int garagem = Integer.parseInt(request.getParameter("garagem"));
-            Double valor = Double.parseDouble(request.getParameter("valorimovel"));
-            Double areatotal = Double.parseDouble(request.getParameter("areatotal"));
-            Double areaedificada = Double.parseDouble(request.getParameter("areaedificada"));
-            String tpimovel = request.getParameter("tpimovel");
-
-            imovel.setTitulo(titulo);
-            imovel.setDescricao(descricao);
-            imovel.setComodos(comodos);
-            imovel.setBanheiros(banheiro);
-            imovel.setVagas_garagem(garagem);
-            imovel.setValor(valor);
-            imovel.setArea_total(areatotal);
-            imovel.setArea_edificada(areaedificada);
-            imovel.setTipo_imovel(tpimovel);
+            imovel.setTitulo(request.getParameter("titulo"));
+            imovel.setDescricao(request.getParameter("descricao"));
+            imovel.setComodos(Integer.parseInt(request.getParameter("comodos")));
+            imovel.setBanheiros(Integer.parseInt(request.getParameter("banheiro")));
+            imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem")));
+            
+            imovel.setValor(new BigDecimal(request.getParameter("valorimovel")));
+            imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal")));
+            imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada")));
+            imovel.setTipo_imovel(request.getParameter("tpimovel"));
             imovel.getUsuario().setId_usuario(sessao.getId_usuario());
 
-            //Endereço Requests
-            String logradouro = request.getParameter("logradouro");
-            int numero = Integer.parseInt(request.getParameter("numero"));
-            String complemento = request.getParameter("complemento");
-            String cidade = request.getParameter("cidade");
-            String estado = request.getParameter("estado");
-            String cep = request.getParameter("cep");
-            String bairro = request.getParameter("bairro");
-
-            //Endereço Set's
-            imovel.getEndereco().setLogradouro(logradouro);
-            imovel.getEndereco().setNumero(numero);
-            imovel.getEndereco().setComplemento(complemento);
-            imovel.getEndereco().setCidade(cidade);
-            imovel.getEndereco().setEstado(estado);
-            imovel.getEndereco().setCep(cep);
-            imovel.getEndereco().setBairro(bairro);
+            imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
+            imovel.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero")));
+            imovel.getEndereco().setComplemento(request.getParameter("complemento"));
+            imovel.getEndereco().setCidade(request.getParameter("cidade"));
+            imovel.getEndereco().setEstado(request.getParameter("estado"));
+            imovel.getEndereco().setCep(request.getParameter("cep"));
+            imovel.getEndereco().setBairro(request.getParameter("bairro"));
 
             ImovelDAO dao = new ImovelDAO();
 
