@@ -14,7 +14,7 @@
   FROM Imovel I
     JOIN usuario u on u.id_usuario = i.id_usuario
 WHERE status = 'Disponivel'
-     AND i.data_cadastro BETWEEN  $P{datainicio}  AND $P{datafinal}
+     AND i.data_cadastro::timestamp::date BETWEEN  $P{datainicio}  AND $P{datafinal}
 	]]>
 	</queryString>
 	<field name="titulo" class="java.lang.String"/>

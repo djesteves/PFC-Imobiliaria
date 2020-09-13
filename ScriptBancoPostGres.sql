@@ -32,7 +32,6 @@ CREATE TABLE Imovel(
 id_imovel SERIAL PRIMARY KEY,
 titulo VARCHAR(255) NOT NULL,
 descricao VARCHAR(255),
-Obs VARCHAR(1000),
 status VARCHAR(255) NOT NULL,
 situacao VARCHAR(255) NOT NULL,
 valor NUMERIC(16,2) NOT NULL,
@@ -46,6 +45,7 @@ diretorio_imagem VARCHAR(255) NOT NULL,
 tipo_imovel VARCHAR(255) NOT NULL,
 id_usuario INTEGER,
 id_endereco INTEGER,
+obs VARCHAR(1000),
 CONSTRAINT fk_imovel_endereco FOREIGN KEY (id_endereco) REFERENCES Endereco (id_endereco),
 CONSTRAINT fk_imovel_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
 );
