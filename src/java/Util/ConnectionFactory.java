@@ -32,13 +32,4 @@ public class ConnectionFactory {
         }
     }
 
-    public static boolean FecharConexao() {
-        try {
-            ConnectionFactory.getConexao().close();
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Nao foi possivel encerrar a conexao ao Banco de Dados." + e);
-            return false;
-        }
-    }
 }

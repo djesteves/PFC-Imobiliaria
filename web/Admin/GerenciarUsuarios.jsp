@@ -11,7 +11,7 @@
         <input type="hidden" value="funcionario" name="modo" id="modo">
 
         <button type="submit" class="btn btn-success">
-            <i class="fas fa-plus"></i>&nbsp;&nbsp;Cadastrar Funcionário
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Cadastrar usuário
         </button>
     </form>
 
@@ -30,21 +30,21 @@
         <tbody>
             <c:forEach var="usuario" items="${listUsuario}">
                 <tr>
-                    <c:if test = "${usuario.login.nivel != 'ADMINISTRADOR'}">
+                    <c:if test = "${usuario.nivel != 'ADMINISTRADOR'}">
                         <td>
                             <a title="Deletar Usuário" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${usuario.id_usuario})"><i class="fas fa-trash-alt"></i></a>
 
                             <a title="Editar Usuário" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/UsuarioListarPorID?id=${usuario.id_usuario}"><i class="fas fa-user-edit"></i></a>
                         </td>
                     </c:if>
-                    <c:if test = "${usuario.login.nivel == 'ADMINISTRADOR'}">
+                    <c:if test = "${usuario.nivel == 'ADMINISTRADOR'}">
                         <td></td>
                     </c:if>
                     <td>${usuario.id_usuario}</td>
                     <td>${usuario.nome}</td>
                     <td>${usuario.cpfcnpj}</td>
-                    <td>${usuario.login.nivel}</td>
-                    <td>${usuario.login.situacao}</td>
+                    <td>${usuario.nivel}</td>
+                    <td>${usuario.situacao}</td>
                 </tr>
             </c:forEach>
         </tbody>

@@ -7,10 +7,12 @@ package Controle;
  */
 import Modelo.Usuario;
 import Dao.UsuarioDAO;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Login;
-import Modelo.Sessao;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
 
 public class Logar implements ICommand {
 
@@ -18,24 +20,34 @@ public class Logar implements ICommand {
     public String executar(HttpServletRequest request, HttpServletResponse response) {
         try {
             String email = request.getParameter("loginmail");
-            String senha = Login.criptografia(request.getParameter("loginsenha"));
+            String senha = Usuario.criptografia(request.getParameter("loginsenha"));
 
             Usuario usuario = new Usuario();
-            usuario.getLogin().setEmail(email);
-            usuario.getLogin().setSenha(senha);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
 
             UsuarioDAO dao = new UsuarioDAO();
 
-            Sessao sessao = dao.logar(usuario);
+            Boolean logado = dao.logar(usuario);
 
-            if (sessao != null) {
-                request.getSession(true).setAttribute("usuarioLogado", sessao);
+            HttpSession session = request.getSession(true);
+
+            if (logado) {
+                Map<String, Object> usuarioLogado = new HashMap<>();
+                usuarioLogado.put("id", usuario.getId_usuario());
+                usuarioLogado.put("nome", usuario.getNome());
+                usuarioLogado.put("email", usuario.getEmail());
+                usuarioLogado.put("nivel", usuario.getNivel());
+                usuarioLogado.put("situacao", usuario.getSituacao());
+
+                session.setAttribute("usuarioLogado", usuarioLogado);
+
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "Usúario ou senha inválidos");
                 return "index.jsp";
             }
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
             return "index.jsp";

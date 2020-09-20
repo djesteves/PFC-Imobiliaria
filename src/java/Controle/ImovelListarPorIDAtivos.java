@@ -8,10 +8,12 @@ package Controle;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import Dao.ImovelDAO;
 import Modelo.Imovel;
-import Modelo.Sessao;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,21 +23,21 @@ public class ImovelListarPorIDAtivos implements ICommand {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
+
+        Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
+
+        ImovelDAO dao = new ImovelDAO();
+
+        List<Imovel> listaImovel = null;
+
         try {
-            HttpSession usuarioLogado = request.getSession();
-            Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
-
-            ImovelDAO dao = new ImovelDAO();
-
-            List<Imovel> listaImovel = dao.listarPorIDAtivos(sessao.getId_usuario());
-
-            request.setAttribute("listaImovel", listaImovel);
-            return "Usuario/GerenciarImoveis.jsp";
-
-        } catch (Exception ex) {
-            request.setAttribute("msgerro", ex.getMessage());
-            System.err.println(ex.getMessage());
-            return "index.jsp";
+            listaImovel = dao.listarPorIDAtivos((int) session.get("id"));
+        } catch (SQLException ex) {
+            Logger.getLogger(ImovelListarPorIDAtivos.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        request.setAttribute("listaImovel", listaImovel);
+        return "Usuario/GerenciarImoveis.jsp";
+
     }
 }

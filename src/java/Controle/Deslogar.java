@@ -8,7 +8,8 @@ public class Deslogar implements ICommand {
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
 
-        request.getSession().removeAttribute("usuarioLogado");
+        request.getSession().invalidate();
+        //request.getSession().removeAttribute("usuarioLogado");
         request.setAttribute("msg", "Deslogado com sucesso!");
         return "index.jsp";
     }

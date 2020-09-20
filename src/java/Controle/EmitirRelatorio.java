@@ -16,7 +16,6 @@ import Dao.RelatorioDAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JRException;
 
 /**

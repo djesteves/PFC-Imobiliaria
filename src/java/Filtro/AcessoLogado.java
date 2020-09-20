@@ -9,8 +9,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import Modelo.Sessao;
+import java.util.Map;
 import javax.servlet.annotation.WebFilter;
 
 @WebFilter(filterName = "AcessoLogado", urlPatterns = {"/Usuario/GerenciarImoveis.jsp", "/Usuario/FormImovel.jsp", "/Usuario/AlterarSenhaUsuario.jsp" })
@@ -23,10 +22,9 @@ public class AcessoLogado implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpSession usuarioLogado = ((HttpServletRequest) request).getSession();
-        Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
+        Map<String, Object> session = (Map) ((HttpServletRequest) request).getSession().getAttribute("usuarioLogado");
 
-        if (sessao != null) {
+        if (session != null) {
             chain.doFilter(request, response);
         } else {
             ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + "/acessologado.jsp");

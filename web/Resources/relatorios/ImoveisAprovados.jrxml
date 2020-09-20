@@ -10,17 +10,17 @@
 		<![CDATA[SELECT titulo, 
 			  id_imovel, 
 			  valor, 
-			  I.data_cadastro
+			  I.data_validacao
   FROM Imovel I
     JOIN usuario u on u.id_usuario = i.id_usuario
 WHERE status = 'Disponivel'
-     AND i.data_cadastro::timestamp::date BETWEEN  $P{datainicio}  AND $P{datafinal}
+     AND i.data_validacao::timestamp::date BETWEEN  $P{datainicio}  AND $P{datafinal}
 	]]>
 	</queryString>
 	<field name="titulo" class="java.lang.String"/>
 	<field name="id_imovel" class="java.lang.Integer"/>
 	<field name="valor" class="java.math.BigDecimal"/>
-	<field name="data_cadastro" class="java.util.Date"/>
+	<field name="data_validacao" class="java.util.Date"/>
 	<pageHeader>
 		<band height="72" splitType="Stretch">
 			<staticText>
@@ -97,7 +97,7 @@ WHERE status = 'Disponivel'
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Data de Cadastro]]></text>
+				<text><![CDATA[Data de Aprovação]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="258" y="0" width="102" height="20" uuid="2188768a-33cc-43e1-bc4b-a316d253fdfd"/>
@@ -144,7 +144,7 @@ WHERE status = 'Disponivel'
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{data_cadastro}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{data_validacao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

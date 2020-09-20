@@ -1,23 +1,30 @@
 package Modelo;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 
 public class Usuario {
-
     private int id_usuario;
     private Date dataCadastro;
+
+    //login
+    private String email;
+    private String senha;
+    private Perfil nivel;
+    private String situacao;
+
+    //dados pessoais
     private String nome;
     private String tel_celular;
     private String tel_residencial;
     private String cpfcnpj;
-
     private String rg;
     private String tipoPessoa;
-    private Login login;
     private Endereco endereco;
 
     public Usuario() {
-        this.login = new Login();
         this.endereco = new Endereco();
     }
 
@@ -85,19 +92,62 @@ public class Usuario {
         this.tipoPessoa = tipoPessoa;
     }
 
-    public Login getLogin() {
-        return login;
-    }
-
-    public void setLogin(Login login) {
-        this.login = login;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Perfil getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Perfil nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public static String criptografia(String senha) {
+        MessageDigest algoritmo;
+        byte messageDigest[];
+        StringBuilder hexString;
+        try {
+            //algoritmo = MessageDigest.getInstance("SHA-256");// 64 letras
+            algoritmo = MessageDigest.getInstance("MD5");  // 32 letras
+            messageDigest = algoritmo.digest(senha.getBytes("UTF-8"));
+            hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                hexString.append(String.format("%02X", 0xFF & b));
+            }
+            senha = hexString.toString();
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            System.out.println(e.getMessage());
+        }
+        return senha;
     }
 }

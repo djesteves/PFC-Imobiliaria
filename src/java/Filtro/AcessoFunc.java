@@ -1,5 +1,6 @@
 package Filtro;
 
+import Modelo.Perfil;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -9,12 +10,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import Modelo.Perfil;
-import Modelo.Sessao;
+import java.util.Map;
+
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Funcionario/*", "/Controle/ImovelAprovar", "/Controle/ImovelEmAnalise" ,"/Controle/ImovelReprovar" })
+@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Funcionario/*", "/Controle/ImovelAprovar", "/Controle/ImovelEmAnalise", "/Controle/ImovelReprovar"})
 public class AcessoFunc implements Filter {
 
     @Override
@@ -24,10 +24,9 @@ public class AcessoFunc implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpSession usuarioLogado = ((HttpServletRequest) request).getSession();
-        Sessao sessao = (Sessao) usuarioLogado.getAttribute("usuarioLogado");
+        Map<String, Object> session = (Map) ((HttpServletRequest) request).getSession().getAttribute("usuarioLogado");
 
-        if (sessao != null && (sessao.getNivel().equals(Perfil.FUNCIONARIO) || sessao.getNivel().equals(Perfil.ADMINISTRADOR))) {
+        if (session != null && (session.get("nivel").equals(Perfil.FUNCIONARIO) || session.get("nivel").equals(Perfil.ADMINISTRADOR))) {
             chain.doFilter(request, response);
         } else {
             ((HttpServletResponse) response).sendRedirect(((HttpServletRequest) request).getContextPath() + "/acessonegado.jsp");

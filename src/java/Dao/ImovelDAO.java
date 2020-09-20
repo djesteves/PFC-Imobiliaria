@@ -27,7 +27,7 @@ public class ImovelDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Imovel imovel) throws SQLException {
+    public void cadastrar(Imovel imovel) throws SQLException {
 
         Connection connection = ConnectionFactory.getConexao();
 
@@ -67,11 +67,10 @@ public class ImovelDAO {
         smt.setString(13, imovel.getTipo_imovel());
         smt.setInt(14, imovel.getUsuario().getId_usuario());
         smt.setInt(15, idImovel);
-        boolean rowInserted = smt.executeUpdate() > 0;
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowInserted;
     }
 
     public List<Imovel> listarPorIDAtivos(int id) throws SQLException {
@@ -79,7 +78,7 @@ public class ImovelDAO {
         String CONSULTAIMOVELUSUARIO = "SELECT * FROM Imovel I "
                 + " INNER JOIN Endereco E ON E.id_endereco = I.id_endereco"
                 + " INNER JOIN Usuario U ON U.id_usuario = I.id_usuario"
-                + " WHERE I.id_usuario = ? and Situacao <> 'Inativo'";
+                + " WHERE I.id_usuario = ? and i.Situacao <> 'Inativo'";
 
         List<Imovel> ArrImovel = null;
 
@@ -171,7 +170,7 @@ public class ImovelDAO {
         return imovel;
     }
 
-    public boolean alterar(Imovel imovel) throws SQLException {
+    public void alterar(Imovel imovel) throws SQLException {
 
         String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
                 + " cidade = ?, cep = ?, bairro = ?, estado = ?"
@@ -209,19 +208,19 @@ public class ImovelDAO {
         smt.setString(7, imovel.getEndereco().getEstado());
         smt.setInt(8, imovel.getEndereco().getId_endereco());
 
-        boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
+
     }
 
     public List<Imovel> emAnalise() throws SQLException {
 
         String SELECT_APROVARIMOVEIS = "SELECT I.id_imovel, I.data_cadastro,"
-                + " I.valor, U.Nome, U.id_usuario, L.email FROM Imovel I "
+                + " I.valor, U.Nome, U.id_usuario, U.email "
+                + " FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
-                + "INNER JOIN Login L ON L.id_usuario = I.id_usuario "
                 + "WHERE Status = 'Em Análise' "
                 + "ORDER BY I.data_cadastro";
 
@@ -237,7 +236,7 @@ public class ImovelDAO {
             imovel.setValor(rs.getDouble("valor"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getUsuario().setNome(rs.getString("nome"));
-            imovel.getUsuario().getLogin().setEmail(rs.getString("email"));
+            imovel.getUsuario().setEmail(rs.getString("email"));
 
             listAprovarImovel.add(imovel);
         }
@@ -247,25 +246,25 @@ public class ImovelDAO {
         return listAprovarImovel;
     }
 
-    public boolean aprovar(int id) throws SQLException {
+    public void aprovar(int id) throws SQLException {
 
         String UPDATE_APROVARIMOVEIS = "UPDATE Imovel I "
-                + "SET Status = 'Disponivel' "
+                + "SET Status = 'Disponivel', data_validacao = ?"
                 + "WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_APROVARIMOVEIS);
 
-        smt.setInt(1, id);
-        boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.setTimestamp(1, timestamp);
+        smt.setInt(2, id);
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
     }
 
-    public boolean excluir(int id) throws SQLException {
+    public void excluir(int id) throws SQLException {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
                 + "SET Situacao = 'Inativo' "
@@ -276,17 +275,17 @@ public class ImovelDAO {
         smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
         smt.setInt(1, id);
-        boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
+
     }
 
-    public boolean reprovar(Imovel imovel) throws SQLException {
-        
+    public void reprovar(Imovel imovel) throws SQLException {
+
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
-                + "SET Status = 'Reprovado', Obs = ?"
+                + "SET Status = 'Reprovado', Obs = ?, data_validacao = ?"
                 + "WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
@@ -294,12 +293,12 @@ public class ImovelDAO {
         smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
         smt.setString(1, imovel.getObs());
-        smt.setInt(2, imovel.getId_imovel());
-        boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.setTimestamp(2, timestamp);
+        smt.setInt(3, imovel.getId_imovel());
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
 
     }
 

@@ -79,11 +79,12 @@
                                     <a class="btn btn-outline-light dropdown-toggle" href="#" id="navbarDropdownLogado" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="far fa-user"></i>
                                         ${usuarioLogado.nome}
+
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
 
-                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/UsuarioListarPorID?id=<c:out value='${usuarioLogado.id_usuario}' />">
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/UsuarioListarPorID?id=<c:out value='${usuarioLogado.id}' />">
                                             <i class="fas fa-user-cog"></i>
                                             Gerenciar Conta
                                         </a>

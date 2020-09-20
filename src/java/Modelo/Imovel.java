@@ -18,6 +18,7 @@ public class Imovel {
     private double area_edificada;
     private double valor;
     private Date data_cadastro;
+    private Date data_validacao;
     private int comodos;
     private int banheiros;
     private int vagas_garagem;
@@ -73,6 +74,14 @@ public class Imovel {
 
     public void setData_cadastro(Date data_cadastro) {
         this.data_cadastro = data_cadastro;
+    }
+
+    public Date getData_validacao() {
+        return data_validacao;
+    }
+
+    public void setData_validacao(Date data_validacao) {
+        this.data_validacao = data_validacao;
     }
 
     public int getComodos() {

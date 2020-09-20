@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import Modelo.Perfil;
-import Modelo.Sessao;
 
 public class UsuarioDAO {
 
@@ -22,20 +21,17 @@ public class UsuarioDAO {
     PreparedStatement smt;
     ResultSet rs;
 
-    public boolean cadastrar(Usuario usuario, String modo) throws SQLException {
-
-        String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?)";
-        String INSERTLOGIN = "INSERT INTO Login VALUES (?,?,?,?,?)";
+    public Boolean cadastrar(Usuario usuario) throws SQLException {
+        String INSERTUSUARIO = "INSERT INTO Usuario VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?)";
         String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
-        String INSERTFUNCIONARIO = "INSERT INTO Funcionario VALUES (DEFAULT,?)";
 
-        String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Login L LEFT JOIN Usuario U "
-                + "ON U.id_usuario = l.id_usuario WHERE Email = ? OR cpf_cnpj = ?";
+        String SELECT_VERIFICACAO = "SELECT email, cpf_cnpj, rg FROM Usuario "
+                + "WHERE Email = ? OR cpf_cnpj = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(SELECT_VERIFICACAO);
-        smt.setString(1, usuario.getLogin().getEmail());
+        smt.setString(1, usuario.getEmail());
         smt.setString(2, usuario.getCpfcnpj());
         rs = smt.executeQuery();
 
@@ -59,7 +55,7 @@ public class UsuarioDAO {
             int idEndereco = rs.getInt(1);
 
             //Usuario
-            smt = connection.prepareStatement(INSERTUSUARIO, Statement.RETURN_GENERATED_KEYS);
+            smt = connection.prepareStatement(INSERTUSUARIO);
 
             smt.setString(1, usuario.getNome());
             smt.setTimestamp(2, timestamp);
@@ -69,68 +65,52 @@ public class UsuarioDAO {
             smt.setString(6, usuario.getRg());
             smt.setString(7, usuario.getTipoPessoa());
             smt.setInt(8, idEndereco);
+            smt.setString(9, usuario.getEmail());
+            smt.setString(10, usuario.getSenha());
+            smt.setString(11, usuario.getNivel().toString());
+            smt.setString(12, "Ativo");
+
             smt.executeUpdate();
-
-            rs = smt.getGeneratedKeys();
-            rs.next();
-            int idUsuario = rs.getInt(1);
-
-            //Login
-            smt = connection.prepareStatement(INSERTLOGIN);
-
-            smt.setString(1, usuario.getLogin().getEmail());
-            smt.setString(2, usuario.getLogin().getSenha());
-            smt.setString(3, usuario.getLogin().getNivel().toString());
-            smt.setString(4, "Ativo");
-            smt.setInt(5, idUsuario);
-
-            boolean rowInserted = smt.executeUpdate() > 0;
-
-            //Funcionario
-            if (modo.equalsIgnoreCase("funcionario")) {
-                smt = connection.prepareStatement(INSERTFUNCIONARIO);
-                smt.setInt(1, idUsuario);
-                smt.executeUpdate();
-            }
 
             smt.close();
             connection.close();
 
-            return rowInserted;
+            return true;
+
         }
 
     }
 
-    public Sessao logar(Usuario usuario) throws SQLException {
+    public Boolean logar(Usuario usuario) throws SQLException {
 
-        String SELECT_LOGIN = "SELECT * FROM Usuario U "
-                + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
-                + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
-                + "WHERE Email = ? AND Senha = ? AND L.Situacao = 'Ativo'";
+        String SELECT_LOGIN = "SELECT id_usuario, nivel_acesso, email, situacao, nome FROM Usuario "
+                + "WHERE Email = ? AND Senha = ? AND Situacao = 'Ativo'";
 
-        Sessao sessao = null;
+        Boolean logado = false;
         Connection connection = ConnectionFactory.getConexao();
         smt = connection.prepareStatement(SELECT_LOGIN);
-        smt.setString(1, usuario.getLogin().getEmail());
-        smt.setString(2, usuario.getLogin().getSenha());
-        ResultSet resultado = smt.executeQuery();
-        if (resultado.next()) {
-            sessao = new Sessao(resultado.getString("nome"),
-                    resultado.getInt("id_usuario"),
-                    Perfil.valueOf(resultado.getString("nivel_acesso")),
-                    resultado.getString("email"));
+        smt.setString(1, usuario.getEmail());
+        smt.setString(2, usuario.getSenha());
+        rs = smt.executeQuery();
+
+        if (rs.next()) {
+            usuario.setId_usuario(rs.getInt("id_usuario"));
+            usuario.setEmail(rs.getString("email"));
+            usuario.setNivel(Perfil.valueOf(rs.getString("nivel_acesso")));
+            usuario.setSituacao(rs.getString("situacao"));
+            usuario.setNome(rs.getString("nome"));
+            logado = true;
         }
 
         smt.close();
         connection.close();
-        return sessao;
+        return logado;
 
     }
 
     public Usuario listarPorID(int id) throws SQLException {
 
         String SELECT_DADOS = "SELECT * FROM Usuario U "
-                + "LEFT JOIN Login L ON L.id_usuario = U.id_Usuario "
                 + "LEFT JOIN Endereco E ON E.id_endereco = U.id_endereco "
                 + "WHERE U.id_usuario = ?";
 
@@ -162,7 +142,8 @@ public class UsuarioDAO {
             usuario.getEndereco().setLogradouro(rs.getString("logradouro"));
             usuario.getEndereco().setNumero(rs.getInt("numero"));
 
-            usuario.getLogin().setEmail(rs.getString("email"));
+            usuario.setEmail(rs.getString("email"));
+            usuario.setNivel(Perfil.valueOf(rs.getString("nivel_acesso")));
 
         }
 
@@ -172,24 +153,23 @@ public class UsuarioDAO {
         return usuario;
     }
 
-    public boolean alterar(Usuario usuario) throws SQLException {
+    public void alterar(Usuario usuario) throws SQLException {
 
         String UPDATE_DADOS = "UPDATE Usuario SET Nome = ?, tel_celular =?,"
                 + " tel_residencial = ?"
                 + " WHERE id_usuario = ?";
 
-        String UPDATE_USUARIOEMAIL = "UPDATE Login SET email = ? WHERE id_usuario = ?";
+        String UPDATE_USUARIOEMAIL = "UPDATE Usuario SET email = ? WHERE id_usuario = ?";
 
         String UPDATE_ENDERECO = "UPDATE Endereco SET logradouro = ?, complemento = ?,  numero = ?,"
                 + " cidade = ?, cep = ?, bairro = ?, estado = ?"
                 + " WHERE id_endereco = ?";
 
-        boolean rowUpdate = false;
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_USUARIOEMAIL);
 
-        smt.setString(1, usuario.getLogin().getEmail());
+        smt.setString(1, usuario.getEmail());
         smt.setInt(2, usuario.getId_usuario());
 
         smt.executeUpdate();
@@ -214,35 +194,32 @@ public class UsuarioDAO {
         smt.setString(7, usuario.getEndereco().getEstado());
         smt.setInt(8, usuario.getEndereco().getId_endereco());
 
-        rowUpdate = smt.executeUpdate() > 0;
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
+
     }
 
-    public boolean alterarSenha(int id, Usuario usuario) throws SQLException {
+    public void alterarSenha(Usuario usuario) throws SQLException {
 
-        String UPDATE_USUARIOSENHA = "UPDATE Login SET senha = ? WHERE id_usuario = ?";
+        String UPDATE_USUARIOSENHA = "UPDATE Usuario SET senha = ? WHERE id_usuario = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_USUARIOSENHA);
-        smt.setString(1, usuario.getLogin().getSenha());
-        smt.setInt(2, id);
+        smt.setString(1, usuario.getSenha());
+        smt.setInt(2, usuario.getId_usuario());
 
-        boolean rowUpdate = smt.executeUpdate() > 0;
-
+        smt.executeUpdate();
         smt.close();
         connection.close();
-        return rowUpdate;
     }
 
     public List<Usuario> listarAtivos() throws SQLException {
 
-        String SELECT_USUARIOS = "SELECT U.id_usuario, nome, cpf_cnpj, nivel_acesso, l.situacao FROM "
-                + "Login L LEFT JOIN Usuario U ON U.id_usuario = l.id_usuario "
-                + "  WHERE l.situacao = 'Ativo'"
+        String SELECT_USUARIOS = "SELECT id_usuario, nome, cpf_cnpj, nivel_acesso, situacao from Usuario "
+                + "  WHERE situacao = 'Ativo'"
                 + " ORDER BY nivel_acesso";
 
         Connection connection = ConnectionFactory.getConexao();
@@ -255,8 +232,8 @@ public class UsuarioDAO {
             usuario.setId_usuario(resultSet.getInt("id_usuario"));
             usuario.setNome(resultSet.getString("nome"));
             usuario.setCpfcnpj(resultSet.getString("cpf_cnpj"));
-            usuario.getLogin().setNivel(Perfil.valueOf(resultSet.getString("nivel_acesso")));
-            usuario.getLogin().setSituacao(resultSet.getString("situacao"));
+            usuario.setNivel(Perfil.valueOf(resultSet.getString("nivel_acesso")));
+            usuario.setSituacao(resultSet.getString("situacao"));
             listUsuario.add(usuario);
         }
 
@@ -268,8 +245,8 @@ public class UsuarioDAO {
 
     }
 
-    public boolean excluir(int id) throws SQLException {
-        String UPDATE_SITUACAO = "UPDATE Login SET situacao = ?"
+    public void excluir(int id) throws SQLException {
+        String UPDATE_SITUACAO = "UPDATE Usuario SET situacao = ?"
                 + " WHERE id_usuario = ?";
 
         Connection connection = ConnectionFactory.getConexao();
@@ -279,11 +256,9 @@ public class UsuarioDAO {
         smt.setString(1, "Inativo");
         smt.setInt(2, id);
 
-        boolean rowUpdate = smt.executeUpdate() > 0;
+        smt.executeUpdate();
 
         smt.close();
         connection.close();
-        return rowUpdate;
-
     }
 }

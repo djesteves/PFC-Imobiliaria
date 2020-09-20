@@ -19,13 +19,11 @@ cpf_cnpj VARCHAR(20) NOT NULL,
 rg VARCHAR(20),
 tipo_pessoa CHAR NOT NULL,
 id_endereco INTEGER,
+email VARCHAR(255) NOT NULL,
+senha VARCHAR(255) NOT NULL,
+nivel_acesso varchar(20) NOT NULL,
+situacao VARCHAR(50) NOT NULL,
 CONSTRAINT fk_usuario_endereco FOREIGN KEY (id_endereco) REFERENCES ENDERECO(id_endereco)
-);
-
-CREATE TABLE Funcionario(
-id_funcionario SERIAL PRIMARY KEY,
-id_usuario INTEGER,
-CONSTRAINT fk_funcionario_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
 );
 
 CREATE TABLE Imovel(
@@ -46,17 +44,9 @@ tipo_imovel VARCHAR(255) NOT NULL,
 id_usuario INTEGER,
 id_endereco INTEGER,
 obs VARCHAR(1000),
+data_validacao TIMESTAMP NOT NULL,
 CONSTRAINT fk_imovel_endereco FOREIGN KEY (id_endereco) REFERENCES Endereco (id_endereco),
 CONSTRAINT fk_imovel_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
-);
-
-CREATE TABLE Login(
-email VARCHAR(255) NOT NULL,
-senha VARCHAR(255) NOT NULL,
-nivel_acesso varchar(20) NOT NULL,
-situacao VARCHAR(50) NOT NULL,
-id_usuario integer,
-CONSTRAINT fk_login_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
 );
 
 CREATE TABLE Contrato(

@@ -12,23 +12,40 @@
     </div>
 
     <c:if test="${usuario != null}">
-
+        
+   
+    
         <form action="<%=request.getContextPath()%>/Controle/UsuarioAlterar" method="post" class="formulario">
             <input type="hidden" name="id" value="${usuario.id_usuario}" />
             <input type="hidden" name="ide" value="${usuario.endereco.id_endereco}" />
         </c:if>
         <form action="<%=request.getContextPath()%>/Controle/UsuarioCadastrar" method="post" class="formulario">
             <div class="form-row">
+                <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
+                   
+                    <div class="form-group col-md-12">
+                        <label for="nivel">Nivel de Acesso: </label>
+
+                        <select name="nivel" id="nivel" class="form-control col-md-6" required>
+                            <option value="">-- Selecione o Nivel --</option>
+                            <option value="USUARIO">Usuário</option>
+                            <option value="FUNCIONARIO">Funcionário</option>
+                            <option value="ADMINISTRADOR">Administrador</option>
+                        </select>
+                    </div>
+                </c:if>
+
                 <c:if test="${usuario == null}">
                     <div class="form-group col-md-6">
                     </c:if>
                     <c:if test="${usuario != null}">
                         <div class="form-group col-md-12">
                         </c:if>
-                        <input type="hidden" value="<%=request.getParameter("modo")%>" class="form-control" name="modo" id="modo"/>
                         <label for="mail">E-mail:</label>
-                        <input type="email" value="${usuario.login.email}" class="form-control" name="mail" id="mail" required/>
+                        <input type="email" value="${usuario.email}" class="form-control" name="mail" id="mail" required/>
                     </div>
+
+
                     <c:if test="${usuario == null}">
                         <div class="form-group col-md-6">
                             <label for="senha">Senha:</label>
@@ -141,7 +158,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('tppessoa').value = "<c:out value='${usuario.tipoPessoa}' />";
         document.getElementById('estado').value = "<c:out value='${usuario.endereco.estado}' />";
-
+        document.getElementById('nivel').value = "<c:out value='${usuario.nivel}' />";
         let a = "<c:out value='${usuario}' />";
         if (a !== "") {
             document.getElementById('cpfcnpj').readOnly = true;

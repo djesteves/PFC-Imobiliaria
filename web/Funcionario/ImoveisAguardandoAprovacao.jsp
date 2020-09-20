@@ -25,7 +25,7 @@
                     <td>
                         <a title="Consultar Imóvel" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/ImovelListarPorID?id=${imovel.id_imovel}&idu=${imovel.usuario.id_usuario}"><i class="fas fa-eye"></i></a>
 
-                        <a title="Aprovar Imóvel" class="btn btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=${imovel.id_imovel}&email=${imovel.usuario.login.email}"><i class="fas fa-check"></i></a>
+                        <a title="Aprovar Imóvel" class="btn btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=${imovel.id_imovel}&email=${imovel.usuario.email}"><i class="fas fa-check"></i></a>
 
                         <a title="Reprovar Imóvel" class="btn btn-sm btn-danger" href="#" onClick="modalReprovar(${imovel.id_imovel})" data-toggle="modal" data-target="#modalReprovar" ><i class="fas fa-times"></i></a>
 

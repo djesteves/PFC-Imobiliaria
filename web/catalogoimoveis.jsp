@@ -32,6 +32,7 @@
                     <option value="300000">Até R$ 300.000</option>
                     <option value="500000">Até R$ 500.000</option>
                     <option value="1000000">Até R$ 1.000.000</option>
+                    <option value="1000000000000000">Maior que R$ 1.000.000</option>
                 </select>
 
                 <hr>
