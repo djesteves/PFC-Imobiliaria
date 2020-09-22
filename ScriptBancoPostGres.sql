@@ -33,8 +33,8 @@ descricao VARCHAR(255),
 status VARCHAR(255) NOT NULL,
 situacao VARCHAR(255) NOT NULL,
 valor NUMERIC(16,2) NOT NULL,
-area_total NUMERIC(8,2) NOT NULL,
-area_edificada NUMERIC(8,2) NOT NULL,
+area_total NUMERIC(16,2) NOT NULL,
+area_edificada NUMERIC(16,2) NOT NULL,
 comodos INTEGER NOT NULL,
 vagas_garagem INTEGER NOT NULL,
 banheiros INTEGER NOT NULL,
@@ -44,7 +44,10 @@ tipo_imovel VARCHAR(255) NOT NULL,
 id_usuario INTEGER,
 id_endereco INTEGER,
 obs VARCHAR(1000),
-data_validacao TIMESTAMP NOT NULL,
+data_validacao TIMESTAMP,
+modalidade_imovel varchar(255) NOT NULL,
+iptu NUMERIC(16,2),
+condominio NUMERIC (16,2),
 CONSTRAINT fk_imovel_endereco FOREIGN KEY (id_endereco) REFERENCES Endereco (id_endereco),
 CONSTRAINT fk_imovel_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
 );
@@ -55,10 +58,8 @@ valor_fechado NUMERIC(16,2) NOT NULL,
 data_contrato DATE,
 id_imovel INTEGER,
 id_usuario INTEGER,
-id_funcionario INTEGER,
 CONSTRAINT fk_contrato_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel),
-CONSTRAINT fk_contrato_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
-CONSTRAINT fk_contrato_funcionario FOREIGN KEY (id_funcionario) REFERENCES Funcionario (id_funcionario)
+CONSTRAINT fk_contrato_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
 );
 
 CREATE TABLE Agendamento(
@@ -67,9 +68,7 @@ data_inicio DATE NOT NULL,
 data_fim DATE NOT NULL,
 status VARCHAR(255) NOT NULL, 
 id_usuario INTEGER,
-id_funcionario INTEGER,
 id_imovel INTEGER,
 CONSTRAINT fk_agendamento_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
-CONSTRAINT fk_agendamento_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel),
-CONSTRAINT fk_agendamento_funcionario FOREIGN KEY (id_funcionario) REFERENCES Funcionario (id_funcionario)
+CONSTRAINT fk_agendamento_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel)
 );

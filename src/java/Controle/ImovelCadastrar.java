@@ -45,8 +45,11 @@ public class ImovelCadastrar implements ICommand {
             Part filePart = request.getPart("uploadFile"); // 
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //
             InputStream fileContent = filePart.getInputStream();
-
-            imovel.setDiretorio_imagem(session.get("id") + File.separator + fileName);
+            
+            String id = String.valueOf(session.get("id"));
+            System.out.println(id);
+            
+            imovel.setDiretorio_imagem(String.valueOf(session.get("id")) + File.separator + fileName);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
 
@@ -63,7 +66,7 @@ public class ImovelCadastrar implements ICommand {
             // cria o diretorio de upload
             // esse caminho e relativo ao diretorio da aplicacao
             ServletContext context = request.getServletContext();
-            String uploadPath = context.getRealPath("/") + "Resources\\upload" + File.separator + session.get("id");
+            String uploadPath = context.getRealPath("/") + "Resources\\upload" + File.separator + String.valueOf(session.get("id"));
 
             // caso o diretorio nao exista o bloco abaixo cria o mesmo
             File uploadDir = new File(uploadPath);
@@ -87,7 +90,7 @@ public class ImovelCadastrar implements ICommand {
             imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal").replaceAll("[^0-9]", "")));
             imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll("[^0-9]", "")));
             imovel.setTipo_imovel(request.getParameter("tpimovel"));
-            imovel.getUsuario().setId_usuario(Integer.parseInt(session.get("id").replaceAll("[^0-9]", "")));
+            imovel.getUsuario().setId_usuario(Integer.parseInt(String.valueOf(session.get("id"))));
 
             imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
             imovel.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero").replaceAll("[^0-9]", "")));

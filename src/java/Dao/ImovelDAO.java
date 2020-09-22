@@ -48,7 +48,7 @@ public class ImovelDAO {
 
         rs = smt.getGeneratedKeys();
         rs.next();
-        int idImovel = rs.getInt(1);
+        int idEndereco = rs.getInt(1);
 
         //imovel
         smt = connection.prepareStatement(INSERTIMOVEL);
@@ -66,7 +66,7 @@ public class ImovelDAO {
         smt.setString(12, imovel.getDiretorio_imagem());
         smt.setString(13, imovel.getTipo_imovel());
         smt.setInt(14, imovel.getUsuario().getId_usuario());
-        smt.setInt(15, idImovel);
+        smt.setInt(15, idEndereco);
         smt.executeUpdate();
 
         smt.close();
