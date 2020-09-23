@@ -45,10 +45,7 @@ public class ImovelCadastrar implements ICommand {
             Part filePart = request.getPart("uploadFile"); // 
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //
             InputStream fileContent = filePart.getInputStream();
-            
-            String id = String.valueOf(session.get("id"));
-            System.out.println(id);
-            
+           
             imovel.setDiretorio_imagem(String.valueOf(session.get("id")) + File.separator + fileName);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -91,6 +88,9 @@ public class ImovelCadastrar implements ICommand {
             imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll("[^0-9]", "")));
             imovel.setTipo_imovel(request.getParameter("tpimovel"));
             imovel.getUsuario().setId_usuario(Integer.parseInt(String.valueOf(session.get("id"))));
+            imovel.setModalidade_imovel(request.getParameter("tpvenda"));
+            imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
+            imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
 
             imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
             imovel.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero").replaceAll("[^0-9]", "")));

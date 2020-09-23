@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import Modelo.Imovel;
 import Util.ConnectionFactory;
+import java.util.Map;
 
 /**
  *
@@ -32,7 +33,7 @@ public class ImovelDAO {
         Connection connection = ConnectionFactory.getConexao();
 
         //Endereço
-        String INSERTIMOVEL = "INSERT INTO Imovel VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String INSERTIMOVEL = "INSERT INTO Imovel VALUES (DEFAULT,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String INSERTENDERECO = "INSERT INTO Endereco VALUES (DEFAULT,?,?,?,?,?,?,?)";
 
         smt = connection.prepareStatement(INSERTENDERECO, Statement.RETURN_GENERATED_KEYS);
@@ -67,6 +68,10 @@ public class ImovelDAO {
         smt.setString(13, imovel.getTipo_imovel());
         smt.setInt(14, imovel.getUsuario().getId_usuario());
         smt.setInt(15, idEndereco);
+        smt.setInt(15, idEndereco);
+        smt.setString(16, imovel.getModalidade_imovel());
+        smt.setDouble(17, imovel.getIptu());
+        smt.setDouble(18, imovel.getCondominio());
         smt.executeUpdate();
 
         smt.close();
@@ -104,6 +109,9 @@ public class ImovelDAO {
             imovel.setArea_total(rs.getDouble("area_total"));
             imovel.setArea_edificada(rs.getDouble("area_edificada"));
             imovel.setValor(rs.getDouble("valor"));
+            imovel.setModalidade_imovel(rs.getString("modalidade_imovel"));
+            imovel.setIptu(rs.getDouble("iptu"));
+            imovel.setCondominio(rs.getDouble("condominio"));
             imovel.setDiretorio_imagem(rs.getString("diretorio_imagem"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
@@ -154,6 +162,9 @@ public class ImovelDAO {
             imovel.setTitulo(rs.getString("titulo"));
             imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
             imovel.setValor(rs.getDouble("valor"));
+            imovel.setModalidade_imovel(rs.getString("modalidade_imovel"));
+            imovel.setIptu(rs.getDouble("iptu"));
+            imovel.setCondominio(rs.getDouble("condominio"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
             imovel.getEndereco().setCep(rs.getString("cep"));
@@ -177,7 +188,8 @@ public class ImovelDAO {
                 + " WHERE id_endereco = ?";
 
         String UPDATE_DADOS = "UPDATE Imovel SET Titulo = ?, descricao =?,"
-                + " valor = ?, area_total = ?, area_edificada = ?, comodos = ?, vagas_garagem = ?, banheiros = ?, tipo_imovel = ?"
+                + " valor = ?, area_total = ?, area_edificada = ?, comodos = ?, vagas_garagem = ?, banheiros = ?, tipo_imovel = ?,"
+                + " modalidade_imovel = ?, iptu = ?, condominio = ?"
                 + " WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
@@ -193,7 +205,10 @@ public class ImovelDAO {
         smt.setInt(7, imovel.getVagas_garagem());
         smt.setInt(8, imovel.getBanheiros());
         smt.setString(9, imovel.getTipo_imovel());
-        smt.setInt(10, imovel.getId_imovel());
+        smt.setString(10, imovel.getModalidade_imovel());
+        smt.setDouble(11, imovel.getIptu());
+        smt.setDouble(12, imovel.getCondominio());
+        smt.setInt(13, imovel.getId_imovel());
 
         smt.executeUpdate();
 
@@ -302,19 +317,23 @@ public class ImovelDAO {
 
     }
 
-    public List<Imovel> listarAprovados(String[] Pesquisa) throws Exception {
+    public List<Imovel> listarAprovados(Map filtro) throws Exception {
 
         String SELECT_IMOVEIS = "SELECT * FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
                 + "WHERE I.status = 'Disponivel'";
 
-        if (!"null".equals(Pesquisa[0])) {
-            SELECT_IMOVEIS += " AND comodos = " + Pesquisa[0];
+        if (!"".equalsIgnoreCase(String.valueOf(filtro.get("quartos")))) {
+            SELECT_IMOVEIS += " AND comodos = " + filtro.get("quartos");
         }
 
-        if (!"null".equals(Pesquisa[1])) {
-            SELECT_IMOVEIS += " AND valor <= " + Pesquisa[1];
+        if (!"".equalsIgnoreCase(String.valueOf(filtro.get("valor")))) {
+            SELECT_IMOVEIS += " AND valor <= " + filtro.get("valor");
+        }
+
+        if (!"".equalsIgnoreCase(String.valueOf(filtro.get("tpvenda")))) {
+            SELECT_IMOVEIS += " AND modalidade_imovel = '" + filtro.get("tpvenda") + "'";
         }
 
         Imovel imovel = null;
@@ -339,6 +358,9 @@ public class ImovelDAO {
                 imovel.setTitulo(rs.getString("titulo"));
                 imovel.setVagas_garagem(rs.getInt("vagas_garagem"));
                 imovel.setValor(rs.getDouble("valor"));
+                imovel.setModalidade_imovel(rs.getString("modalidade_imovel"));
+                imovel.setIptu(rs.getDouble("iptu"));
+                imovel.setCondominio(rs.getDouble("condominio"));
                 imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
                 imovel.getEndereco().setBairro(rs.getString("bairro"));
                 imovel.getEndereco().setCep(rs.getString("cep"));

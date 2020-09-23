@@ -27,6 +27,9 @@ public class Imovel {
     private String status;
     private String titulo;
     private String obs;
+    private String modalidade_imovel;
+    private double iptu;
+    private double condominio;
     private String diretorio_imagem;
     private Endereco endereco;
     private Usuario usuario;
@@ -34,6 +37,30 @@ public class Imovel {
     public Imovel() {
         this.endereco = new Endereco();
         this.usuario = new Usuario();
+    }
+
+    public String getModalidade_imovel() {
+        return modalidade_imovel;
+    }
+
+    public void setModalidade_imovel(String modalidade_imovel) {
+        this.modalidade_imovel = modalidade_imovel;
+    }
+
+    public double getIptu() {
+        return iptu;
+    }
+
+    public void setIptu(double iptu) {
+        this.iptu = iptu;
+    }
+
+    public double getCondominio() {
+        return condominio;
+    }
+
+    public void setCondominio(double condominio) {
+        this.condominio = condominio;
     }
 
     public int getId_imovel() {

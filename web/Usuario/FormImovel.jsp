@@ -28,7 +28,6 @@
             <form action="<%=request.getContextPath()%>/Controle/ImovelCadastrar" method="post" enctype="multipart/form-data" class="formulario" id="formulario">
             </c:if>
 
-
             <div class="form-group">
                 <label for="name">Titulo:</label>
                 <input type="text" class="form-control" name="titulo" id="titulo"  value="<c:out value='${imovel.titulo}' />" maxlength="255"  required/>
@@ -55,29 +54,48 @@
 
                 <div class="form-group col-md-4">
                     <label for="areatotal">Área Total:</label>
-                    <input type="text" class="form-control" name="areatotal" id="areatotal" value="<fmt:formatNumber minFractionDigits="2" value="${imovel.area_total}"/>" maxlength="5" required/>
+                    <input type="text" class="form-control" name="areatotal" id="areatotal" value="<fmt:formatNumber value="${imovel.area_total}"/>" maxlength="5" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Área Edificada:</label>
-                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<fmt:formatNumber minFractionDigits="2" value="${imovel.area_edificada}"/>"  maxlength="5" required/>
+                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<fmt:formatNumber value="${imovel.area_edificada}"/>"  maxlength="5" required/>
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label for="areaedificada">Valor do Imóvel:</label>
-                    <input type="text" class="form-control" name="valorimovel" id="valorimovel" value="<fmt:formatNumber minFractionDigits="2" value="${imovel.valor}"/>" maxlength="15" required/>
+                    <label for="areaedificada">Valor de Venda/Aluguel:</label>
+                    <input type="text" class="form-control" name="valorimovel" id="valorimovel" value="<fmt:formatNumber value="${imovel.valor}"/>" maxlength="15" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="tpimovel">Tipo de Imóvel:</label>
-                    <select name="tpimovel" id="tpimovel" class="form-control" required>
+                    <select class="custom-select" name="tpimovel" id="tpimovel" class="form-control" required>
                         <option selected>Escolha...</option>
-                        <option value="germinada">Geminada</option>
-                        <option value="sobrado">Sobrado</option>
-                        <option value="apartamento">Apartamento</option>
-                        <option value="kitnet">Kitnet</option>
-                        <option value="flat">Flat</option>
+                        <option value="GERMINADA">Geminada</option>
+                        <option value="SOBRADO">Sobrado</option>
+                        <option value="APARTAMENTO">Apartamento</option>
+                        <option value="KITNET">Kitnet</option>
+                        <option value="FLAT">Flat</option>
                     </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="tpvenda">Tipo de Venda:</label>
+                    <select class="custom-select" name="tpvenda" id="tpvenda" class="form-control" required>
+                        <option selected>Escolha...</option>
+                        <option value="VENDA">Venda</option>
+                        <option value="ALUGUEL">Aluguel</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="iptu">Valor do IPTU:</label>
+                    <input type="text" class="form-control" name="iptu" id="iptu" value="<fmt:formatNumber value="${imovel.iptu}"/>" maxlength="15" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="condominio">Valor do Condomínio:</label>
+                    <input type="text" class="form-control" name="condominio" id="condominio" value="<fmt:formatNumber value="${imovel.condominio}"/>" maxlength="15" />
                 </div>
             </div>
 
@@ -100,7 +118,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="estado">Estado:</label>
-                    <select name="estado" id="estado" class="form-control" required>
+                    <select class="custom-select" name="estado" id="estado" class="form-control" required>
                         <option selected>Escolha...</option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
@@ -161,6 +179,7 @@
         $("#tpimovel").val("<c:out value='${imovel.tipo_imovel}' />");
         $("#estado").val("<c:out value='${imovel.endereco.estado}' />");
         $("#descricao").val("<c:out value='${imovel.descricao}' />");
+        $("#tpvenda").val("<c:out value='${imovel.modalidade_imovel}' />");
     });
 </script>
 

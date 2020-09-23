@@ -25,9 +25,8 @@
                    
                     <div class="form-group col-md-12">
                         <label for="nivel">Nivel de Acesso: </label>
-
-                        <select name="nivel" id="nivel" class="form-control col-md-6" required>
-                            <option value="">-- Selecione o Nivel --</option>
+                        <select class="custom-select" name="nivel" id="nivel" class="form-control col-md-6" required>
+                            <option value="">Escolha...</option>
                             <option value="USUARIO">Usuário</option>
                             <option value="FUNCIONARIO">Funcionário</option>
                             <option value="ADMINISTRADOR">Administrador</option>
@@ -66,7 +65,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="tppessoa">Tipo de Pessoa:</label>
-                        <select name="tipo_pessoa" id="tppessoa" class="form-control">
+                        <select class="custom-select" name="tipo_pessoa" id="tppessoa" class="form-control">
                             <option value="F">Física</option>
                             <option value="J">Jurídica</option>
                         </select>
@@ -104,7 +103,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="estado">Estado:</label>
-                        <select name="estado" id="estado" class="form-control" required>
+                        <select class="custom-select" name="estado" id="estado" class="form-control" required>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>

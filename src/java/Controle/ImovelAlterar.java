@@ -33,6 +33,9 @@ public class ImovelAlterar implements ICommand {
             imovel.setTitulo(request.getParameter("titulo"));
             imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem").replaceAll("[^0-9]", "")));
             imovel.setValor(Double.parseDouble(request.getParameter("valorimovel").replaceAll("[^0-9]", "")));
+            imovel.setModalidade_imovel(request.getParameter("tpvenda"));
+            imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
+            imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
 
             imovel.getEndereco().setId_endereco(Integer.parseInt(request.getParameter("ide")));
             imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
