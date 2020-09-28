@@ -2,6 +2,11 @@
 <jsp:include page="../header.jsp" />
 
 <div class="container">
+    <div class="text-center">
+
+        <p>Meus Imóveis</p>
+
+    </div>
 
     <div class="row">
         <c:forEach var="i" items="${listaImovel}">

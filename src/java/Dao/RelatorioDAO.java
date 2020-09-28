@@ -16,6 +16,7 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import Util.ConnectionFactory;
 import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -34,7 +35,10 @@ public class RelatorioDAO {
         // preenche relatorio
         JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
 
-        // exporta para pdf e executa
+        //visualiar relatorio
+        //JasperViewer.viewReport(print, false);
+
+        // exporta para pdf e executa (metodo ruim pois o bom seria gerar no servidor)
         JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");
         Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
 

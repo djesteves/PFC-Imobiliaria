@@ -51,7 +51,7 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="id_imovel" name="id_imovel">
-                        
+
                         <div class="form-group">
                             <label for="obs">Observação</label>
                             <textarea class="form-control" id="obs" name="obs" rows="3" required></textarea>
@@ -68,8 +68,8 @@
 </div>
 
 <script type="text/javascript">
-    
-    function modalReprovar(id){
+
+    function modalReprovar(id) {
         $("#id_imovel").val(id);
         $("#obs").val('');
     }
@@ -112,3 +112,6 @@
         });
     });
 </script>
+
+
+<jsp:include page="../footer.jsp" />

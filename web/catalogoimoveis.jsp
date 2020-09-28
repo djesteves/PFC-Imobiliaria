@@ -27,7 +27,7 @@
                     <option value="1000000000000000">Maior que R$ 1.000.000</option>
                 </select>
 
-                <label class="my-1 mr-2" for="tpvenda">Desejo:</label>
+                <label class="my-1 mr-2" for="tpvenda">Pretendo:</label>
                 <select onChange="filtro()" class="custom-select my-1 mr-sm-2" name="tpvenda" id="tpvenda" class="form-control">
                     <option value="" selected>Escolha...</option>
                     <option value="VENDA">Comprar</option>
@@ -47,9 +47,13 @@
 
             </form>
         </div>
-        <div class="col-md-8 col-lg-9 " data-aos="fade-left" data-aos-delay="200">
+        <div class="col-md-8 col-lg-9 d-flex justify-content-center" data-aos="fade-left" data-aos-delay="200">
+
+
+
 
             <div style="display: none;" id="loader" class="loader"></div>
+
 
             <div id="imovel" class="row">
 
@@ -57,48 +61,95 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            filtro();
-        });
+</div>
 
-        function filtro() {
-            var xhttp = null;
-            if (window.XMLHttpRequest) {
-                //code for modern browsers
-                xhttp = new XMLHttpRequest();
-            } else {
-                // code for old IE browsers
-                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+
+<!-- Modal Imóvel-->
+<div class="modal fade" id="modalImovel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalImovelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div id="modal-content" class="modal-content">
+            <div class="d-flex justify-content-center">
+                <div style="display: none;" id="loader-modal-imovel" class="loader justify-content-center ">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        filtro();
+    });
+
+    function filtro() {
+        var xhttp = null;
+        if (window.XMLHttpRequest) {
+            //code for modern browsers
+            xhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        var form = document.getElementById("pesquisa"),
+                formData = null;
+
+        formData = new FormData(form);
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 3) {
+                document.getElementById("loader").style.display = "block";
+                $("#imovel").hide();
             }
 
-            var form = document.getElementById("pesquisa"),
-                    formData = null;
+            if (this.readyState == 4 && this.status == 200) {
+                var resposta = this.responseText;
+                setTimeout(function () {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("imovel").innerHTML = resposta;
+                    $("#imovel").show();
+                }, 500);
+            }
+        };
 
-            formData = new FormData(form);
+        //envia multipart a servlet precisa estar com a anotação.
+        xhttp.open("POST", 'ImovelListarAprovados', true);
+        xhttp.send(formData);
+    }
 
-            xhttp.onreadystatechange = function () {
-
-                if (this.readyState == 3) {
-                    document.getElementById("loader").style.display = "block";
-                    $("#imovel").hide();
-                }
-
-                if (this.readyState == 4 && this.status == 200) {
-                    var resposta = this.responseText;
-                    setTimeout(function () {
-                        document.getElementById("loader").style.display = "none";
-                        document.getElementById("imovel").innerHTML = resposta;
-                        $("#imovel").show();
-                    }, 500);
-                }
-            };
-
-            //envia multipart a servlet precisa estar com a anotação.
-            xhttp.open("POST", 'ImovelListarAprovados', true);
-            xhttp.send(formData);
+    function carregarImovel(id) {
+        var xhttp = null;
+        if (window.XMLHttpRequest) {
+            //code for modern browsers
+            xhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-    </script>
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 3) {
+                document.getElementById("loader-modal-imovel").style.display = "block";
+            }
+
+            if (this.readyState == 4 && this.status == 200) {
+                var resposta = this.responseText;
+                setTimeout(function () {
+                    document.getElementById("loader-modal-imovel").style.display = "none";
+                    document.getElementById("modal-content").innerHTML = resposta;
+                }, 500);
+            }
+        };
+
+        //envia multipart a servlet precisa estar com a anotação.
+        xhttp.open("GET", 'VisualizarImovel?id=' + id, true);
+        xhttp.send();
+    }
 
 
-    <jsp:include page="footer.jsp" />
+</script>
+
+
+<jsp:include page="footer.jsp" />
