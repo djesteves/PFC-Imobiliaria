@@ -139,7 +139,7 @@
                 setTimeout(function () {
                     document.getElementById("loader-modal-imovel").style.display = "none";
                     document.getElementById("modal-content").innerHTML = resposta;
-                }, 500);
+                }, 1000);
             }
         };
 
