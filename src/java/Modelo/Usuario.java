@@ -150,4 +150,9 @@ public class Usuario {
         }
         return senha;
     }
+    
+    public static void main(String[] args) {
+        String senha = criptografia("123");
+        System.out.println(senha);
+    }
 }

@@ -34,6 +34,8 @@ public class ImovelListarPorIDAtivos implements ICommand {
             listaImovel = dao.listarPorIDAtivos((int) session.get("id"));
         } catch (SQLException ex) {
             Logger.getLogger(ImovelListarPorIDAtivos.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("msgerro", ex.getMessage());
+            return "index.jsp";
         }
 
         request.setAttribute("listaImovel", listaImovel);

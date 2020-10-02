@@ -17,11 +17,11 @@
             <!-- Botões -->
             <div class="text-center text-md-left">
                 <c:if test="${usuarioLogado == null}">
-                    <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" class="btn btn-primary shadow lift mr-1">
+                    <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" class="btn btn-radius btn-primary shadow lift mr-1">
                         Crie sua conta <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
                     </a>
                 </c:if> 
-                <a href="<%=request.getContextPath()%>/Usuario/FormImovel.jsp" class="btn btn-outline-secondary shadow lift mr-1">
+                <a href="<%=request.getContextPath()%>/Usuario/FormImovel.jsp" class="btn btn-radius btn-outline-secondary shadow lift mr-1">
                     Anuncie seu imóvel
                 </a>
             </div>

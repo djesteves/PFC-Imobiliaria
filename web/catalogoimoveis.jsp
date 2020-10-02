@@ -48,15 +48,10 @@
             </form>
         </div>
         <div class="col-md-8 col-lg-9 d-flex justify-content-center" data-aos="fade-left" data-aos-delay="200">
-
-
-
-
             <div style="display: none;" id="loader" class="loader"></div>
 
-
             <div id="imovel" class="row">
-
+                <!-- Imoveis ajax aqui -->
             </div>
         </div>
     </div>
@@ -67,10 +62,14 @@
 <!-- Modal Imóvel-->
 <div class="modal fade" id="modalImovel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalImovelLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
+
         <div id="modal-content" class="modal-content">
             <div class="d-flex justify-content-center">
                 <div style="display: none;" id="loader-modal-imovel" class="loader justify-content-center ">
                 </div>
+            </div>
+            <div id="imovel-content">
+                <!-- Imovel ajax aqui -->
             </div>
         </div>
     </div>
@@ -131,6 +130,7 @@
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 3) {
+                $("#imovel-content").empty();
                 document.getElementById("loader-modal-imovel").style.display = "block";
             }
 
@@ -138,7 +138,7 @@
                 var resposta = this.responseText;
                 setTimeout(function () {
                     document.getElementById("loader-modal-imovel").style.display = "none";
-                    document.getElementById("modal-content").innerHTML = resposta;
+                    document.getElementById("imovel-content").innerHTML = resposta;
                 }, 1000);
             }
         };

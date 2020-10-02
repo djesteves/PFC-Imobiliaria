@@ -72,3 +72,7 @@ id_imovel INTEGER,
 CONSTRAINT fk_agendamento_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
 CONSTRAINT fk_agendamento_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel)
 );
+
+-- INSERT ADMINISTRADOR
+insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP')
+insert into usuario values (DEFAULT, 'Admin', NOW(), '11912345678','1143211234','774.341.551-16', '29.767.686-6', 'F', 1, 'admin@email.com', '202CB962AC59075B964B07152D234B70', 'ADMINISTRADOR', 'Ativo')
