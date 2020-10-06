@@ -29,6 +29,7 @@ public class EmitirRelatorio implements ICommand {
 
         try {
             String relatorio = request.getParameter("nomerel");
+            System.out.println("rel" +relatorio);
 
             // acha jrxml dentro da aplicação
             ServletContext contexto = request.getServletContext();

@@ -15,8 +15,8 @@ public class ConnectionFactory {
             String driverName = "org.postgresql.Driver";
             Class.forName(driverName);
             String serverName = "localhost:5432";
-            String mydatabase = "dbimobiliaria";
-            String url = "jdbc:postgresql://" + serverName + "/" + mydatabase;
+            String database = "dbimobiliaria";
+            String url = "jdbc:postgresql://" + serverName + "/" + database;
             String username = "postgres";
             String password = "postgres";
 

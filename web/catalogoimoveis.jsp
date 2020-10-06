@@ -8,7 +8,6 @@
         <p>Catálogo de Imóveis</p>
     </div>
 
-
     <div class="row">
         <div class="col-lg-3 col-md-4 mb-4" data-aos="fade-down" data-aos-delay="200">
             <form id="pesquisa" class="formulario">
@@ -47,7 +46,7 @@
 
             </form>
         </div>
-        <div class="col-md-8 col-lg-9 d-flex justify-content-center" data-aos="fade-left" data-aos-delay="200">
+        <div class="col-md-8 col-lg-9" data-aos="fade-left" data-aos-delay="200">
             <div style="display: none;" id="loader" class="loader"></div>
 
             <div id="imovel" class="row">
@@ -55,9 +54,7 @@
             </div>
         </div>
     </div>
-
 </div>
-
 
 <!-- Modal Imóvel-->
 <div class="modal fade" id="modalImovel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalImovelLabel" aria-hidden="true">
