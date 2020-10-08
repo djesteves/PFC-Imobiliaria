@@ -67,6 +67,8 @@
     </div>
 </div>
 
+<jsp:include page="../footer.jsp" />
+
 <script type="text/javascript">
 
     function modalReprovar(id) {
@@ -112,6 +114,3 @@
         });
     });
 </script>
-
-
-<jsp:include page="../footer.jsp" />

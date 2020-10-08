@@ -70,7 +70,7 @@
                 <div class="form-group col-md-4">
                     <label for="tpimovel">Tipo de Imóvel:</label>
                     <select class="custom-select" name="tpimovel" id="tpimovel" class="form-control" required>
-                        <option selected>Escolha...</option>
+
                         <option value="GERMINADA">Geminada</option>
                         <option value="SOBRADO">Sobrado</option>
                         <option value="APARTAMENTO">Apartamento</option>
@@ -82,7 +82,7 @@
                 <div class="form-group col-md-4">
                     <label for="tpvenda">Tipo de Venda:</label>
                     <select class="custom-select" name="tpvenda" id="tpvenda" class="form-control" required>
-                        <option selected>Escolha...</option>
+
                         <option value="VENDA">Venda</option>
                         <option value="ALUGUEL">Aluguel</option>
                     </select>
@@ -119,7 +119,7 @@
                 <div class="form-group col-md-4">
                     <label for="estado">Estado:</label>
                     <select class="custom-select" name="estado" id="estado" class="form-control" required>
-                        <option selected>Escolha...</option>
+
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapá</option>
@@ -174,6 +174,9 @@
 
         </form>
 </div>
+
+<jsp:include page="../footer.jsp" />
+
 <script>
     $(document).ready(function () {
         $("#tpimovel").val("<c:out value='${imovel.tipo_imovel}' />");
@@ -182,6 +185,3 @@
         $("#tpvenda").val("<c:out value='${imovel.modalidade_imovel}' />");
     });
 </script>
-
-
-<jsp:include page="../footer.jsp" />

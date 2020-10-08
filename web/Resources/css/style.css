@@ -132,12 +132,9 @@ div#divbotoes{
     flex-direction: column;
 }
 .canto-curva-outer:hover > .canto-curva-inner{
-    background-color: rgb(31,153,183);
+    background-color: #0ea0ff;
 }
-.canto-curva-outer:hover > .canto-curva-inner > .canto-bot{
-    color: rgb(238,238,238);
-    background-color: rgb(31,135,183);
-}
+
 .canto-curva img { 
     margin: 4px 0;
     height: 64px;
@@ -151,7 +148,6 @@ div#divbotoes{
     font-weight: bold;
     color: rgb(160,160,160);
     background-color: rgba(230,230,230,0.85);
-    transition: color 1s, background-color 1s;
     display: flex;
     justify-content: center;
     cursor: pointer;

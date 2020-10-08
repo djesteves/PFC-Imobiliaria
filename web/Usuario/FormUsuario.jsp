@@ -12,9 +12,7 @@
     </div>
 
     <c:if test="${usuario != null}">
-        
-   
-    
+ 
         <form action="<%=request.getContextPath()%>/Controle/UsuarioAlterar" method="post" class="formulario">
             <input type="hidden" name="id" value="${usuario.id_usuario}" />
             <input type="hidden" name="ide" value="${usuario.endereco.id_endereco}" />
@@ -153,6 +151,8 @@
         </form>
 </div>	
 
+<jsp:include page="../footer.jsp" />
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('tppessoa').value = "<c:out value='${usuario.tipoPessoa}' />";
@@ -165,5 +165,3 @@
         }
     });
 </script>
-
-<jsp:include page="../footer.jsp" />

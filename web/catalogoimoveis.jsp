@@ -72,6 +72,8 @@
     </div>
 </div>
 
+<jsp:include page="footer.jsp" />
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         filtro();
@@ -147,6 +149,3 @@
 
 
 </script>
-
-
-<jsp:include page="footer.jsp" />

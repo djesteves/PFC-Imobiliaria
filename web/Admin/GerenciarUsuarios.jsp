@@ -51,6 +51,8 @@
     </table>
 
 </div>
+    
+<jsp:include page="../footer.jsp" />
 
 <script type="text/javascript">
     function confirmaDelete(id) {
@@ -97,7 +99,3 @@
         });
     });
 </script>
-
-
-
-<jsp:include page="../footer.jsp" />
