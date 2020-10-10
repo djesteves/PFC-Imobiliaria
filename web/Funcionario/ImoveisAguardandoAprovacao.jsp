@@ -23,7 +23,7 @@
             <c:forEach var="imovel" items="${ImoveisEmAnalise}">
                 <tr>
                     <td>
-                        <a title="Consultar Imóvel" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/ImovelListarPorID?id=${imovel.id_imovel}&idu=${imovel.usuario.id_usuario}"><i class="fas fa-eye"></i></a>
+                        <a title="Consultar Imóvel" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/ImovelListarPorID?id=${imovel.id_imovel}"><i class="fas fa-eye"></i></a>
 
                         <a title="Aprovar Imóvel" class="btn btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=${imovel.id_imovel}&email=${imovel.usuario.email}"><i class="fas fa-check"></i></a>
 

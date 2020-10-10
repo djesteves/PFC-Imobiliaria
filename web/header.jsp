@@ -16,19 +16,7 @@
     </head>
     <body>
         <header>
-            <c:if test="${msg != null}">
-                <script>
-                    var mensagem = "${msg}";
-                    mostraDialogo(mensagem, "success", 3000);
-                </script>
-            </c:if> 
 
-            <c:if test="${msgerro != null}">
-                <script>
-                    var mensagem = "${msgerro}";
-                    mostraDialogo(mensagem, "danger", 3000);
-                </script>
-            </c:if> 
             <nav class="navbar navbar-dark navbar-expand-lg bg-white navbar-gradient mb-4">
                 <div class="container">
                     <a class="navbar-brand logo" href="<%=request.getContextPath()%>/index.jsp">Imobiliária</a>

@@ -83,7 +83,7 @@ public class ImovelDAO {
         String CONSULTAIMOVELUSUARIO = "SELECT * FROM Imovel I "
                 + " INNER JOIN Endereco E ON E.id_endereco = I.id_endereco"
                 + " INNER JOIN Usuario U ON U.id_usuario = I.id_usuario"
-                + " WHERE I.id_usuario = ? and i.Situacao <> 'Inativo'";
+                + " WHERE I.id_usuario = ? and i.Situacao = 'Ativo'";
 
         List<Imovel> ArrImovel = null;
 
@@ -322,7 +322,8 @@ public class ImovelDAO {
         String SELECT_IMOVEIS = "SELECT * FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "LEFT JOIN Endereco E ON E.id_endereco = I.id_endereco "
-                + "WHERE I.status = 'Disponivel'";
+                + "WHERE I.status = 'Disponivel'"
+                + "  AND I.situacao = 'Ativo'";
 
         if (!"".equalsIgnoreCase(String.valueOf(filtro.get("quartos")))) {
             SELECT_IMOVEIS += " AND comodos = " + filtro.get("quartos");

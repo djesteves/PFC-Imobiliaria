@@ -134,7 +134,7 @@
                     <div class="form-group col-md-2">
                         <label for="cep">CEP:</label>
                         <input type="text" size="10" maxlength="9"
-                               onblur="pesquisacep(this.value);" class="form-control" value="${usuario.endereco.cep}" name="cep" id="cep" required>
+                                class="form-control" value="${usuario.endereco.cep}" name="cep" id="cep" required>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="bairro">Bairro:</label>
