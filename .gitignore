@@ -1,3 +1,7 @@
 Src/build/
 Src/dist/
 Src/test/
+nbproject/private
+/Codigo/build/
+/Codigo/dist/
+/Codigo/nbproject/private/
