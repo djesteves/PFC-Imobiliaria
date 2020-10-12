@@ -23,7 +23,7 @@
                         </div>   
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
                             <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelListarPorID?id=${i.id_imovel}" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                            <a title="Deletar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelExcluir?id=${i.id_imovel}" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
+                            <a title="Deletar Imóvel" href="#" onClick="confirmaDelete(${i.id_imovel})" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>
@@ -40,3 +40,11 @@
 </div>
 
 <jsp:include page="../footer.jsp" />
+
+<script>
+    function confirmaDelete(id) {
+        if (confirm('Tem certeza que deseja excluir este imóvel?')) {
+            window.location.href = "${pageContext.servletContext.contextPath}/Controle/ImovelExcluir?id=" + id;
+        }
+    }
+</script>

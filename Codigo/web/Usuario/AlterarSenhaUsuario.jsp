@@ -25,8 +25,8 @@
             <button type="submit" class="btn btn-primary">Confirmar</button>
             <button type="button" onclick="window.history.back();" class="btn btn-danger">Voltar</button>
         </div>
-        
-        
+
+
     </form>
 </div>	
 

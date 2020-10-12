@@ -31,24 +31,14 @@ public class AgendarVisita implements ICommand {
         try {
             Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
-            Agendamento agendamento = new Agendamento();
-            Imovel im = new Imovel();
-            Usuario u = new Usuario();
-
-            agendamento.setDataAgendamento(formatter.parse(request.getParameter("dataagendamento")));
-            im.setId_imovel(Integer.parseInt(request.getParameter("idimovel")));
-            u.setId_usuario(Integer.parseInt(session.get("id").toString()));
-            agendamento.setImovel(im);
-            agendamento.setSituacao("Ativo");
-            agendamento.setStatus("Solicitado");
-            agendamento.setUsuario(u);
-
             Agenda agenda = new Agenda();
 
-            agenda.setAgendamento(agendamento);
-            Usuario uC = new Usuario();
-            uC.setId_usuario(Integer.parseInt(request.getParameter("corretores")));
-            agenda.setUsuarioCorretor(uC);
+            agenda.getAgendamento().setDataAgendamento(formatter.parse(request.getParameter("dataagendamento")));
+            agenda.getAgendamento().getImovel().setId_imovel(Integer.parseInt(request.getParameter("idimovel")));
+            agenda.getAgendamento().getUsuario().setId_usuario(Integer.parseInt(session.get("id").toString()));
+            agenda.getAgendamento().setSituacao("Ativo");
+            agenda.getAgendamento().setStatus("Solicitado");
+            agenda.getUsuarioCorretor().setId_usuario(Integer.parseInt(request.getParameter("corretores")));
 
             AgendamentoDAO dao = new AgendamentoDAO();
 

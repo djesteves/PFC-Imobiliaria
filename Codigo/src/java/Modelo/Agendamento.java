@@ -15,21 +15,25 @@ public class Agendamento {
 
     private int id_agendamento;
     private Date dataAgendamento;
+    private Date dataSolicitacao;
     private String status;
     private String situacao;
     private Usuario usuario;
     private Imovel imovel;
 
-    public Agendamento(int id_agendamento, Date dataAgendamento, String status, String situacao, Usuario usuario, Imovel imovel) {
+    public Agendamento() {
+        this.usuario = new Usuario();
+        this.imovel = new Imovel();
+    }
+
+    public Agendamento(int id_agendamento, Date dataAgendamento, Date dataSolicitacao, String status, String situacao, Usuario usuario, Imovel imovel) {
         this.id_agendamento = id_agendamento;
         this.dataAgendamento = dataAgendamento;
+        this.dataSolicitacao = dataSolicitacao;
         this.status = status;
         this.situacao = situacao;
         this.usuario = usuario;
         this.imovel = imovel;
-    }
-    
-    public Agendamento() {
     }
 
     public int getId_agendamento() {
@@ -46,6 +50,14 @@ public class Agendamento {
 
     public void setDataAgendamento(Date dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
+    }
+
+    public Date getDataSolicitacao() {
+        return dataSolicitacao;
+    }
+
+    public void setDataSolicitacao(Date dataSolicitacao) {
+        this.dataSolicitacao = dataSolicitacao;
     }
 
     public String getStatus() {
@@ -80,4 +92,5 @@ public class Agendamento {
         this.imovel = imovel;
     }
 
+    
 }

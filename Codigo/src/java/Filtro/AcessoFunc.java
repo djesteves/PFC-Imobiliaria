@@ -14,7 +14,7 @@ import java.util.Map;
 
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Corretor/*", "/Controle/ImovelAprovar", "/Controle/ImovelEmAnalise", "/Controle/ImovelReprovar"})
+@WebFilter(filterName = "AcessoFunc", urlPatterns = {"/Corretor/*", "/Controle/ImovelAprovar", "/Controle/ImovelEmAnalise", "/Controle/ImovelReprovar", "/Controle/AgendaCorretor"})
 public class AcessoFunc implements Filter {
 
     @Override

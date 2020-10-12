@@ -5,29 +5,33 @@
  */
 package Controle;
 
+import Dao.AgendaDAO;
+import Modelo.Agenda;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Dao.ImovelDAO;
-import Modelo.Imovel;
 
 /**
  *
  * @author Diego
  */
-public class ImovelEmAnalise implements ICommand {
+public class AgendaCorretor implements ICommand {
 
+    //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-
         try {
-            ImovelDAO dao = new ImovelDAO();
+            AgendaDAO dao = new AgendaDAO();
+            Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
-            List<Imovel> imoveis = dao.emAnalise();
+            int id_corretor = Integer.parseInt(session.get("id").toString());
 
-            request.setAttribute("ImoveisEmAnalise", imoveis);
-            return "Corretor/ImoveisAguardandoAprovacao.jsp";
+            List<Agenda> listaAgenda = dao.listarAgenda(id_corretor);
+
+            request.setAttribute("listaAgenda", listaAgenda);
+            return "Corretor/Agenda.jsp";
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());

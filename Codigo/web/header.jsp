@@ -77,8 +77,8 @@
                                             Alterar Senha
                                         </a>
 
-                                        <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel) || 'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
-                                            <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">
+                                        <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
+                                            <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendaCorretor">
                                                 <i class="fas fa-book" aria-hidden="true"></i>
                                                 Minha Agenda
                                             </a>

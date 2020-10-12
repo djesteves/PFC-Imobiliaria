@@ -16,6 +16,8 @@ public class Agenda {
     private Agendamento agendamento;
 
     public Agenda() {
+        this.agendamento = new Agendamento();
+        this.usuarioCorretor = new Usuario();
     }
 
     public Agenda(int id_agenda, Usuario usuarioCorretor, Agendamento agendamento) {

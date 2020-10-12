@@ -26,7 +26,7 @@
                         <select class="custom-select" name="nivel" id="nivel" class="form-control col-md-6" required>
                             <option value="">Escolha...</option>
                             <option value="USUARIO">Usuário</option>
-                            <option value="FUNCIONARIO">Funcionário</option>
+                            <option value="CORRETOR">Corretor</option>
                             <option value="ADMINISTRADOR">Administrador</option>
                         </select>
                     </div>

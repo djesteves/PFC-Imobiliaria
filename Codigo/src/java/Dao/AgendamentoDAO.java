@@ -67,7 +67,7 @@ public class AgendamentoDAO {
 
         smt = connection.prepareStatement(insertAgendamento, Statement.RETURN_GENERATED_KEYS);
         
-        Date dataAgendamento = (Date) agenda.getAgendamento().getDataAgendamento();
+        Date dataAgendamento = agenda.getAgendamento().getDataAgendamento();
         Timestamp dataParaGravar = new Timestamp(dataAgendamento.getTime());
 
         smt.setTimestamp(1, dataParaGravar);
