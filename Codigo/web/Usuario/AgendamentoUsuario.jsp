@@ -5,7 +5,7 @@
 <div class="table-responsive container">
 
     <div class="text-center">
-        <p>Agenda do Corretor</p>
+        <p>Minhas Solicitações de Visitas</p>
     </div>
 
     <table id="agendatable" class="table table-sm table-striped table-bordered">
@@ -13,7 +13,7 @@
         <thead class="thead table-primary">
             <tr>
                 <th scope="col">Ações</th>
-                <th scope="col">Nome Solicitante</th>
+                <th scope="col">Nome Corretor</th>
                 <th scope="col">Código Imóvel</th>
                 <th scope="col">Data da Solicitação</th>
                 <th scope="col">Data do Agendamento</th>

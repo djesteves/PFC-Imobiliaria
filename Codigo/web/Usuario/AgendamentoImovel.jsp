@@ -5,7 +5,7 @@
 <div class="table-responsive container">
 
     <div class="text-center">
-        <p>Agenda do Corretor</p>
+        <p>Solicitações de Visitas no Imovel Código ${param.id}</p>
     </div>
 
     <table id="agendatable" class="table table-sm table-striped table-bordered">
@@ -54,7 +54,7 @@
             "ordering": false,
             "language": {
 
-                "sEmptyTable": "Nenhum registro encontrado",
+                "sEmptyTable": "Nenhum agendamento marcado",
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
                 "sInfoFiltered": "(Filtrados de _MAX_ registros)",

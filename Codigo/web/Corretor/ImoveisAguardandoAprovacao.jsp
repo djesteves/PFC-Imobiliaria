@@ -13,7 +13,7 @@
         <thead class="thead table-primary">
             <tr>
                 <th scope="col">Ações</th>
-                <th scope="col">ID Imóvel</th>
+                <th scope="col">Código Imóvel</th>
                 <th scope="col">Usr Cadastro</th>
                 <th scope="col">Dt Cadastro</th>
                 <th scope="col">Valor</th>
@@ -81,7 +81,7 @@
             "ordering": false,
             "language": {
 
-                "sEmptyTable": "Nenhum registro encontrado",
+                "sEmptyTable": "Nenhum imóvel a ser aprovado",
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
                 "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
                 "sInfoFiltered": "(Filtrados de _MAX_ registros)",

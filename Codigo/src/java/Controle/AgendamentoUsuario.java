@@ -17,21 +17,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Diego
  */
-public class AgendaCorretor implements ICommand {
+public class AgendamentoUsuario implements ICommand {
 
-    //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
+
         try {
             AgendaDAO dao = new AgendaDAO();
             Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
             int id = Integer.parseInt(session.get("id").toString());
 
-            List<Agenda> listaAgenda = dao.listarAgendaCorretor(id);
+            List<Agenda> listaAgenda = dao.listarAgendaUsuario(id);
 
             request.setAttribute("listaAgenda", listaAgenda);
-            return "Corretor/Agenda.jsp";
+            return "Usuario/AgendamentoUsuario.jsp";
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());

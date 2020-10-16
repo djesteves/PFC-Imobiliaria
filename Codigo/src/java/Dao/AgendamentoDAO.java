@@ -66,14 +66,10 @@ public class AgendamentoDAO {
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(insertAgendamento, Statement.RETURN_GENERATED_KEYS);
-        
-        Date dataAgendamento = agenda.getAgendamento().getDataAgendamento();
-        Timestamp dataParaGravar = new Timestamp(dataAgendamento.getTime());
-
-        smt.setTimestamp(1, dataParaGravar);
+        smt.setTimestamp(1, new Timestamp(agenda.getAgendamento().getDataAgendamento().getTime()));
         smt.setTimestamp(2, timestamp);
         smt.setString(3, agenda.getAgendamento().getStatus());
-        smt.setString(4,agenda.getAgendamento().getSituacao());
+        smt.setString(4, agenda.getAgendamento().getSituacao());
         smt.setInt(5, agenda.getAgendamento().getUsuario().getId_usuario());
         smt.setInt(6, agenda.getAgendamento().getImovel().getId_imovel());
         smt.execute();

@@ -9,7 +9,6 @@ import Dao.AgendaDAO;
 import Modelo.Agenda;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,21 +16,20 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Diego
  */
-public class AgendaCorretor implements ICommand {
+public class AgendamentoImovel implements ICommand {
 
-    //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
+
         try {
             AgendaDAO dao = new AgendaDAO();
-            Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
-            int id = Integer.parseInt(session.get("id").toString());
+            int id = Integer.parseInt(request.getParameter("id"));
 
-            List<Agenda> listaAgenda = dao.listarAgendaCorretor(id);
+            List<Agenda> listaAgenda = dao.listarAgendaImovel(id);
 
             request.setAttribute("listaAgenda", listaAgenda);
-            return "Corretor/Agenda.jsp";
+            return "Usuario/AgendamentoImovel.jsp";
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());

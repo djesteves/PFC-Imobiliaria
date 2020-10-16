@@ -84,6 +84,13 @@
                                             </a>
                                         </c:if>
 
+                                        <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendamentoUsuario">
+                                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                            Meus Agendamentos
+                                        </a>
+
+                                        
+
                                         <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel) || 'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
                                             <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">
                                                 <i class="fa fa-tools" aria-hidden="true"></i>

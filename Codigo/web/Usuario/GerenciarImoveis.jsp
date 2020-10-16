@@ -22,6 +22,7 @@
                             <p class="card-text">${i.status}</p>
                         </div>   
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
+                            <a title="Verificar Agendamentos" href="<%=request.getContextPath()%>/Controle/AgendamentoImovel?id=${i.id_imovel}" class="btn btn-info"><i class="fas fa-book"></i></a>
                             <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelListarPorID?id=${i.id_imovel}" class="btn btn-primary"><i class="far fa-edit"></i></a>
                             <a title="Deletar Imóvel" href="#" onClick="confirmaDelete(${i.id_imovel})" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
                         </div>

@@ -55,7 +55,8 @@
         var dataAtual = new Date();
 
         if (data < dataAtual) {
-            alert("A data do agendamento não pode ser inferior a data corrente");
+            var mensagem = "A data do agendamento não pode ser inferior a data corrente";
+            mostraDialogo(mensagem, "danger", 3000);
             $('#dataagendamento').val('');
         }
     }
