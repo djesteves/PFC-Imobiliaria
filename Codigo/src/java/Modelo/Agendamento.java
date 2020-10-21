@@ -19,20 +19,23 @@ public class Agendamento {
     private String status;
     private String situacao;
     private Usuario usuario;
+    private Usuario usuarioCorretor;
     private Imovel imovel;
 
     public Agendamento() {
         this.usuario = new Usuario();
         this.imovel = new Imovel();
+        this.usuarioCorretor = new Usuario();
     }
 
-    public Agendamento(int id_agendamento, Date dataAgendamento, Date dataSolicitacao, String status, String situacao, Usuario usuario, Imovel imovel) {
+    public Agendamento(int id_agendamento, Date dataAgendamento, Date dataSolicitacao, String status, String situacao, Usuario usuario, Usuario usuarioCorretor, Imovel imovel) {
         this.id_agendamento = id_agendamento;
         this.dataAgendamento = dataAgendamento;
         this.dataSolicitacao = dataSolicitacao;
         this.status = status;
         this.situacao = situacao;
         this.usuario = usuario;
+        this.usuarioCorretor = usuarioCorretor;
         this.imovel = imovel;
     }
 
@@ -92,5 +95,12 @@ public class Agendamento {
         this.imovel = imovel;
     }
 
-    
+    public Usuario getUsuarioCorretor() {
+        return usuarioCorretor;
+    }
+
+    public void setUsuarioCorretor(Usuario usuarioCorretor) {
+        this.usuarioCorretor = usuarioCorretor;
+    }
+
 }

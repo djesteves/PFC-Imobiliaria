@@ -5,9 +5,10 @@
  */
 package Controle;
 
-import Dao.AgendaDAO;
-import Modelo.Agenda;
+import Dao.AgendamentoDAO;
+import Modelo.Agendamento;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -17,21 +18,31 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Diego
  */
-public class AgendaCorretor implements ICommand {
+public class AgendamentoLista implements ICommand {
 
     //DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
         try {
-            AgendaDAO dao = new AgendaDAO();
+            AgendamentoDAO dao = new AgendamentoDAO();
             Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
-            int id = Integer.parseInt(session.get("id").toString());
+            int id = 0;
 
-            List<Agenda> listaAgenda = dao.listarAgendaCorretor(id);
+            if (request.getParameter("id") == null) {
+                id = (int) session.get("id");
+            } else {
+                id = Integer.parseInt(request.getParameter("id"));
+            }
 
-            request.setAttribute("listaAgenda", listaAgenda);
-            return "Corretor/Agenda.jsp";
+            Map<String, Object> parametros = new HashMap<>();
+            parametros.put("id", id);
+            parametros.put("modo", request.getParameter("modo"));
+
+            List<Agendamento> listaAgendamento = dao.listarAgendamentos(parametros);
+
+            request.setAttribute("listaAgendamento", listaAgendamento);
+            return "Usuario/Agendamentos.jsp";
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());

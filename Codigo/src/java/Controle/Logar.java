@@ -45,7 +45,7 @@ public class Logar implements ICommand {
                 return "index.jsp";
             } else {
                 request.setAttribute("msgerro", "Usúario ou senha inválidos");
-                return "index.jsp";
+                return "login.jsp";
             }
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());

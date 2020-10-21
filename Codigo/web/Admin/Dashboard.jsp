@@ -4,7 +4,7 @@
     Author     : Diego
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/header.jsp" />
+<jsp:include page="../navbar.jsp" />
 
 <div class="container"> 
 
@@ -13,6 +13,19 @@
     </div>
 
     <div id="divbotoes">
+        <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
+            <div class="canto-curva-outer col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div  class="canto-curva canto-curva-inner">
+                    <img src="../Resources/img/worker.png" alt=""/>
+                    <a href="<%=request.getContextPath()%>/Controle/AgendamentoLista?modo=Corretor""> 
+                        <div tipo="_div" class="canto-bot">
+                            Minha Agenda
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </c:if>
+        
         <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
             <div class="canto-curva-outer col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div  class="canto-curva canto-curva-inner">
@@ -52,6 +65,9 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 
     <!-- modal relatorios -->

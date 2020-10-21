@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../header.jsp" />
+<jsp:include page="../navbar.jsp" />
 
 <div data-aos="fade-right" data-aos-delay="300" class="container">
     <div class="text-center">
         <p>Solicitar visita ao imóvel</p>
     </div>
 
-    <form action="<%=request.getContextPath()%>/Controle/AgendarVisita" method="post" class="formulario">
+    <form action="<%=request.getContextPath()%>/Controle/AgendamentoSolicitar" method="post" class="formulario">
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="idimovel">Número do Imóvel</label>

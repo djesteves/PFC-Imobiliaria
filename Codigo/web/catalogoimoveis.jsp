@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="pt-BR" />
 
-<jsp:include page="header.jsp" />
+<jsp:include page="navbar.jsp" />
 
 <div class="container">
     <div class="text-center">
@@ -23,7 +23,9 @@
                     <option value="300000">Até R$ 300.000</option>
                     <option value="500000">Até R$ 500.000</option>
                     <option value="1000000">Até R$ 1.000.000</option>
-                    <option value="1000000000000000">Maior que R$ 1.000.000</option>
+                    <option value="10000000">Até R$ 10.000.000</option>
+                    <option value="50000000">Até R$ 50.000.000</option>
+                    <option value="100000000000000">Todos</option>
                 </select>
 
                 <label class="my-1 mr-2" for="tpvenda">Pretendo:</label>
@@ -46,7 +48,7 @@
 
             </form>
         </div>
-        <div class="col-md-8 col-lg-9" data-aos="fade-left" data-aos-delay="200">
+        <div class="col-md-8 col-lg-9" >
             <div style="display: none;" id="loader" class="loader"></div>
 
             <div id="imovel" class="row">

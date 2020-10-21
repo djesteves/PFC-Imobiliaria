@@ -1,11 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<jsp:include page="/header.jsp" />
+<jsp:include page="/navbar.jsp" />
 
 <div class="table-responsive container">
 
     <div class="text-center">
-        <p>Agenda do Corretor</p>
+        <p>Lista de Agendamentos</p>
     </div>
 
     <table id="agendatable" class="table table-sm table-striped table-bordered">
@@ -14,6 +14,7 @@
             <tr>
                 <th scope="col">Ações</th>
                 <th scope="col">Nome Solicitante</th>
+                <th scope="col">Nome Corretor</th>
                 <th scope="col">Código Imóvel</th>
                 <th scope="col">Data da Solicitação</th>
                 <th scope="col">Data do Agendamento</th>
@@ -21,27 +22,22 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="agenda" items="${listaAgenda}">
+            <c:forEach var="agendamento" items="${listaAgendamento}">
                 <tr>
                     <td>
-                        <!--
-                        <a title="Consultar Imóvel" class="btn btn-sm btn-primary" href="${pageContext.servletContext.contextPath}/Controle/ImovelListarPorID?id=${imovel.id_imovel}"><i class="fas fa-eye"></i></a>
-
                         <a title="Aprovar Imóvel" class="btn btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=${imovel.id_imovel}&email=${imovel.usuario.email}"><i class="fas fa-check"></i></a>
-
                         <a title="Reprovar Imóvel" class="btn btn-sm btn-danger" href="#" onClick="modalReprovar(${imovel.id_imovel})" data-toggle="modal" data-target="#modalReprovar" ><i class="fas fa-times"></i></a>
-                        -->
                     </td>
-                    <td>${agenda.agendamento.usuario.nome}</td>
-                    <td>${agenda.agendamento.imovel.id_imovel}</td>
-                    <td><fmt:formatDate pattern="dd/MM/yyyy" value="${agenda.agendamento.dataSolicitacao}"/></td>
-                    <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${agenda.agendamento.dataAgendamento}"/></td>
-                    <td>${agenda.agendamento.status}</td>
+                    <td>${agendamento.usuario.nome}</td>
+                    <td>${agendamento.usuarioCorretor.nome}</td>
+                    <td>${agendamento.imovel.id_imovel}</td>
+                    <td><fmt:formatDate pattern="dd/MM/yyyy" value="${agendamento.dataSolicitacao}"/></td>
+                    <td><fmt:formatDate pattern="dd/MM/yyyy HH:mm:ss" value="${agendamento.dataAgendamento}"/></td>
+                    <td>${agendamento.status}</td>
                 </tr>
             </c:forEach>
         </tbody>
     </table>
-
 
 </div>
 

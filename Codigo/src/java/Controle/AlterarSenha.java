@@ -32,7 +32,7 @@ public class AlterarSenha implements ICommand {
 
         if (!senha.equalsIgnoreCase(resenha)) {
             request.setAttribute("msgerro", "As senhas não coincidem!");
-            return "Usuario/AlterarSenhaUsuario.jsp";
+            return "Usuario/AlterarSenha.jsp";
         } else {
             usuario.setId_usuario(Integer.parseInt(session.get("id").toString()));
             usuario.setSenha(Usuario.criptografia(senha));

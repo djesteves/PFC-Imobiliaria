@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(filterName = "AcessoLogado", urlPatterns = {"/Usuario/GerenciarImoveis.jsp", "/Usuario/FormImovel.jsp", "/Usuario/AlterarSenhaUsuario.jsp", "/Usuario/Agendamento.jsp" })
+@WebFilter(filterName = "AcessoLogado", urlPatterns = {"/Usuario/GerenciarImoveis.jsp", "/Usuario/FormImovel.jsp", "/Usuario/AlterarSenhaUsuario.jsp", "/Usuario/AgendamentoSolicitar.jsp", "/Usuario/Agendamentos.jsp"})
 public class AcessoLogado implements Filter {
 
     @Override

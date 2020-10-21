@@ -6,10 +6,7 @@
 package Controle;
 
 import Dao.AgendamentoDAO;
-import Modelo.Agenda;
 import Modelo.Agendamento;
-import Modelo.Imovel;
-import Modelo.Usuario;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Diego
  */
-public class AgendarVisita implements ICommand {
+public class AgendamentoSolicitar implements ICommand {
 
     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
@@ -31,18 +28,18 @@ public class AgendarVisita implements ICommand {
         try {
             Map<String, Object> session = (Map) request.getSession().getAttribute("usuarioLogado");
 
-            Agenda agenda = new Agenda();
+            Agendamento agendamento = new Agendamento();
 
-            agenda.getAgendamento().setDataAgendamento(formatter.parse(request.getParameter("dataagendamento")));
-            agenda.getAgendamento().getImovel().setId_imovel(Integer.parseInt(request.getParameter("idimovel")));
-            agenda.getAgendamento().getUsuario().setId_usuario(Integer.parseInt(session.get("id").toString()));
-            agenda.getAgendamento().setSituacao("Ativo");
-            agenda.getAgendamento().setStatus("Solicitado");
-            agenda.getUsuarioCorretor().setId_usuario(Integer.parseInt(request.getParameter("corretores")));
+            agendamento.setDataAgendamento(formatter.parse(request.getParameter("dataagendamento")));
+            agendamento.getImovel().setId_imovel(Integer.parseInt(request.getParameter("idimovel")));
+            agendamento.getUsuario().setId_usuario(Integer.parseInt(session.get("id").toString()));
+            agendamento.setSituacao("Ativo");
+            agendamento.setStatus("Solicitado");
+            agendamento.getUsuarioCorretor().setId_usuario(Integer.parseInt(request.getParameter("corretores")));
 
             AgendamentoDAO dao = new AgendamentoDAO();
 
-            dao.Agendar(agenda);
+            dao.Agendar(agendamento);
 
             request.setAttribute("msg", "O Agendamento foi realizado com sucesso, as informações foram enviadas por email");
             return "index.jsp";

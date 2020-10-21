@@ -72,17 +72,12 @@ status VARCHAR(255) NOT NULL,
 situacao VARCHAR(20) NOT NULL,
 id_usuario INTEGER,
 id_imovel INTEGER,
+id_corretor INTEGER,
 CONSTRAINT fk_agendamento_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
+CONSTRAINT fk_agendamento_usuarioCorretor FOREIGN KEY (id_corretor) REFERENCES Usuario (id_usuario),
 CONSTRAINT fk_agendamento_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel)
 );
 
-CREATE TABLE Agenda(
-id_agenda SERIAL PRIMARY KEY,
-id_corretor INTEGER,
-id_agendamento INTEGER,
-CONSTRAINT fk_agenda_usuario FOREIGN KEY (id_corretor) REFERENCES Usuario (id_usuario),
-CONSTRAINT fk_agenda_agenda FOREIGN KEY (id_agendamento) REFERENCES Agendamento (id_agendamento)
-);
 
 -- INSERT ADMINISTRADOR
 insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');

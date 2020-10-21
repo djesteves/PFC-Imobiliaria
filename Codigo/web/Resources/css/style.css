@@ -7,10 +7,7 @@ and open the template in the editor.
     Created on : 02/08/2019, 02:26:51
     Author     : Diego
 */
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
-html, body, html * {
-    font-family: 'Roboto', sans-serif;
-}
+
 
 .navbar-gradient {
     background:linear-gradient(120deg,#7f70f5,#0ea0ff);
@@ -20,11 +17,12 @@ html, body, html * {
 .formulario {
     max-width:950px;
     padding:20px;
-    padding-bottom:60px;
-    padding-top:60px;
+    padding-bottom:40px;
+    padding-top:40px;
     margin:auto;
     margin-bottom: 50px;
-    box-shadow:0 2px 10px rgba(0,0,0,.1)
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+    background-color: #fff;
 }
 
 body {
@@ -115,7 +113,7 @@ div#divbotoes{
     border: solid 1px rgb(220,220,220);
     border-radius: 12px;
     margin: 4px 4px 0 4px;
-    
+
     height: 168px;
     width: 100%;
     max-width: 160px;
@@ -157,4 +155,5 @@ div#divbotoes{
 
 a:link {
     text-decoration: none;
+    cursor: pointer;
 }

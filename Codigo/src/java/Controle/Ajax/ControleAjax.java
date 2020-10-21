@@ -118,7 +118,7 @@ public class ControleAjax extends HttpServlet {
                     + "  <p><i class=\"fas fa-file-invoice-dollar\"> </i> " + nf.format(im.getCondominio()) + " Valor do Condominio</p>\n"
                     + "  <hr class=\"my-4\">\n"
                     + "<div class=\"text-center \">\n"
-                    + " <form action=\"" + request.getContextPath() + "/Usuario/Agendamento.jsp\" method=\"post\">"
+                    + " <form action=\"" + request.getContextPath() + "/Usuario/AgendamentoSolicitar.jsp\" method=\"post\">"
                     + " <input type=\"hidden\" id=\"id_imovel\" name=\"id_imovel\" value=\"" + im.getId_imovel() + "\" >"
                     + "  <button type=\"submit\" class=\"btn btn-primary btn-lg\" href=\"index.jsp\" role=\"button\">Agendar uma Visita</button>\n"
                     + " </form>"
@@ -163,7 +163,9 @@ public class ControleAjax extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             if (imoveis.isEmpty()) {
+                out.println("<div class=\"col-12 text-center\">");
                 out.println("<p><strong> Nenhum Imóvel Cadastrado </strong></p>");
+                out.println("</div>");
             } else {
                 for (Imovel im : imoveis) {
                     out.println("<div class=\"col-sm-6 col-xl-4 mb-3 align-items-center\">");
