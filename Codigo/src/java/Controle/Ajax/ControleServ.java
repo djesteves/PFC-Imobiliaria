@@ -7,16 +7,19 @@ package Controle.Ajax;
 
 import Dao.AgendamentoDAO;
 import Dao.ImovelDAO;
+import Dao.RelatorioDAO;
 import Modelo.Imovel;
 import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +31,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Diieg
  */
-@WebServlet(name = "ServletAjax", urlPatterns = {"/ImovelListarAprovados", "/VisualizarImovel", "/ListarCorretores"})
+@WebServlet(name = "ControleServ", urlPatterns = {"/ImovelListarAprovados", "/VisualizarImovel", "/ListarCorretores", "/EmitirRelatorio"})
 @MultipartConfig
-public class ControleAjax extends HttpServlet {
+public class ControleServ extends HttpServlet {
 
     NumberFormat nf = NumberFormat.getCurrencyInstance();
 
@@ -48,9 +51,11 @@ public class ControleAjax extends HttpServlet {
                 CarregarModalImovel(request, response);
             } else if (uri.equals(request.getContextPath() + "/ListarCorretores")) {
                 ListarCorretores(request, response);
+            } else if (uri.equals(request.getContextPath() + "/EmitirRelatorio")) {
+                EmitirRelatorio(request, response);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ControleAjax.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleServ.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
 
@@ -65,6 +70,8 @@ public class ControleAjax extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
+            out.println("<option value=\"\">Escolha </option>");
+            out.println("<option value=\"AutoAlocar\">Alocar um corretor automaticamente/Não tenho preferência</option>");
             for (Usuario u : corretores) {
                 out.println("<option value=\"" + u.getId_usuario() + "\">" + u.getNome() + "</option>");
             }
@@ -120,7 +127,7 @@ public class ControleAjax extends HttpServlet {
                     + "<div class=\"text-center \">\n"
                     + " <form action=\"" + request.getContextPath() + "/Usuario/AgendamentoSolicitar.jsp\" method=\"post\">"
                     + " <input type=\"hidden\" id=\"id_imovel\" name=\"id_imovel\" value=\"" + im.getId_imovel() + "\" >"
-                    + "  <button type=\"submit\" class=\"btn btn-primary btn-lg\" href=\"index.jsp\" role=\"button\">Agendar uma Visita</button>\n"
+                    + "  <button type=\"submit\" class=\"btn btn-primary btn-block\" href=\"index.jsp\" role=\"button\">Agendar uma Visita</button>\n"
                     + " </form>"
                     + "</div>"
                     + "</div>"
@@ -129,6 +136,39 @@ public class ControleAjax extends HttpServlet {
                     + " </div> "
                     + "</div>");
 
+        }
+
+    }
+
+    public void EmitirRelatorio(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String relatorio = request.getParameter("nomerel");
+
+        // acha jrxml dentro da aplicação
+        ServletContext contexto = request.getServletContext();
+        String jrxml = contexto.getRealPath("Resources/relatorios/" + relatorio + ".jrxml");
+        String path = contexto.getRealPath("/Resources/resultados/");
+
+        Map<String, Object> parametros = new HashMap<>();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        parametros.put("logo", contexto.getRealPath("Resources/img/icon_imob.png"));
+        parametros.put("path", path);
+
+        if (relatorio.equalsIgnoreCase("ImoveisAprovados")) {
+            parametros.put("datainicio", formatter.parse(request.getParameter("datainicio")));
+            parametros.put("datafinal", formatter.parse(request.getParameter("datafinal")));
+        } else if (relatorio.equalsIgnoreCase("FichaAgendamento")) {
+            parametros.put("id_agendamento", Integer.parseInt(request.getParameter("id_agendamento")));
+        }
+
+        RelatorioDAO gerador = new RelatorioDAO();
+
+        String caminho = gerador.geraPdf(jrxml, parametros);
+
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println(caminho);
         }
 
     }
@@ -143,7 +183,7 @@ public class ControleAjax extends HttpServlet {
                 ImovelListarAprovados(request, response);
             }
         } catch (Exception ex) {
-            Logger.getLogger(ControleAjax.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControleServ.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
         }

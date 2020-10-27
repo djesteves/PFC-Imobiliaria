@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FichaAgendamento" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30362aa8-bfaa-4ae5-8232-1af28fc4c609">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="id_agendamento" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select ag.id_agendamento, ag.dataagendamento, ag.datasolicitacao, 
+u.nome as solicitante, uc.nome as corretor, i.id_imovel,
+e.logradouro || ' - ' || e.numero || ', '|| e.bairro  ||' - ' || e.cidade || ' - '|| e.cep as enderecoimovel
+from agendamento ag
+join usuario u on u.id_usuario = ag.id_usuario
+join usuario uc on uc.id_usuario = ag.id_corretor
+join imovel i on i.id_imovel = ag.id_imovel
+join endereco e on e.id_endereco = i.id_endereco
+where ag.id_agendamento = $P{id_agendamento}]]>
+	</queryString>
+	<field name="id_agendamento" class="java.lang.Integer"/>
+	<field name="dataagendamento" class="java.sql.Timestamp"/>
+	<field name="datasolicitacao" class="java.sql.Timestamp"/>
+	<field name="solicitante" class="java.lang.String"/>
+	<field name="corretor" class="java.lang.String"/>
+	<field name="id_imovel" class="java.lang.Integer"/>
+	<field name="enderecoimovel" class="java.lang.String"/>
+	<pageHeader>
+		<band height="72" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="24" width="475" height="20" uuid="84e84bd5-fc4a-4e20-8c0c-1f30603deccd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ficha de Agendamento]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="80" height="71" uuid="364a68c2-f160-4169-8c5f-a6d349130039"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="71" width="555" height="1" uuid="a3676ec2-72f1-454f-af99-06fd8c861b1b"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="503" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="33" width="555" height="30" uuid="a7c86bf1-7062-4bab-907a-717fe786882e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dados da Solicitação]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="73" width="372" height="20" uuid="3905c158-7ecb-41e7-afcb-7335f88a2a73">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eec25a96-b6f4-40d0-b98f-6b8f913f5312"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_agendamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="0" y="263" width="552" height="20" uuid="4041359e-9ce9-4aba-a94f-8e634f668f00">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68299a4a-d55d-4b8c-a196-5f8b45e2aabc"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataagendamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH:mm:ss">
+				<reportElement x="148" y="93" width="372" height="20" uuid="ab8be2db-3b1b-40ab-81d2-1b0bdf18d221">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a273ed2-561e-4ec7-b79d-2e1ad547cd46"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{datasolicitacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="113" width="372" height="19" uuid="9f13ff46-586b-4758-bfac-8519981ff568">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64e44cf7-4476-437d-87f4-b8e0915771e7"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="133" width="372" height="19" uuid="f3b282a5-da8a-4eb6-a45c-d948692d4e38">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d525927-8b7a-4ecb-b08a-cfc369675996"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{corretor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="153" width="372" height="19" uuid="cc657a56-3b16-4874-ada1-ee5610027e16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_imovel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="173" width="372" height="40" uuid="3d55e91d-3270-4e71-ace5-5c419bc99197">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0bb3ebde-7ff3-4f50-be78-3b6e59061d6d"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{enderecoimovel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="73" width="128" height="20" uuid="c17ae690-8021-4ca9-a59c-222861193266">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eec25a96-b6f4-40d0-b98f-6b8f913f5312"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código do Agendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="243" width="554" height="20" forecolor="#FF0400" uuid="8ea7b5d5-3d2d-4708-8fb4-606835230f97">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68299a4a-d55d-4b8c-a196-5f8b45e2aabc"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data do Agendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="93" width="128" height="20" uuid="dc84db6f-9948-4ae5-ac16-af00a5129698">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a273ed2-561e-4ec7-b79d-2e1ad547cd46"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Solicitação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="113" width="128" height="20" uuid="7dff3afc-016c-499e-8ec5-8c9c440ff6dd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64e44cf7-4476-437d-87f4-b8e0915771e7"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="153" width="128" height="20" uuid="8e858c32-4076-440e-871c-615f7a7f3748">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código do Imóvel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="133" width="128" height="20" uuid="1ce6c2c4-e3eb-4afd-9de9-a9dfdd99e9ac">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d525927-8b7a-4ecb-b08a-cfc369675996"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Corretor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="173" width="128" height="20" uuid="2b3c48fa-ed22-4b7f-a313-bc436b654ef7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0bb3ebde-7ff3-4f50-be78-3b6e59061d6d"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endereço do Imóvel]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="645465f5-2e20-436a-a88d-0998adc9304b"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="0" width="55" height="10" uuid="018311a6-1372-46c8-9300-b9ab4bfbc7c7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="0" width="30" height="10" uuid="25cd0ba8-5079-446c-ba23-257ca4d4235b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="10">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="be909857-f2e4-4a51-9949-e47a9b983f0d"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="0" width="55" height="10" uuid="5bd807b6-fc85-47b5-a0d4-0bfc5a628d92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="0" width="30" height="10" uuid="350198a2-2548-48a5-9980-6a45a85bd6e5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

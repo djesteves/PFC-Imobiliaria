@@ -9,17 +9,18 @@
 
     .formulario {
         border-radius: 8px;
+        font-weight: lighter;
     }
 
-    @media (max-width: 575.98px) {
+    @media (max-width: 400px) {
         .formulario {
             width: 280px; 
         }
     }
 
-    @media (min-width: 575.98px) and (max-width: 1199.98px) {   
+    @media (min-width: 400px) and (max-width: 1199.98px) {   
         .formulario {
-            width: 350px;
+            width: 380px;
         }
     }
 

@@ -5,7 +5,7 @@
 <div class="table-responsive container">
 
     <div class="text-center">
-        <p>Lista de Agendamentos</p>
+        <p>Lista de Agendamentos ${usuarioLogado.nome}</p>
     </div>
 
     <table id="agendatable" class="table table-sm table-striped table-bordered">
@@ -25,8 +25,8 @@
             <c:forEach var="agendamento" items="${listaAgendamento}">
                 <tr>
                     <td>
-                        <a title="Aprovar Imóvel" class="btn btn-sm btn-success" href="${pageContext.servletContext.contextPath}/Controle/ImovelAprovar?id=${imovel.id_imovel}&email=${imovel.usuario.email}"><i class="fas fa-check"></i></a>
-                        <a title="Reprovar Imóvel" class="btn btn-sm btn-danger" href="#" onClick="modalReprovar(${imovel.id_imovel})" data-toggle="modal" data-target="#modalReprovar" ><i class="fas fa-times"></i></a>
+              
+                        <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="fas fa-print" ></i></a>
                     </td>
                     <td>${agendamento.usuario.nome}</td>
                     <td>${agendamento.usuarioCorretor.nome}</td>
@@ -82,4 +82,35 @@
 
         });
     });
+
+
+    function EmitirRelatorio(rel, param1) {
+       
+        var xhttp = null;
+        if (window.XMLHttpRequest) {
+            //code for modern browsers
+            xhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 3) {
+                console.log("emitindo rel");
+            }
+
+            if (this.readyState == 4 && this.status == 200) {
+                var resposta = this.responseText;
+                
+                URL= '<%=request.getContextPath()%>/Resources/resultados/'+resposta;
+                window.open(URL);
+            }
+        };
+
+        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&id_agendamento=' +param1, true);
+        xhttp.send();
+    }
 </script>

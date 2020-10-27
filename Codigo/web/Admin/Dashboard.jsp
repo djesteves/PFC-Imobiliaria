@@ -25,7 +25,7 @@
                 </div>
             </div>
         </c:if>
-        
+
         <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
             <div class="canto-curva-outer col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div  class="canto-curva canto-curva-inner">
@@ -66,8 +66,6 @@
             </div>
         </div>
 
-
-
     </div>
 
     <!-- modal relatorios -->
@@ -80,9 +78,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<%=request.getContextPath()%>/Controle/EmitirRelatorio" method="post">
+                <form id="formData">
                     <div class="modal-body">
-                        <input type="hidden" id="nomerel" name="nomerel" value="ImoveisAprovados">
                         <div class="form-row">
                             <div class="col">
                                 <label for="datainicio">Data Inicial</label>
@@ -95,8 +92,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+
+
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="EmitirRelatorio('ImoveisAprovados')">Confirmar</button>
                     </div>
                 </form>
             </div>
@@ -105,4 +104,40 @@
     <!-- fim modal relatorios -->
 </div>
 
-<jsp:include page="/footer.jsp" />                    
+<jsp:include page="/footer.jsp" />
+
+<script type="text/javascript">
+
+
+    function EmitirRelatorio(rel) {
+
+        var xhttp = null;
+        if (window.XMLHttpRequest) {
+            //code for modern browsers
+            xhttp = new XMLHttpRequest();
+        } else {
+            // code for old IE browsers
+            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        var datainicio = document.getElementById("datainicio").value;
+        var datafinal = document.getElementById("datafinal").value;
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 3) {
+                console.log("emitindo rel");
+            }
+
+            if (this.readyState == 4 && this.status == 200) {
+                var resposta = this.responseText;
+
+                URL = '<%=request.getContextPath()%>/Resources/resultados/' + resposta;
+                window.open(URL);
+            }
+        };
+
+        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&datainicio=' + datainicio + '&datafinal=' + datafinal, true);
+        xhttp.send();
+    }
+</script>

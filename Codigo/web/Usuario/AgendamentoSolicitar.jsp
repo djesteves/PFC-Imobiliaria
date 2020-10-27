@@ -8,6 +8,8 @@
 
     <form action="<%=request.getContextPath()%>/Controle/AgendamentoSolicitar" method="post" class="formulario">
         <div class="form-row">
+
+
             <div class="form-group col-4">
                 <label for="idimovel">Número do Imóvel</label>
                 <input type="text" readOnly="true" class="form-control" value="${param.id_imovel}" name="idimovel" id="idimovel" required/>
@@ -20,9 +22,9 @@
                 </select>
             </div>
 
-            <div class="form-group col-12">
+            <div class="form-group col-6">
                 <label for="dataagendamento">Data e Hora do Agendamento</label>
-                <input type="datetime-local" class="form-control col-sm-6 col-md-4 col-lg-4" onBlur="verData()" name="dataagendamento" id="dataagendamento" required/>
+                <input type="datetime-local" class="form-control col-sm-6 col-md-4 col-lg-8" onBlur="verData()" name="dataagendamento" id="dataagendamento" required/>
             </div>
 
         </div>
@@ -56,6 +58,12 @@
 
         if (data < dataAtual) {
             var mensagem = "A data do agendamento não pode ser inferior a data corrente";
+            mostraDialogo(mensagem, "danger", 3000);
+            $('#dataagendamento').val('');
+        }
+
+        if (data.getHours() < 9 || data.getHours() > 17) {
+            var mensagem = "A data do agendamento deverá ocorrer em horario comercial (das 9:00 as 17:00)";
             mostraDialogo(mensagem, "danger", 3000);
             $('#dataagendamento').val('');
         }

@@ -16,6 +16,8 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import Util.ConnectionFactory;
 import java.io.File;
+import java.nio.charset.Charset;
+import java.util.Random;
 import net.sf.jasperreports.engine.JasperExportManager;
 
 /**
@@ -26,7 +28,7 @@ public class RelatorioDAO {
 
     Connection conexao = ConnectionFactory.getConexao();
 
-    public void geraPdf(String jrxml,
+    public String geraPdf(String jrxml,
             Map<String, Object> parametros) throws IOException, JRException, SQLException {
 
         // compila jrxml em memoria
@@ -35,15 +37,24 @@ public class RelatorioDAO {
         // preenche relatorio
         JasperPrint print = JasperFillManager.fillReport(jasper, parametros, this.conexao);
 
-        String caminhoApp = new File("").getAbsolutePath();
-        System.out.println("cam " +caminhoApp);
-        //visualiar relatorio
-        //JasperViewer.viewReport(print, false);
+        //gerar nome random para o relatorio
+        int leftLimit = 48;
+        int rightLimit = 122;
+        int targetStringLength = 15;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString().toUpperCase();
+
 
         // exporta para pdf e executa
-        JasperExportManager.exportReportToPdfFile(print, "C:\\relatorio.pdf");
-        Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
+        JasperExportManager.exportReportToPdfFile(print, parametros.get("path") + generatedString + ".pdf");
+        //Runtime.getRuntime().exec("cmd /c start C:\\relatorio.pdf");
 
         conexao.close();
+        return generatedString + ".pdf";
     }
 }
