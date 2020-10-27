@@ -1,3 +1,6 @@
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA IF NOT EXISTS public;
+
 CREATE TABLE Endereco(
 id_endereco SERIAL PRIMARY KEY,
 logradouro VARCHAR(255) NOT NULL,
@@ -84,10 +87,5 @@ insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi
 insert into usuario values (DEFAULT, 'Administrador', NOW(), '11912345678','1143211234','774.341.551-16', '29.767.686-6', 'F', 1, 'admin@email.com', '202CB962AC59075B964B07152D234B70', 'ADMINISTRADOR', 'Ativo');
 
 -- INSERT CORRETOR 1
+insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
 insert into usuario values (DEFAULT, 'Corretor 1', NOW(), '11912345678','1143211234','024.939.380-89', '29.767.686-6', 'F', 1, 'corretor1@email.com', '202CB962AC59075B964B07152D234B70', 'CORRETOR', 'Ativo');
-
--- INSERT CORRETOR 2
-insert into usuario values (DEFAULT, 'Corretor 1', NOW(), '11912345678','1143211234','754.939.380-89', '29.767.686-6', 'F', 1, 'corretor2@email.com', '202CB962AC59075B964B07152D234B70', 'CORRETOR', 'Ativo');
-
--- INSERT USUARIO 1
-insert into usuario values (DEFAULT, 'Usuario 1', NOW(), '11912345678','1143211234','374.439.380-89', '29.767.686-6', 'F', 1, 'usuario2@email.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
