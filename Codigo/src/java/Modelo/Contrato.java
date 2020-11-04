@@ -15,11 +15,18 @@ public class Contrato {
 
     private int id_contrato;
     private double valor_fechado;
-    private Usuario funcionario;
+    private Usuario usuarioCorretor;
     private Imovel imovel;
     private Usuario usuarioComprador;
     private Usuario usuarioVendedor;
     private Date dataContrato;
+
+    public Contrato() {
+        this.usuarioCorretor = new Usuario();
+        this.usuarioComprador = new Usuario();
+        this.usuarioVendedor = new Usuario();
+        this.imovel = new Imovel();
+    }
 
     public int getId_contrato() {
         return id_contrato;
@@ -37,12 +44,12 @@ public class Contrato {
         this.valor_fechado = valor_fechado;
     }
 
-    public Usuario getFuncionario() {
-        return funcionario;
+    public Usuario getCorretor() {
+        return usuarioCorretor;
     }
 
-    public void setFuncionario(Usuario funcionario) {
-        this.funcionario = funcionario;
+    public void setCorretor(Usuario usuarioCorretor) {
+        this.usuarioCorretor = usuarioCorretor;
     }
 
     public Imovel getImovel() {

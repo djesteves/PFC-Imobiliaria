@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AgendamentoSolicitar implements ICommand {
 
-    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+    DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
@@ -33,45 +33,48 @@ public class AgendamentoSolicitar implements ICommand {
             int id_corretor = 0;
             String msgErro = "";
 
-            agendamento.setDataAgendamento(formatter.parse(request.getParameter("dataagendamento")));
+            agendamento.setDataAgendamento(fmt.parse(request.getParameter("dataagendamento")));
             agendamento.getImovel().setId_imovel(Integer.parseInt(request.getParameter("idimovel")));
             agendamento.getUsuario().setId_usuario(Integer.parseInt(session.get("id").toString()));
             agendamento.setSituacao("Ativo");
             agendamento.setStatus("Confirmado");
 
             AgendamentoDAO dao = new AgendamentoDAO();
+            
+            if (dao.disponibilidadeImovel(agendamento)) {
+                if ("AutoAlocar".equalsIgnoreCase(request.getParameter("corretores"))) {
 
-            if ("AutoAlocar".equalsIgnoreCase(request.getParameter("corretores"))) {
-                id_corretor = dao.alocaCorretor(agendamento);
-                agendamento.getUsuarioCorretor().setId_usuario(id_corretor);
+                    id_corretor = dao.alocaCorretor(agendamento);
+                    agendamento.getUsuarioCorretor().setId_usuario(id_corretor);
 
-                if (id_corretor == 0) {
-                    msgErro = "Nenhum corretor disponivel para a data e hora desejada!";
+                    if (id_corretor == 0) {
+                        msgErro = "Nenhum corretor disponivel para a data e hora desejada!";
+                    }
+
+                } else {
+                    id_corretor = Integer.parseInt(request.getParameter("corretores"));
+                    agendamento.getUsuarioCorretor().setId_usuario(id_corretor);
+
+                    if (!dao.disponibilidadeCorretor(agendamento)) {
+                        msgErro = "O corretor selecionado não está disponivel para a data e hora desejada!";
+                    }
                 }
             } else {
-                id_corretor = Integer.parseInt(request.getParameter("corretores"));
-                agendamento.getUsuarioCorretor().setId_usuario(id_corretor);
-
-                if (dao.disponibilidadeCorretor(agendamento)) {
-                    msgErro = "O corretor selecionado não está disponivel para a data e hora desejada!";
-                }
+                msgErro = "O imóvel não está disponivel para a data e hora desejada!";
             }
 
             if (id_corretor != 0 && msgErro == "") {
                 dao.Agendar(agendamento);
-            }
-
-            if (msgErro != "") {
-                request.setAttribute("msgerro", msgErro);
+                request.setAttribute("msg", "O Agendamento foi realizado com sucesso, as informações foram enviadas por email");
                 return "index.jsp";
             } else {
-                request.setAttribute("msg", "O Agendamento foi realizado com sucesso, as informações foram enviadas por email");
+                request.setAttribute("msgerro", msgErro);
                 return "index.jsp";
             }
         } catch (ParseException | SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
-            return "AgendamentoSolicitar.jsp";
+            return "Usuario/AgendamentoSolicitar.jsp";
         }
 
     }

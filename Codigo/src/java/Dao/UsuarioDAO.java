@@ -245,7 +245,7 @@ public class UsuarioDAO {
 
     }
 
-    public void excluir(int id) throws SQLException {
+    public void excluir(Usuario usuario) throws SQLException {
         String UPDATE_SITUACAO = "UPDATE Usuario SET situacao = ?"
                 + " WHERE id_usuario = ?";
 
@@ -253,8 +253,8 @@ public class UsuarioDAO {
 
         PreparedStatement smt = connection.prepareStatement(UPDATE_SITUACAO);
 
-        smt.setString(1, "Inativo");
-        smt.setInt(2, id);
+        smt.setString(1, usuario.getSituacao());
+        smt.setInt(2, usuario.getId_usuario());
 
         smt.executeUpdate();
 

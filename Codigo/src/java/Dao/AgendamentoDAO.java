@@ -34,7 +34,8 @@ public class AgendamentoDAO {
 
         String queryCorretores = "SELECT * FROM Usuario U "
                 + " INNER JOIN Endereco E ON E.id_endereco = U.id_endereco"
-                + " WHERE u.nivel_acesso = 'CORRETOR'";
+                + " WHERE u.nivel_acesso = 'CORRETOR'"
+                + " AND u.situacao = 'Ativo'";
 
         List<Usuario> corretores = new ArrayList<>();
 
@@ -54,7 +55,6 @@ public class AgendamentoDAO {
 
         }
 
-        smt.close();
         connection.close();
 
         return corretores;
@@ -78,6 +78,7 @@ public class AgendamentoDAO {
             queryAgendaImovel += "WHERE ag.id_imovel = ?";
         }
 
+        queryAgendaImovel += " AND ag.situacao = 'Ativo'";
         queryAgendaImovel += "ORDER BY ag.dataagendamento ASC";
 
         List<Agendamento> listaAgenda = new ArrayList<>();
@@ -104,7 +105,6 @@ public class AgendamentoDAO {
 
         }
 
-        smt.close();
         connection.close();
 
         return listaAgenda;
@@ -127,7 +127,6 @@ public class AgendamentoDAO {
         smt.setInt(7, agenda.getUsuarioCorretor().getId_usuario());
         smt.execute();
 
-        smt.close();
         connection.close();
 
     }
@@ -161,7 +160,6 @@ public class AgendamentoDAO {
 
         }
 
-        smt.close();
         connection.close();
 
         return id;
@@ -183,14 +181,53 @@ public class AgendamentoDAO {
         rs = smt.executeQuery();
 
         if (rs.next()) {
-            smt.close();
-            connection.close();
-            return true;
-        } else {
-            smt.close();
             connection.close();
             return false;
+        } else {
+            connection.close();
+            return true;
         }
+
+    }
+
+    public boolean disponibilidadeImovel(Agendamento agendamento) throws SQLException {
+
+        Connection connection = ConnectionFactory.getConexao();
+
+        String disponibilidadeImovel = "SELECT dataagendamento "
+                + " FROM Agendamento "
+                + "WHERE id_imovel  = ? "
+                + "  AND dataagendamento = ?";
+        
+        smt = connection.prepareStatement(disponibilidadeImovel);
+        smt.setInt(1, agendamento.getImovel().getId_imovel());
+        smt.setTimestamp(2, new Timestamp(agendamento.getDataAgendamento().getTime()));
+        rs = smt.executeQuery();
+        
+        System.out.println(rs);
+
+        if (rs.next()) {
+            connection.close();
+            return false;
+        } else {
+            connection.close();
+            return true;
+        }
+
+    }
+
+    public void cancelar(Agendamento agenda) throws SQLException {
+
+        String insertAgendamento = "UPDATE Agendamento SET Situacao = ? WHERE id_agendamento = ?";
+
+        Connection connection = ConnectionFactory.getConexao();
+
+        smt = connection.prepareStatement(insertAgendamento);
+        smt.setString(1, agenda.getSituacao());
+        smt.setInt(2, agenda.getId_agendamento());
+        smt.executeUpdate();
+
+        connection.close();
 
     }
 }

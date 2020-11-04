@@ -45,7 +45,7 @@ public class ImovelCadastrar implements ICommand {
             Part filePart = request.getPart("uploadFile"); // 
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); //
             InputStream fileContent = filePart.getInputStream();
-           
+
             imovel.setDiretorio_imagem(String.valueOf(session.get("id")) + File.separator + fileName);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -93,7 +93,7 @@ public class ImovelCadastrar implements ICommand {
             imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
             imovel.setStatus("Em Análise");
             imovel.setSituacao("Ativo");
-            
+
             imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
             imovel.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero").replaceAll("[^0-9]", "")));
             imovel.getEndereco().setComplemento(request.getParameter("complemento"));
@@ -111,7 +111,7 @@ public class ImovelCadastrar implements ICommand {
 
             String email = session.get("email");
 
-            String remetente = "royal.imobiliaria2020@gmail.com";
+            String remetente = "Imobiliária";
             System.out.println("__________________________________________________");
             System.out.println("Enviando email DE: " + remetente + " PARA: " + email);
             System.out.println("Assunto: " + assunto);

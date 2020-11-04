@@ -5,35 +5,36 @@
  */
 package Controle;
 
+import Dao.AgendamentoDAO;
+import Modelo.Agendamento;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Dao.ImovelDAO;
-import Modelo.Imovel;
-
 
 /**
  *
  * @author Diego
  */
-public class ImovelExcluir implements ICommand {
+public class AgendamentoCancelar implements ICommand {
 
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
-        Imovel imovel = new Imovel();
-        imovel.setId_imovel(Integer.parseInt(request.getParameter("id")));
-        imovel.setSituacao("Inativo");
-        
-        ImovelDAO dao = new ImovelDAO();
+        Agendamento agendamento = new Agendamento();
+        AgendamentoDAO dao = new AgendamentoDAO();
+
+        agendamento.setId_agendamento(Integer.parseInt(request.getParameter("id")));
+        agendamento.setSituacao("Inativo");
 
         try {
-            dao.excluir(imovel);
-            request.setAttribute("msg", "Imóvel deletado com sucesso!");
+            dao.cancelar(agendamento);
+            request.setAttribute("msg", "Agendamento foi cancelado com sucesso");
             return "index.jsp";
         } catch (SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
             return "index.jsp";
         }
+
     }
+
 }

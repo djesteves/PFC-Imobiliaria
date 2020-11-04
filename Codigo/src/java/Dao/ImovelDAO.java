@@ -279,17 +279,18 @@ public class ImovelDAO {
         connection.close();
     }
 
-    public void excluir(int id) throws SQLException {
+    public void excluir(Imovel imovel) throws SQLException {
 
         String UPDATE_REPROVARIMOVEIS = "UPDATE Imovel I "
-                + "SET Situacao = 'Inativo' "
+                + "SET Situacao = ? "
                 + "WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_REPROVARIMOVEIS);
 
-        smt.setInt(1, id);
+        smt.setString(1, imovel.getSituacao());
+        smt.setInt(2, imovel.getId_imovel());
         smt.executeUpdate();
 
         smt.close();

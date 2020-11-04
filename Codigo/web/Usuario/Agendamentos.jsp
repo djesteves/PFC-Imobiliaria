@@ -8,6 +8,8 @@
         <p>Lista de Agendamentos ${usuarioLogado.nome}</p>
     </div>
 
+    <div style="display: none;" id="loader" class="loader"></div>
+
     <table id="agendatable" class="table table-sm table-striped table-bordered">
 
         <thead class="thead table-primary">
@@ -25,8 +27,14 @@
             <c:forEach var="agendamento" items="${listaAgendamento}">
                 <tr>
                     <td>
-              
-                        <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="fas fa-print" ></i></a>
+                        <c:if test = "${usuarioLogado.nivel == 'CORRETOR'}">
+                            <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="confirmaConclusao(${agendamento.id_agendamento})"><i class="fas fa-check" ></i></a>
+                            </c:if>
+
+                        <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
+
+                        <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${agendamento.id_agendamento})"><i class="fas fa-times" ></i></a>
+
                     </td>
                     <td>${agendamento.usuario.nome}</td>
                     <td>${agendamento.usuarioCorretor.nome}</td>
@@ -44,6 +52,18 @@
 <jsp:include page="../footer.jsp" />
 
 <script type="text/javascript">
+
+    function confirmaDelete(id) {
+        if (confirm('Tem certeza que deseja excluir este Agendamento?')) {
+            window.location.href = "${pageContext.servletContext.contextPath}/Controle/AgendamentoCancelar?id=" + id;
+        }
+    }
+
+    function confirmaConclusao(id) {
+        if (confirm('Tem certeza que deseja concluir este Agendamento?')) {
+            window.location.href = "${pageContext.servletContext.contextPath}/Controle/AgendamentoConcluir?id=" + id;
+        }
+    }
 
     $(document).ready(function () {
         $('#agendatable').dataTable({
@@ -85,7 +105,7 @@
 
 
     function EmitirRelatorio(rel, param1) {
-       
+
         var xhttp = null;
         if (window.XMLHttpRequest) {
             //code for modern browsers
@@ -99,18 +119,21 @@
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 3) {
-                console.log("emitindo rel");
+                document.getElementById("loader").style.display = "block";
             }
 
             if (this.readyState == 4 && this.status == 200) {
                 var resposta = this.responseText;
-                
-                URL= '<%=request.getContextPath()%>/Resources/resultados/'+resposta;
-                window.open(URL);
+
+                setTimeout(function () {
+                    document.getElementById("loader").style.display = "none";
+                    URL = '<%=request.getContextPath()%>/Resources/resultados/' + resposta;
+                    window.open(URL);
+                }, 500);
             }
         };
 
-        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&id_agendamento=' +param1, true);
+        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&id_agendamento=' + param1, true);
         xhttp.send();
     }
 </script>

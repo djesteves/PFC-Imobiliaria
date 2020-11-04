@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Dao.UsuarioDAO;
+import Modelo.Usuario;
 
 /**
  *
@@ -20,12 +21,14 @@ public class UsuarioExcluir implements ICommand {
     @Override
     public String executar(HttpServletRequest request, HttpServletResponse response) {
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        Usuario usuario = new Usuario();
+        usuario.setId_usuario(Integer.parseInt(request.getParameter("id")));
+        usuario.setSituacao("Inativo");
 
         UsuarioDAO dao = new UsuarioDAO();
 
         try {
-            dao.excluir(id);
+            dao.excluir(usuario);
             request.setAttribute("msg", "Usuário removido com sucesso!");
             return "index.jsp";
         } catch (SQLException ex) {
