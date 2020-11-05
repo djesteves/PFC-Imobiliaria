@@ -213,6 +213,13 @@ public class ControleServ extends HttpServlet {
                     out.println("<img class=\"card-img-top\" src=\"" + request.getContextPath() + "/Resources/upload/" + im.getDiretorio_imagem() + "\" alt=\"Imagem do Imóvel\" height=\"225\" width=\"210\">");
                     out.println("<div class=\"card-body\">");
                     out.println("<h2 class=\"card-title\">" + im.getTitulo() + "</h2>");
+
+                    if ("VENDA".equalsIgnoreCase(im.getModalidade_imovel())) {
+                        out.println("<span class=\"badge badge-primary\"> " + im.getModalidade_imovel() + "</span>");
+                    } else if ("ALUGUEL".equalsIgnoreCase(im.getModalidade_imovel())) {
+                        out.println("<span class=\"badge badge-success\"> " + im.getModalidade_imovel() + "</span>");
+                    }
+
                     out.println("<p class=\"card-text\">" + im.getDescricao() + "</p>");
                     out.println("</div>");
                     out.println("<div class=\"card-footer\">");
@@ -220,6 +227,7 @@ public class ControleServ extends HttpServlet {
                     out.println("<button type=\"button\" class=\"btn btn-primary\" onClick=\"carregarImovel('" + im.getId_imovel() + "')\" data-toggle=\"modal\" data-target=\"#modalImovel\">\n"
                             + "        Detalhes\n"
                             + "    </button>");
+
                     out.println("</div>");
                     out.println("</div>");
                     out.println("</div>");

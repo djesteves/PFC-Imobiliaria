@@ -55,18 +55,6 @@ CONSTRAINT fk_imovel_endereco FOREIGN KEY (id_endereco) REFERENCES Endereco (id_
 CONSTRAINT fk_imovel_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
 );
 
-CREATE TABLE Contrato(
-id_contrato SERIAL PRIMARY KEY,
-valor_fechado NUMERIC(16,2) NOT NULL,
-data_contrato TIMESTAMP,
-id_imovel INTEGER,
-id_usuario INTEGER,
-id_corretor INTEGER,
-CONSTRAINT fk_contrato_imovel FOREIGN KEY (id_imovel) REFERENCES Imovel (id_imovel),
-CONSTRAINT fk_contrato_usuario FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario),
-CONSTRAINT fk_contrato_corretor FOREIGN KEY (id_corretor) REFERENCES Usuario (id_usuario)
-);
-
 CREATE TABLE Agendamento(
 id_agendamento SERIAL PRIMARY KEY,
 dataAgendamento TIMESTAMP NOT NULL,
@@ -88,4 +76,12 @@ insert into usuario values (DEFAULT, 'Administrador', NOW(), '11912345678','1143
 
 -- INSERT CORRETOR 1
 insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
-insert into usuario values (DEFAULT, 'Corretor 1', NOW(), '11912345678','1143211234','024.939.380-89', '29.767.686-6', 'F', 1, 'corretor1@email.com', '202CB962AC59075B964B07152D234B70', 'CORRETOR', 'Ativo');
+insert into usuario values (DEFAULT, 'Corretor 1 - Diego', NOW(), '11912345678','1143211234','024.939.380-89', '29.767.686-6', 'F', 1, 'corretor1@email.com', '202CB962AC59075B964B07152D234B70', 'CORRETOR', 'Ativo');
+
+-- INSERT CORRETOR 2
+insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
+insert into usuario values (DEFAULT, 'Corretor 2 - Danilo', NOW(), '11912345678','1143211234','047.653.890-49', '29.767.686-6', 'F', 1, 'corretor2@email.com', '202CB962AC59075B964B07152D234B70', 'CORRETOR', 'Ativo');
+
+-- INSERT USUARIO 1
+insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
+insert into usuario values (DEFAULT, 'Usuario', NOW(), '11912345678','1143211234','668.962.280-08', '29.767.686-6', 'F', 1, 'usuario@email.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
