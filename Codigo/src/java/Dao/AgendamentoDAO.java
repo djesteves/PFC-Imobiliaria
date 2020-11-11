@@ -234,4 +234,19 @@ public class AgendamentoDAO {
         connection.close();
 
     }
+    
+    public void concluir(Agendamento agenda) throws SQLException {
+
+        String updateAgendamento = "UPDATE Agendamento SET Status = ? WHERE id_agendamento = ?";
+
+        Connection connection = ConnectionFactory.getConexao();
+
+        smt = connection.prepareStatement(updateAgendamento);
+        smt.setString(1, agenda.getStatus());
+        smt.setInt(2, agenda.getId_agendamento());
+        smt.executeUpdate();
+
+        connection.close();
+
+    }
 }
