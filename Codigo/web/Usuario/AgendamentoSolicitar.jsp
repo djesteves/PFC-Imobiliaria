@@ -9,7 +9,6 @@
     <form action="<%=request.getContextPath()%>/Controle/AgendamentoSolicitar" method="post" class="formulario">
         <div class="form-row">
 
-
             <div class="form-group col-4">
                 <label for="idimovel">Número do Imóvel</label>
                 <input type="text" readOnly="true" class="form-control" value="${param.id_imovel}" name="idimovel" id="idimovel" required/>

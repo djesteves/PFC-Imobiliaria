@@ -14,7 +14,7 @@
 
         <thead class="thead table-primary">
             <tr>
-                <th scope="col">Ações</th>
+                <th scope="col">Ações do Agendamento</th>
                 <th scope="col">Nome Solicitante</th>
                 <th scope="col">Nome Corretor</th>
                 <th scope="col">Código Imóvel</th>
@@ -33,7 +33,7 @@
 
                         <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
 
-                        <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${agendamento.id_agendamento})"><i class="fas fa-times" ></i></a>
+                        <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}')"><i class="fas fa-times" ></i></a>
 
                     </td>
                     <td>${agendamento.usuario.nome}</td>
@@ -53,9 +53,9 @@
 
 <script type="text/javascript">
 
-    function confirmaDelete(id) {
+    function confirmaDelete(id, data) {
         if (confirm('Tem certeza que deseja excluir este Agendamento?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/Controle/AgendamentoCancelar?id=" + id;
+            window.location.href = "${pageContext.servletContext.contextPath}/Controle/AgendamentoCancelar?id=" + id + "&data=" + data;
         }
     }
 

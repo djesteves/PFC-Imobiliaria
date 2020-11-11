@@ -86,23 +86,27 @@ public class AgendamentoDAO {
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(queryAgendaImovel);
-        smt.setInt(1, (int) parametros.get("id"));
+        if (!modo.equalsIgnoreCase("Administrador")) {
+            smt.setInt(1, (int) parametros.get("id"));
+        }
         rs = smt.executeQuery();
 
-        while (rs.next()) {
+        if (rs != null) {
+            while (rs.next()) {
 
-            Agendamento ag = new Agendamento();
+                Agendamento ag = new Agendamento();
 
-            ag.setId_agendamento(rs.getInt("id_agendamento"));
-            ag.getUsuario().setNome(rs.getString("nome"));
-            ag.getUsuarioCorretor().setNome(rs.getString("corretor"));
-            ag.getImovel().setId_imovel(rs.getInt("id_imovel"));
-            ag.setDataAgendamento(rs.getTimestamp("dataagendamento"));
-            ag.setDataSolicitacao(rs.getTimestamp("datasolicitacao"));
-            ag.setStatus(rs.getString("status"));
+                ag.setId_agendamento(rs.getInt("id_agendamento"));
+                ag.getUsuario().setNome(rs.getString("nome"));
+                ag.getUsuarioCorretor().setNome(rs.getString("corretor"));
+                ag.getImovel().setId_imovel(rs.getInt("id_imovel"));
+                ag.setDataAgendamento(rs.getTimestamp("dataagendamento"));
+                ag.setDataSolicitacao(rs.getTimestamp("datasolicitacao"));
+                ag.setStatus(rs.getString("status"));
 
-            listaAgenda.add(ag);
+                listaAgenda.add(ag);
 
+            }
         }
 
         connection.close();
@@ -198,12 +202,12 @@ public class AgendamentoDAO {
                 + " FROM Agendamento "
                 + "WHERE id_imovel  = ? "
                 + "  AND dataagendamento = ?";
-        
+
         smt = connection.prepareStatement(disponibilidadeImovel);
         smt.setInt(1, agendamento.getImovel().getId_imovel());
         smt.setTimestamp(2, new Timestamp(agendamento.getDataAgendamento().getTime()));
         rs = smt.executeQuery();
-        
+
         System.out.println(rs);
 
         if (rs.next()) {
