@@ -27,14 +27,17 @@
             <c:forEach var="agendamento" items="${listaAgendamento}">
                 <tr>
                     <td>
-                        <c:if test = "${usuarioLogado.nivel == 'CORRETOR'}">
-                            <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="confirmaConclusao(${agendamento.id_agendamento})"><i class="fas fa-check" ></i></a>
+                        <c:if test = "${usuarioLogado.nivel != 'USUARIO'}">
+                            <c:if test = "${agendamento.status == 'Em Andamento'}">
+                                <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="modalConcluir(${agendamento.id_agendamento}, '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalConcluir" ><i class="fas fa-check" ></i></a>
+                                </c:if>
                             </c:if>
 
+                        <c:if test = "${agendamento.status == 'Em Andamento'}">
+                            <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="modalCancelar(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}', '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalCancelar" ><i class="fas fa-times" ></i></a>
+                        </c:if>
+
                         <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
-
-                        <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="confirmaDelete(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}')"><i class="fas fa-times" ></i></a>
-
                     </td>
                     <td>${agendamento.usuario.nome}</td>
                     <td>${agendamento.usuarioCorretor.nome}</td>
@@ -47,17 +50,87 @@
         </tbody>
     </table>
 
+    <div class="modal fade" id="modalCancelar" tabindex="-1" role="dialog" aria-labelledby="modalCancelar" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="<%=request.getContextPath()%>/Controle/AgendamentoCancelar" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Informe o motivo do cancelamento do Agendamento!</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="idagendamento" name="idagendamento">
+                        <input type="hidden" id="dataagendamento" name="dataagendamento">
+                        <input type="hidden" id="emailsolicitante" name="emailsolicitante">
+                        <input type="hidden" id="emailcorretor" name="emailcorretor">
+                        <input type="hidden" id="emailanunciante" name="emailanunciante">
+
+                        <div class="form-group">
+                            <label for="obs">Observação</label>
+                            <textarea class="form-control" id="obs" name="obs" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalConcluir" tabindex="-1" role="dialog" aria-labelledby="modalConcluir" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form action="<%=request.getContextPath()%>/Controle/AgendamentoConcluir" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="modal-title">Deseja realmente concluir o agendamento?</h5>
+                        <input type="hidden" id="idagendamentoconcluir" name="idagendamentoconcluir">
+                        <input type="hidden" id="emailsolicitanteconcluir" name="emailsolicitanteconcluir">
+                        <input type="hidden" id="emailcorretorconcluir" name="emailcorretorconcluir">
+                        <input type="hidden" id="emailanuncianteconcluir" name="emailanuncianteconcluir">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
 </div>
 
 <jsp:include page="../footer.jsp" />
 
 <script type="text/javascript">
 
-    function confirmaDelete(id, data) {
-        if (confirm('Tem certeza que deseja excluir este Agendamento?')) {
-            window.location.href = "${pageContext.servletContext.contextPath}/Controle/AgendamentoCancelar?id=" + id + "&data=" + data;
-        }
+    function modalCancelar(id, data, emailuser, emailcorretor, emailanunciante) {
+        $("#idagendamento").val(id);
+        $("#dataagendamento").val(data);
+        $("#emailsolicitante").val(emailuser);
+        $("#emailcorretor").val(emailcorretor);
+        $("#emailanunciante").val(emailanunciante);
+        $("#obs").val('');
     }
+
+    function modalConcluir(id, emailuser, emailcorretor, emailanunciante) {
+        $("#idagendamentoconcluir").val(id);
+        $("#emailsolicitanteconcluir").val(emailuser);
+        $("#emailcorretorconcluir").val(emailcorretor);
+        $("#emailanuncianteconcluir").val(emailanunciante);
+    }
+
 
     function confirmaConclusao(id) {
         if (confirm('Tem certeza que deseja concluir este Agendamento?')) {

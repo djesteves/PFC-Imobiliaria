@@ -72,7 +72,8 @@
                     </span>
                     <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" data-toggle="modal" data-target="#modalRelAprovadosImoveis">Imóveis aprovados por período</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modalRelImoveis">Imóveis cadastrados por período</a>
+                            <a class="dropdown-item" data-toggle="modal" data-target="#modalRelUser">Usuários cadastrados por período</a>
                         </div>
                     </c:if>
                 </div>
@@ -81,18 +82,28 @@
 
     </div>
 
-    <!-- modal relatorios -->
-    <div class="modal fade" id="modalRelAprovadosImoveis" tabindex="-1" role="dialog" aria-labelledby="modalRelAprovarImoveis" aria-hidden="true">
+<!-- modal Rel Imovel -->
+    <div class="modal fade" id="modalRelImoveis" tabindex="-1" role="dialog" aria-labelledby="modalRelImoveis" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Imóveis aprovados por período</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Imóveis cadastrados por período</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form id="formData">
                     <div class="modal-body">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <label for="situacao">Situacao:</label>
+                                <select class="custom-select my-1 mr-sm-2" name="situacao" id="situacao" class="form-control" required>
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
                         <div class="form-row">
                             <div class="col">
                                 <label for="datainicio">Data Inicial</label>
@@ -105,16 +116,64 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-
-
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="EmitirRelatorio('ImoveisAprovados')">Confirmar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="EmitirRelatorio('ImoveisCadastradosPeriodo')">Confirmar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- fim modal relatorios -->
+<!-- fim modal Rel Imovel -->
+
+
+<!-- modal Rel Usuarios -->
+    <div class="modal fade" id="modalRelUser" tabindex="-1" role="dialog" aria-labelledby="modalRelUser" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Imóveis cadastrados por período</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formData">
+                    <div class="modal-body">
+                        <div class="form-row">
+                            <div class="col-md-5">
+                                <label for="situacao">Situacao:</label>
+                                <select class="custom-select my-1 mr-sm-2" name="situacaouser" id="situacaouser" class="form-control" required>
+
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="datainicio">Data Inicial</label>
+                                <input type="date" id="datainiciouser" name="datainiciouser" required>
+                            </div>
+                            <div class="col">
+                                <label for="datafinal">Data Final</label>
+                                <input type="date" id="datafinaluser" name="datafinaluser" required>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" onClick="EmitirRelatorio('UsuariosCadastradosPeriodo')">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- fim modal rel Usuarios -->
 </div>
 
 <jsp:include page="/footer.jsp" />
@@ -133,8 +192,15 @@
             xhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
-        var datainicio = document.getElementById("datainicio").value;
-        var datafinal = document.getElementById("datafinal").value;
+        if (rel === 'ImoveisCadastradosPeriodo') {
+            var datainicio = document.getElementById("datainicio").value;
+            var datafinal = document.getElementById("datafinal").value;
+            var situacao = document.getElementById("situacao").value;
+        } else if (rel === 'UsuariosCadastradosPeriodo') {
+            var datainicio = document.getElementById("datainiciouser").value;
+            var datafinal = document.getElementById("datafinaluser").value;
+            var situacao = document.getElementById("situacaouser").value;
+        }
 
         xhttp.onreadystatechange = function () {
 
@@ -150,7 +216,7 @@
             }
         };
 
-        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&datainicio=' + datainicio + '&datafinal=' + datafinal, true);
+        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&datainicio=' + datainicio + '&datafinal=' + datafinal + "&situacao=" + situacao, true);
         xhttp.send();
     }
 </script>

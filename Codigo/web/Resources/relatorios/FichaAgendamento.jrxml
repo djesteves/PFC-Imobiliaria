@@ -7,7 +7,7 @@
 	<parameter name="logo" class="java.lang.String"/>
 	<parameter name="id_agendamento" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[select ag.id_agendamento, ag.dataagendamento, ag.datasolicitacao, 
+		<![CDATA[select ag.id_agendamento, ag.dataagendamento, ag.datasolicitacao, ag.status,
 u.nome as solicitante, uc.nome as corretor, i.id_imovel,
 e.logradouro || ' - ' || e.numero || ', '|| e.bairro  ||' - ' || e.cidade || ' - '|| e.cep as enderecoimovel
 from agendamento ag
@@ -24,10 +24,14 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 	<field name="corretor" class="java.lang.String"/>
 	<field name="id_imovel" class="java.lang.Integer"/>
 	<field name="enderecoimovel" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
 	<pageHeader>
-		<band height="72" splitType="Stretch">
+		<band height="71" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="71" uuid="fb172309-6824-4288-a194-2fa4fb1ae296"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="80" y="24" width="475" height="20" uuid="84e84bd5-fc4a-4e20-8c0c-1f30603deccd">
+				<reportElement x="80" y="38" width="475" height="20" uuid="84e84bd5-fc4a-4e20-8c0c-1f30603deccd">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
@@ -40,9 +44,16 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<reportElement x="0" y="0" width="80" height="71" uuid="364a68c2-f160-4169-8c5f-a6d349130039"/>
 				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 			</image>
-			<line>
-				<reportElement x="0" y="71" width="555" height="1" uuid="a3676ec2-72f1-454f-af99-06fd8c861b1b"/>
-			</line>
+			<staticText>
+				<reportElement x="80" y="18" width="475" height="20" uuid="4ae94a92-8250-4526-a5fc-1a9715473582">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Royal Imobiliária]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
@@ -61,7 +72,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<textFieldExpression><![CDATA[$F{id_agendamento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH:mm:ss">
-				<reportElement x="0" y="263" width="552" height="20" uuid="4041359e-9ce9-4aba-a94f-8e634f668f00">
+				<reportElement x="0" y="283" width="552" height="20" uuid="4041359e-9ce9-4aba-a94f-8e634f668f00">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68299a4a-d55d-4b8c-a196-5f8b45e2aabc"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -70,31 +81,31 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<textFieldExpression><![CDATA[$F{dataagendamento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy HH:mm:ss">
-				<reportElement x="148" y="93" width="372" height="20" uuid="ab8be2db-3b1b-40ab-81d2-1b0bdf18d221">
+				<reportElement x="148" y="113" width="372" height="20" uuid="ab8be2db-3b1b-40ab-81d2-1b0bdf18d221">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a273ed2-561e-4ec7-b79d-2e1ad547cd46"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{datasolicitacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="113" width="372" height="19" uuid="9f13ff46-586b-4758-bfac-8519981ff568">
+				<reportElement x="148" y="133" width="372" height="19" uuid="9f13ff46-586b-4758-bfac-8519981ff568">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64e44cf7-4476-437d-87f4-b8e0915771e7"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="133" width="372" height="19" uuid="f3b282a5-da8a-4eb6-a45c-d948692d4e38">
+				<reportElement x="148" y="153" width="372" height="19" uuid="f3b282a5-da8a-4eb6-a45c-d948692d4e38">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d525927-8b7a-4ecb-b08a-cfc369675996"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{corretor}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="153" width="372" height="19" uuid="cc657a56-3b16-4874-ada1-ee5610027e16">
+				<reportElement x="148" y="173" width="372" height="19" uuid="cc657a56-3b16-4874-ada1-ee5610027e16">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{id_imovel}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="173" width="372" height="40" uuid="3d55e91d-3270-4e71-ace5-5c419bc99197">
+				<reportElement x="148" y="193" width="372" height="40" uuid="3d55e91d-3270-4e71-ace5-5c419bc99197">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0bb3ebde-7ff3-4f50-be78-3b6e59061d6d"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{enderecoimovel}]]></textFieldExpression>
@@ -109,7 +120,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Código do Agendamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="243" width="554" height="20" forecolor="#FF0400" uuid="8ea7b5d5-3d2d-4708-8fb4-606835230f97">
+				<reportElement x="0" y="263" width="554" height="20" forecolor="#FF0400" uuid="8ea7b5d5-3d2d-4708-8fb4-606835230f97">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68299a4a-d55d-4b8c-a196-5f8b45e2aabc"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -118,7 +129,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Data do Agendamento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="93" width="128" height="20" uuid="dc84db6f-9948-4ae5-ac16-af00a5129698">
+				<reportElement x="13" y="113" width="128" height="20" uuid="dc84db6f-9948-4ae5-ac16-af00a5129698">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a273ed2-561e-4ec7-b79d-2e1ad547cd46"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -127,7 +138,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Data da Solicitação]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="113" width="128" height="20" uuid="7dff3afc-016c-499e-8ec5-8c9c440ff6dd">
+				<reportElement x="13" y="133" width="128" height="20" uuid="7dff3afc-016c-499e-8ec5-8c9c440ff6dd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="64e44cf7-4476-437d-87f4-b8e0915771e7"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -136,7 +147,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="153" width="128" height="20" uuid="8e858c32-4076-440e-871c-615f7a7f3748">
+				<reportElement x="13" y="173" width="128" height="20" uuid="8e858c32-4076-440e-871c-615f7a7f3748">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -145,7 +156,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Código do Imóvel]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="133" width="128" height="20" uuid="1ce6c2c4-e3eb-4afd-9de9-a9dfdd99e9ac">
+				<reportElement x="13" y="153" width="128" height="20" uuid="1ce6c2c4-e3eb-4afd-9de9-a9dfdd99e9ac">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2d525927-8b7a-4ecb-b08a-cfc369675996"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -154,7 +165,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				<text><![CDATA[Corretor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="13" y="173" width="128" height="20" uuid="2b3c48fa-ed22-4b7f-a313-bc436b654ef7">
+				<reportElement x="13" y="193" width="128" height="20" uuid="2b3c48fa-ed22-4b7f-a313-bc436b654ef7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0bb3ebde-7ff3-4f50-be78-3b6e59061d6d"/>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -162,6 +173,21 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				</textElement>
 				<text><![CDATA[Endereço do Imóvel]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="13" y="93" width="128" height="20" uuid="73152498-d657-4626-aaf9-44406d814a43">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eec25a96-b6f4-40d0-b98f-6b8f913f5312"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status do Agendamento]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="148" y="93" width="372" height="20" uuid="aab2f7fb-edc6-4435-a78f-2b208e9ac954">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eec25a96-b6f4-40d0-b98f-6b8f913f5312"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>

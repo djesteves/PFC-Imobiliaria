@@ -127,6 +127,7 @@ public class ControleServ extends HttpServlet {
                     + "<div class=\"text-center \">\n"
                     + " <form action=\"" + request.getContextPath() + "/Usuario/AgendamentoSolicitar.jsp\" method=\"post\">"
                     + " <input type=\"hidden\" id=\"id_imovel\" name=\"id_imovel\" value=\"" + im.getId_imovel() + "\" >"
+                    + " <input type=\"hidden\" id=\"emailanunciante\" name=\"emailanunciante\" value=\"" + im.getUsuario().getEmail() + "\" >"
                     + "  <button type=\"submit\" class=\"btn btn-primary btn-block\" href=\"index.jsp\" role=\"button\">Agendar uma Visita</button>\n"
                     + " </form>"
                     + "</div>"
@@ -155,9 +156,10 @@ public class ControleServ extends HttpServlet {
         parametros.put("logo", contexto.getRealPath("Resources/img/icon_imob.png"));
         parametros.put("path", path);
 
-        if (relatorio.equalsIgnoreCase("ImoveisAprovados")) {
+        if (relatorio.equalsIgnoreCase("ImoveisCadastradosPeriodo") || relatorio.equalsIgnoreCase("UsuariosCadastradosPeriodo")) {
             parametros.put("datainicio", formatter.parse(request.getParameter("datainicio")));
             parametros.put("datafinal", formatter.parse(request.getParameter("datafinal")));
+            parametros.put("situacao", request.getParameter("situacao"));
         } else if (relatorio.equalsIgnoreCase("FichaAgendamento")) {
             parametros.put("id_agendamento", Integer.parseInt(request.getParameter("id_agendamento")));
         }

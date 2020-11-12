@@ -63,10 +63,13 @@ public class AgendamentoDAO {
 
     public List<Agendamento> listarAgendamentos(Map parametros) throws SQLException {
 
-        String queryAgendaImovel = "SELECT ag.id_agendamento, u.nome, uc.nome as corretor, ag.id_imovel, ag.dataagendamento, ag.datasolicitacao, ag.status\n"
-                + " FROM agendamento ag\n"
-                + " JOIN usuario u on u.id_usuario = ag.id_usuario\n"
-                + " JOIN usuario uc on uc.id_usuario = ag.id_corretor\n";
+        String queryAgendaImovel = "SELECT ag.id_agendamento, u.nome, uc.nome as corretor, ag.id_imovel, ag.dataagendamento, ag.datasolicitacao, ag.status,\n"
+                + "	   u.email as emailSolicitante, uc.email as emailCorretor, ua.email as emailAnunciante\n"
+                + "                 FROM agendamento ag\n"
+                + "                 JOIN usuario u on u.id_usuario = ag.id_usuario\n"
+                + "                 JOIN usuario uc on uc.id_usuario = ag.id_corretor\n"
+                + "                 JOIN imovel i on i.id_imovel = ag.id_imovel\n"
+                + "                 JOIN usuario ua on ua.id_usuario = i.id_imovel ";
 
         String modo = (String) parametros.get("modo");
 
@@ -95,6 +98,8 @@ public class AgendamentoDAO {
             while (rs.next()) {
 
                 Agendamento ag = new Agendamento();
+                
+               
 
                 ag.setId_agendamento(rs.getInt("id_agendamento"));
                 ag.getUsuario().setNome(rs.getString("nome"));
@@ -102,7 +107,11 @@ public class AgendamentoDAO {
                 ag.getImovel().setId_imovel(rs.getInt("id_imovel"));
                 ag.setDataAgendamento(rs.getTimestamp("dataagendamento"));
                 ag.setDataSolicitacao(rs.getTimestamp("datasolicitacao"));
+                ag.getUsuario().setEmail(rs.getString("emailSolicitante"));
+                ag.getUsuarioCorretor().setEmail(rs.getString("emailCorretor"));
+                ag.getImovel().getUsuario().setEmail(rs.getString("emailAnunciante"));
                 ag.setStatus(rs.getString("status"));
+                
 
                 listaAgenda.add(ag);
 
@@ -222,19 +231,19 @@ public class AgendamentoDAO {
 
     public void cancelar(Agendamento agenda) throws SQLException {
 
-        String insertAgendamento = "UPDATE Agendamento SET Situacao = ? WHERE id_agendamento = ?";
+        String insertAgendamento = "UPDATE Agendamento SET Status = ? WHERE id_agendamento = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(insertAgendamento);
-        smt.setString(1, agenda.getSituacao());
+        smt.setString(1, agenda.getStatus());
         smt.setInt(2, agenda.getId_agendamento());
         smt.executeUpdate();
 
         connection.close();
 
     }
-    
+
     public void concluir(Agendamento agenda) throws SQLException {
 
         String updateAgendamento = "UPDATE Agendamento SET Status = ? WHERE id_agendamento = ?";

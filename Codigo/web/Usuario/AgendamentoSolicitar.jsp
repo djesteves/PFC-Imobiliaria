@@ -8,10 +8,10 @@
 
     <form action="<%=request.getContextPath()%>/Controle/AgendamentoSolicitar" method="post" class="formulario">
         <div class="form-row">
-
             <div class="form-group col-4">
                 <label for="idimovel">Número do Imóvel</label>
                 <input type="text" readOnly="true" class="form-control" value="${param.id_imovel}" name="idimovel" id="idimovel" required/>
+                <input type="hidden" readOnly="true" class="form-control" value="${param.emailanunciante}" name="emailanunciante" id="emailanunciante" required/>
             </div>
 
             <div class="form-group col-lg-8 col-sm-12 col-md-8">
@@ -25,7 +25,6 @@
                 <label for="dataagendamento">Data e Hora do Agendamento</label>
                 <input type="datetime-local" class="form-control col-sm-6 col-md-4 col-lg-8" onBlur="verData()" name="dataagendamento" id="dataagendamento" required/>
             </div>
-
         </div>
 
         <div class="text-muted" >

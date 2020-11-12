@@ -166,6 +166,7 @@ public class ImovelDAO {
             imovel.setIptu(rs.getDouble("iptu"));
             imovel.setCondominio(rs.getDouble("condominio"));
             imovel.getUsuario().setId_usuario(rs.getInt("id_usuario"));
+            imovel.getUsuario().setEmail(rs.getString("email"));
             imovel.getEndereco().setBairro(rs.getString("bairro"));
             imovel.getEndereco().setCep(rs.getString("cep"));
             imovel.getEndereco().setCidade(rs.getString("cidade"));
