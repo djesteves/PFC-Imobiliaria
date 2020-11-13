@@ -238,6 +238,7 @@ public class ImovelDAO {
                 + " FROM Imovel I "
                 + "INNER JOIN Usuario U ON U.id_usuario = I.id_usuario "
                 + "WHERE Status = 'Em Análise' "
+                + "  AND I.Situacao = 'Ativo' "
                 + "ORDER BY I.data_cadastro";
 
         List<Imovel> listAprovarImovel = null;
