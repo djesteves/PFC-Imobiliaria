@@ -48,7 +48,7 @@ public class ControleServ extends HttpServlet {
         String uri = request.getRequestURI();
         try {
             if (uri.equals(request.getContextPath() + "/VisualizarImovel")) {
-                CarregarModalImovel(request, response);
+                ListarImovelPorID(request, response);
             } else if (uri.equals(request.getContextPath() + "/ListarCorretores")) {
                 ListarCorretores(request, response);
             } else if (uri.equals(request.getContextPath() + "/EmitirRelatorio")) {
@@ -79,7 +79,7 @@ public class ControleServ extends HttpServlet {
 
     }
 
-    public void CarregarModalImovel(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void ListarImovelPorID(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int id = Integer.parseInt(request.getParameter("id"));
 
         ImovelDAO dao = new ImovelDAO();
