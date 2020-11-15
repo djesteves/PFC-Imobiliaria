@@ -58,6 +58,7 @@ public class AgendamentoCancelar implements ICommand {
             if (msgErro.equals("")) {
                 agendamento.setId_agendamento(Integer.parseInt(request.getParameter("idagendamento")));
                 agendamento.setStatus("Cancelado");
+                agendamento.setSituacao("Inativo");
                 dao.cancelar(agendamento);
 
                 String assunto = "O Agendamento Nº" + agendamento.getId_agendamento() + " foi cancelado";

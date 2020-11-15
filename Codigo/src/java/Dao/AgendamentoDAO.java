@@ -96,10 +96,7 @@ public class AgendamentoDAO {
 
         if (rs != null) {
             while (rs.next()) {
-
                 Agendamento ag = new Agendamento();
-                
-               
 
                 ag.setId_agendamento(rs.getInt("id_agendamento"));
                 ag.getUsuario().setNome(rs.getString("nome"));
@@ -111,10 +108,8 @@ public class AgendamentoDAO {
                 ag.getUsuarioCorretor().setEmail(rs.getString("emailCorretor"));
                 ag.getImovel().getUsuario().setEmail(rs.getString("emailAnunciante"));
                 ag.setStatus(rs.getString("status"));
-                
 
                 listaAgenda.add(ag);
-
             }
         }
 
@@ -149,8 +144,9 @@ public class AgendamentoDAO {
         int id = 0;
 
         String corretores = "SELECT id_usuario "
-                + "FROM usuario "
-                + "WHERE nivel_acesso = 'CORRETOR'";
+                + " FROM usuario "
+                + "WHERE nivel_acesso = 'CORRETOR'"
+                + "  AND Situacao = 'Ativo'";
 
         Connection connection = ConnectionFactory.getConexao();
 
@@ -184,7 +180,8 @@ public class AgendamentoDAO {
         String disponibilidadeCorretor = "SELECT dataagendamento "
                 + " FROM Agendamento "
                 + "WHERE id_corretor  = ? "
-                + "  AND dataagendamento = ?";
+                + "  AND dataagendamento = ?"
+                + "  AND Situacao = 'Ativo'";
 
         Connection connection = ConnectionFactory.getConexao();
 
@@ -210,7 +207,8 @@ public class AgendamentoDAO {
         String disponibilidadeImovel = "SELECT dataagendamento "
                 + " FROM Agendamento "
                 + "WHERE id_imovel  = ? "
-                + "  AND dataagendamento = ?";
+                + "  AND dataagendamento = ?"
+                + "  AND Situacao = 'Ativo'";
 
         smt = connection.prepareStatement(disponibilidadeImovel);
         smt.setInt(1, agendamento.getImovel().getId_imovel());
@@ -231,13 +229,14 @@ public class AgendamentoDAO {
 
     public void cancelar(Agendamento agenda) throws SQLException {
 
-        String insertAgendamento = "UPDATE Agendamento SET Status = ? WHERE id_agendamento = ?";
+        String insertAgendamento = "UPDATE Agendamento SET Status = ?, Situacao = ? WHERE id_agendamento = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(insertAgendamento);
         smt.setString(1, agenda.getStatus());
-        smt.setInt(2, agenda.getId_agendamento());
+        smt.setString(2, agenda.getSituacao());
+        smt.setInt(3, agenda.getId_agendamento());
         smt.executeUpdate();
 
         connection.close();

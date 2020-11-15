@@ -35,7 +35,6 @@ public class ControleFactory extends HttpServlet {
             System.err.println(ex.getMessage());
             request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
-
     }
 
     @Override

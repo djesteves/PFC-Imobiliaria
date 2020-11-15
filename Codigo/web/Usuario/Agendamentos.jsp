@@ -11,7 +11,6 @@
     <div style="display: none;" id="loader" class="loader"></div>
 
     <table id="agendatable" class="table table-sm table-striped table-bordered">
-
         <thead class="thead table-primary">
             <tr>
                 <th scope="col">Ações do Agendamento</th>
@@ -35,7 +34,7 @@
 
                         <c:if test = "${agendamento.status == 'Em Andamento'}">
                             <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="modalCancelar(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}', '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalCancelar" ><i class="fas fa-times" ></i></a>
-                        </c:if>
+                            </c:if>
 
                         <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
                     </td>
@@ -81,13 +80,11 @@
         </div>
     </div>
 
-
     <div class="modal fade" id="modalConcluir" tabindex="-1" role="dialog" aria-labelledby="modalConcluir" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form action="<%=request.getContextPath()%>/Controle/AgendamentoConcluir" method="post">
                 <div class="modal-content">
                     <div class="modal-header">
-
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -107,14 +104,11 @@
             </form>
         </div>
     </div>
-
-
 </div>
 
 <jsp:include page="../footer.jsp" />
 
 <script type="text/javascript">
-
     function modalCancelar(id, data, emailuser, emailcorretor, emailanunciante) {
         $("#idagendamento").val(id);
         $("#dataagendamento").val(data);
@@ -130,7 +124,6 @@
         $("#emailcorretorconcluir").val(emailcorretor);
         $("#emailanuncianteconcluir").val(emailanunciante);
     }
-
 
     function confirmaConclusao(id) {
         if (confirm('Tem certeza que deseja concluir este Agendamento?')) {
@@ -176,9 +169,7 @@
         });
     });
 
-
     function EmitirRelatorio(rel, param1) {
-
         var xhttp = null;
         if (window.XMLHttpRequest) {
             //code for modern browsers
@@ -187,7 +178,6 @@
             // code for old IE browsers
             xhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-
 
         xhttp.onreadystatechange = function () {
 
@@ -206,7 +196,7 @@
             }
         };
 
-        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + rel + '&id_agendamento=' + param1, true);
+        xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerelatorio=' + rel + '&id_agendamento=' + param1, true);
         xhttp.send();
     }
 </script>

@@ -142,21 +142,22 @@ public class ControleServ extends HttpServlet {
     }
 
     public void EmitirRelatorio(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String relatorio = request.getParameter("nomerel");
+
+        Map<String, Object> parametros = new HashMap<>();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        String relatorio = request.getParameter("nomerelatorio");
 
         // acha jrxml dentro da aplicação
         ServletContext contexto = request.getServletContext();
         String jrxml = contexto.getRealPath("Resources/relatorios/" + relatorio + ".jrxml");
         String path = contexto.getRealPath("/Resources/resultados/");
 
-        Map<String, Object> parametros = new HashMap<>();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
         parametros.put("logo", contexto.getRealPath("Resources/img/icon_imob.png"));
         parametros.put("path", path);
 
-        if (relatorio.equalsIgnoreCase("ImoveisCadastradosPeriodo") || relatorio.equalsIgnoreCase("UsuariosCadastradosPeriodo")) {
+        if (relatorio.equalsIgnoreCase("ImoveisCadastradosPeriodo") || relatorio.equalsIgnoreCase("UsuariosCadastradosPeriodo")
+                || relatorio.equalsIgnoreCase("AgendamentosCadastradosPeriodo")) {
             parametros.put("datainicio", formatter.parse(request.getParameter("datainicio")));
             parametros.put("datafinal", formatter.parse(request.getParameter("datafinal")));
             parametros.put("situacao", request.getParameter("situacao"));

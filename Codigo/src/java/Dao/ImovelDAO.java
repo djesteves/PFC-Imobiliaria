@@ -68,7 +68,6 @@ public class ImovelDAO {
         smt.setString(13, imovel.getTipo_imovel());
         smt.setInt(14, imovel.getUsuario().getId_usuario());
         smt.setInt(15, idEndereco);
-        smt.setInt(15, idEndereco);
         smt.setString(16, imovel.getModalidade_imovel());
         smt.setDouble(17, imovel.getIptu());
         smt.setDouble(18, imovel.getCondominio());
