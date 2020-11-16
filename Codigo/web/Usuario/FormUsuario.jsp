@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="tppessoa">Tipo de Pessoa:</label>
-                        <select class="custom-select" name="tipo_pessoa" id="tppessoa" class="form-control">
+                        <select class="custom-select" name="tipo_pessoa" id="tppessoa" class="form-control" required>
                             <option value="F">Física</option>
                             <option value="J">Jurídica</option>
                         </select>

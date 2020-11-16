@@ -88,8 +88,16 @@ public class ImovelCadastrar implements ICommand {
             imovel.setTipo_imovel(request.getParameter("tpimovel"));
             imovel.getUsuario().setId_usuario(Integer.parseInt(String.valueOf(session.get("id"))));
             imovel.setModalidade_imovel(request.getParameter("tpvenda"));
-            imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
-            imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
+            if(!request.getParameter("iptu").isEmpty()){
+                imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
+            }else {
+                imovel.setIptu(0);
+            }
+            if(!request.getParameter("condominio").isEmpty()) {
+                imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
+            } else{
+                imovel.setCondominio(0);
+            }
             imovel.setStatus("Em Análise");
             imovel.setSituacao("Ativo");
 

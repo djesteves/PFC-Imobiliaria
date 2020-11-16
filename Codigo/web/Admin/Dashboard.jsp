@@ -177,7 +177,7 @@
                 }
             };
 
-            xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerel=' + nomerelatorio + '&datainicio=' + datainicio + '&datafinal=' + datafinal + "&situacao=" + situacao, true);
+            xhttp.open("GET", '<%=request.getContextPath()%>/EmitirRelatorio?nomerelatorio=' + nomerelatorio + '&datainicio=' + datainicio + '&datafinal=' + datafinal + "&situacao=" + situacao, true);
             xhttp.send();
         }
     }
