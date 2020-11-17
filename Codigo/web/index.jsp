@@ -12,17 +12,17 @@
             <!-- Cabeçalho do Texto -->
             <h1 class="text-center text-sm-left">
                 Bem-vindo a <span class="text-primary">Imobiliária</span>. <br>
-                Seu novo imóvel está aqui!
+
             </h1>
+            <p> Compre ou venda/alugue de maneira descomplicada!</p>
             <!-- Botões -->
             <div class="text-center text-md-left">
-                <c:if test="${usuarioLogado == null}">
-                    <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" class="btn btn-radius btn-primary shadow lift mr-1">
-                        Crie sua conta <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
-                    </a>
-                </c:if> 
+                <a href="<%=request.getContextPath()%>/catalogoimoveis.jsp" class="btn btn-radius btn-outline-secondary shadow lift mr-1">
+                    <i class="fas fa-home"></i>&nbsp;
+                    </i>Catalogo de Imóveis</a>
+                </a>
                 <a href="<%=request.getContextPath()%>/Usuario/FormImovel.jsp" class="btn btn-radius btn-outline-secondary shadow lift mr-1">
-                    Anuncie seu imóvel
+                    Anunciar um imóvel
                 </a>
             </div>
         </div>

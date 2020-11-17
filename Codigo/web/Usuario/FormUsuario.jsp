@@ -20,7 +20,6 @@
         <form action="<%=request.getContextPath()%>/Controle/UsuarioCadastrar" method="post" class="formulario">
             <div class="form-row">
                 <c:if test="${'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
-
                     <div class="form-group col-md-12">
                         <label for="nivel">Nivel de Acesso: </label>
                         <select class="custom-select" name="nivel" id="nivel" class="form-control col-md-6" required>
@@ -83,7 +82,12 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-2">
+                        <label for="cep">CEP:</label>
+                        <input type="text" size="10" maxlength="9"
+                               class="form-control" value="${usuario.endereco.cep}" name="cep" id="cep" required>
+                    </div>
+                    <div class="form-group col-md-8">
                         <label for="logradouro">Logradouro:</label>
                         <input type="text" class="form-control" name="logradouro" id="logradouro" value="${usuario.endereco.logradouro}" placeholder="" required>
                     </div>
@@ -91,15 +95,15 @@
                         <label for="numero">Número:</label>
                         <input type="text" class="form-control" name="numero" id="numero" value="${usuario.endereco.numero}" placeholder="" required>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-5">
                         <label for="complemento">Complemento:</label>
                         <input type="text" class="form-control" name="complemento" id="complemento" value="${usuario.endereco.complemento}" placeholder="">
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label for="cidade">Cidade:</label>
                         <input type="text" class="form-control" name="cidade" id="cidade" value="${usuario.endereco.cidade}" required>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label for="estado">Estado:</label>
                         <select class="custom-select" name="estado" id="estado" class="form-control" required>
                             <option value="AC">Acre</option>
@@ -131,12 +135,7 @@
                             <option value="TO">Tocantins</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="cep">CEP:</label>
-                        <input type="text" size="10" maxlength="9"
-                               class="form-control" value="${usuario.endereco.cep}" name="cep" id="cep" required>
-                    </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label for="bairro">Bairro:</label>
                         <input type="text" class="form-control" name="bairro" value="${usuario.endereco.bairro}" id="bairro" required>
                     </div>

@@ -24,19 +24,24 @@ public class ImovelAlterar implements ICommand {
             Imovel imovel = new Imovel();
 
             imovel.setId_imovel(Integer.parseInt(request.getParameter("id")));
-            imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll("[^0-9]", "")));
-            imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal").replaceAll("[^0-9]", "")));
+            imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll(",", "")));
+            imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal").replaceAll(",", "")));
             imovel.setBanheiros(Integer.parseInt(request.getParameter("banheiro").replaceAll("[^0-9]", "")));
             imovel.setComodos(Integer.parseInt(request.getParameter("comodos").replaceAll("[^0-9]", "")));
             imovel.setDescricao(request.getParameter("descricao"));
-            imovel.setTipo_imovel(request.getParameter("tpimovel"));
             imovel.setTitulo(request.getParameter("titulo"));
-            imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem").replaceAll("[^0-9]", "")));
-            imovel.setValor(Double.parseDouble(request.getParameter("valorimovel").replaceAll("[^0-9]", "")));
-            imovel.setModalidade_imovel(request.getParameter("tpvenda"));
-            imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
-            imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
-
+            imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem").replaceAll(",", "")));
+            imovel.setValor(Double.parseDouble(request.getParameter("valorimovel").replaceAll(",", "")));
+            if (!request.getParameter("iptu").isEmpty()) {
+                imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll(",", "")));
+            } else {
+                imovel.setIptu(0);
+            }
+            if (!request.getParameter("condominio").isEmpty()) {
+                imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll(",", "")));
+            } else {
+                imovel.setCondominio(0);
+            }
             imovel.getEndereco().setId_endereco(Integer.parseInt(request.getParameter("ide")));
             imovel.getEndereco().setLogradouro(request.getParameter("logradouro"));
             imovel.getEndereco().setNumero(Integer.parseInt(request.getParameter("numero").replaceAll("[^0-9]", "")));

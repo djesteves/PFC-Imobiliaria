@@ -82,20 +82,22 @@ public class ImovelCadastrar implements ICommand {
             imovel.setBanheiros(Integer.parseInt(request.getParameter("banheiro").replaceAll("[^0-9]", "")));
             imovel.setVagas_garagem(Integer.parseInt(request.getParameter("garagem").replaceAll("[^0-9]", "")));
 
-            imovel.setValor(Double.parseDouble(request.getParameter("valorimovel").replaceAll("[^0-9]", "")));
-            imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal").replaceAll("[^0-9]", "")));
-            imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll("[^0-9]", "")));
+            imovel.setValor(Double.parseDouble(request.getParameter("valorimovel").replaceAll(",", "")));
+
+            System.out.println(imovel.getValor());
+            imovel.setArea_total(Double.parseDouble(request.getParameter("areatotal").replaceAll(",", "")));
+            imovel.setArea_edificada(Double.parseDouble(request.getParameter("areaedificada").replaceAll(",", "")));
             imovel.setTipo_imovel(request.getParameter("tpimovel"));
             imovel.getUsuario().setId_usuario(Integer.parseInt(String.valueOf(session.get("id"))));
             imovel.setModalidade_imovel(request.getParameter("tpvenda"));
-            if(!request.getParameter("iptu").isEmpty()){
-                imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll("[^0-9]", "")));
-            }else {
+            if (!request.getParameter("iptu").isEmpty()) {
+                imovel.setIptu(Double.parseDouble(request.getParameter("iptu").replaceAll(",", "")));
+            } else {
                 imovel.setIptu(0);
             }
-            if(!request.getParameter("condominio").isEmpty()) {
-                imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll("[^0-9]", "")));
-            } else{
+            if (!request.getParameter("condominio").isEmpty()) {
+                imovel.setCondominio(Double.parseDouble(request.getParameter("condominio").replaceAll(",", "")));
+            } else {
                 imovel.setCondominio(0);
             }
             imovel.setStatus("Em Análise");

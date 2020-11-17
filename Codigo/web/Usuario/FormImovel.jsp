@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<fmt:setLocale value = "en_US"/>
 <jsp:include page="../navbar.jsp" />
 
 <div class="container">
@@ -41,30 +42,31 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="comodos">Quantidade de Comodos:</label>
-                    <input type="text" class="form-control" name="comodos" id="comodos"   value="${imovel.comodos}" maxlength="2" required />
+                    <input type="text" class="form-control" name="comodos" id="comodos"   value="${imovel.comodos}" maxlength="4" required />
                 </div>
                 <div class="form-group col-md-4">
                     <label for="banheiro">Quantidade de Banheiros/Suítes:</label>
-                    <input type="text" class="form-control" name="banheiro" id="banheiro"  value="${imovel.banheiros}" maxlength="2" required/>
+                    <input type="text" class="form-control" name="banheiro" id="banheiro"  value="${imovel.banheiros}" maxlength="4" required/>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="garagem">Quantidade de Vagas na Garagem:</label>
-                    <input type="text" class="form-control" name="garagem" id="garagem"  value="${imovel.vagas_garagem}" maxlength="2" required/>
+                    <input type="text" class="form-control" name="garagem" id="garagem"  value="${imovel.vagas_garagem}" maxlength="4" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areatotal">Área Total:</label>
-                    <input type="text" class="form-control" name="areatotal" id="areatotal" value="<fmt:formatNumber value="${imovel.area_total}"/>" maxlength="5" required/>
+                    <input type="text" class="form-control" name="areatotal" id="areatotal" value="<fmt:formatNumber  minFractionDigits="2" value="${imovel.area_total}"/>" maxlength="10" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Área Edificada:</label>
-                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<fmt:formatNumber value="${imovel.area_edificada}"/>"  maxlength="5" required/>
+                    <input type="text" class="form-control" name="areaedificada" id="areaedificada"  value="<fmt:formatNumber  minFractionDigits="2" value="${imovel.area_edificada}"/>"  maxlength="10" required/>
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="areaedificada">Valor de Venda/Aluguel:</label>
-                    <input type="text" class="form-control" name="valorimovel" id="valorimovel" value="<fmt:formatNumber value="${imovel.valor}"/>" maxlength="15" required/>
+
+                    <input type="text" class="form-control" name="valorimovel" id="valorimovel" value="<fmt:formatNumber  minFractionDigits="2" value="${imovel.valor}"/>" maxlength="30" required/>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -90,17 +92,22 @@
 
                 <div class="form-group col-md-4">
                     <label for="iptu">Valor do IPTU:</label>
-                    <input type="text" class="form-control" name="iptu" id="iptu" value="<fmt:formatNumber value="${imovel.iptu}"/>" maxlength="15" />
+                    <input type="text" class="form-control" name="iptu" id="iptu" value="<fmt:formatNumber  minFractionDigits="2" value="${imovel.iptu}"/>" maxlength="30" />
                 </div>
 
                 <div class="form-group col-md-4">
                     <label for="condominio">Valor do Condomínio:</label>
-                    <input type="text" class="form-control" name="condominio" id="condominio" value="<fmt:formatNumber value="${imovel.condominio}"/>" maxlength="15" />
+                    <input type="text" class="form-control" name="condominio" id="condominio" value="<fmt:formatNumber minFractionDigits="2" value="${imovel.condominio}"/>" maxlength="30" />
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-2">
+                    <label for="cep">CEP:</label>
+                    <input type="text" size="10" maxlength="9"
+                           onblur="pesquisacep(this.value);" class="form-control" value="${imovel.endereco.cep}" name="cep" id="cep" required>
+                </div>
+                <div class="form-group col-md-8">
                     <label for="logradouro">Logradouro:</label>
                     <input type="text" class="form-control" name="logradouro" id="logradouro" value="${imovel.endereco.logradouro}" placeholder="" required>
                 </div>
@@ -108,15 +115,15 @@
                     <label for="numero">Número:</label>
                     <input type="text" class="form-control" name="numero" id="numero" value="${imovel.endereco.numero}" placeholder="" required>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-5">
                     <label for="complemento">Complemento:</label>
                     <input type="text" class="form-control" name="complemento" id="complemento" value="${imovel.endereco.complemento}" placeholder="">
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <label for="cidade">Cidade:</label>
                     <input type="text" class="form-control" name="cidade" id="cidade" value="${imovel.endereco.cidade}" required>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-2">
                     <label for="estado">Estado:</label>
                     <select class="custom-select" name="estado" id="estado" class="form-control" required>
 
@@ -149,12 +156,8 @@
                         <option value="TO">Tocantins</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="cep">CEP:</label>
-                    <input type="text" size="10" maxlength="9"
-                           onblur="pesquisacep(this.value);" class="form-control" value="${imovel.endereco.cep}" name="cep" id="cep" required>
-                </div>
-                <div class="form-group col-md-6">
+
+                <div class="form-group col-md-5">
                     <label for="bairro">Bairro:</label>
                     <input type="text" class="form-control" name="bairro" value="${imovel.endereco.bairro}" id="bairro" required>
                 </div>
@@ -178,10 +181,25 @@
 <jsp:include page="../footer.jsp" />
 
 <script>
+    $(function () {
+        $('#condominio').maskMoney();
+        $('#iptu').maskMoney();
+        $('#valorimovel').maskMoney();
+        $('#areaedificada').maskMoney();
+        $('#areatotal').maskMoney();
+    })
     $(document).ready(function () {
         $("#tpimovel").val("<c:out value='${imovel.tipo_imovel}' />");
         $("#estado").val("<c:out value='${imovel.endereco.estado}' />");
         $("#descricao").val("<c:out value='${imovel.descricao}' />");
         $("#tpvenda").val("<c:out value='${imovel.modalidade_imovel}' />");
+
+        let a = "<c:out value='${imovel}' />";
+        if (a !== "") {
+            document.getElementById('valorimovel').readOnly = true;
+            document.getElementById('areatotal').readOnly = true;
+            document.getElementById('tpvenda').disabled = true;
+            document.getElementById('tpimovel').disabled = true;
+        }
     });
 </script>

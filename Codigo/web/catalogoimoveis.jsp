@@ -35,7 +35,7 @@
                     <option value="ALUGUEL">Alugar</option>
                 </select>
 
-                <label for="quartos">Nº de Quartos</label>
+                <label for="quartos">Nº de Comodos</label>
                 <select onChange="filtro()" class="custom-select my-1 mr-sm-2" name="quartos" id="quartos" class="form-control">
                     <option value="" selected>Escolha...</option>
                     <option value="1">1</option>

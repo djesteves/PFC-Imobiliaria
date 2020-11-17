@@ -69,7 +69,7 @@ public class AgendamentoDAO {
                 + "                 JOIN usuario u on u.id_usuario = ag.id_usuario\n"
                 + "                 JOIN usuario uc on uc.id_usuario = ag.id_corretor\n"
                 + "                 JOIN imovel i on i.id_imovel = ag.id_imovel\n"
-                + "                 JOIN usuario ua on ua.id_usuario = i.id_imovel ";
+                + "                 JOIN usuario ua on ua.id_usuario = i.id_usuario ";
 
         String modo = (String) parametros.get("modo");
 

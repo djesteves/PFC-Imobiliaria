@@ -10,13 +10,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSite">
                 <ul class="nav navbar-nav ml-auto ">
-                    <li class="nav-item text-center" role="presentation"><a class="nav-link active mr-2" href="<%=request.getContextPath()%>/catalogoimoveis.jsp"><i class="fas fa-home"></i>&nbsp;</i>Imóveis</a></li>
-
+                    <li class="nav-item text-center" role="presentation"><a class="nav-link active mr-2" href="<%=request.getContextPath()%>/catalogoimoveis.jsp">
+                            <i class="fas fa-home"></i>&nbsp;
+                            </i>Catalogo de Imóveis</a>
+                    </li>
                     <c:if test="${usuarioLogado == null}">
                         <li class="nav-item text-center">
                             <a class="btn btn-outline-light" href="<%=request.getContextPath()%>/login.jsp">
                                 <i class="far fa-user"></i>
-                                Entrar
+                                Entrar/Criar Conta
                             </a>
                         </li>
                     </c:if>  
@@ -47,7 +49,7 @@
 
                                 <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendamentoLista?modo=Usuario">
                                     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                    Agendamentos
+                                    Meus Agendamentos
                                 </a>
 
                                 <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel) || 'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">

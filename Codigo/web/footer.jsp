@@ -7,6 +7,7 @@
 </footer>
 
 <script charset="UTF-8" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 <script charset="UTF-8" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script charset="UTF-8" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script charset="UTF-8" src="https://kit.fontawesome.com/7982155587.js"></script>

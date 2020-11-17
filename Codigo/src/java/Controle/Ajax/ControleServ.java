@@ -116,7 +116,7 @@ public class ControleServ extends HttpServlet {
                     + "  <hr class=\"my-4\">\n"
                     + "  <p style=\"font-weight: bold;\"class=\"lead\"> Caracteristicas </p>\n"
                     + "  <p><i class=\"fas fa-vector-square\"></i> " + im.getArea_total() + "m² Área Total</p>\n"
-                    + "  <p><i class=\"fas fa-bed\"></i> " + im.getComodos() + " quarto(s)</p>\n"
+                    + "  <p><i class=\"fas fa-bed\"></i> " + im.getComodos() + " comodo(s)</p>\n"
                     + "  <p><i class=\"fas fa-restroom\"> </i> " + im.getBanheiros() + " banheiro(s)</p>\n"
                     + "  <hr class=\"my-4\">\n"
                     + "  <p style=\"font-weight: bold;\"class=\"lead\"> Valores </p>\n"

@@ -34,7 +34,13 @@
 
     <c:if test="${empty listaImovel}">
         <div class="text-center">
-            <p><strong> Nenhum Imóvel Cadastrado </strong> </p>
+            <p><strong> Poxa, você não possui nenhum imóvel cadastrado </strong> </p>
+
+
+            <a href="<%=request.getContextPath()%>/Usuario/FormImovel.jsp" class="btn btn-radius btn-outline-secondary shadow lift mr-1">
+                Anuncie um imóvel agora mesmo
+            </a>
+
         </div>
     </c:if>
 

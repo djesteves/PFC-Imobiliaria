@@ -188,8 +188,8 @@ public class ImovelDAO {
                 + " WHERE id_endereco = ?";
 
         String UPDATE_DADOS = "UPDATE Imovel SET Titulo = ?, descricao =?,"
-                + " valor = ?, area_total = ?, area_edificada = ?, comodos = ?, vagas_garagem = ?, banheiros = ?, tipo_imovel = ?,"
-                + " modalidade_imovel = ?, iptu = ?, condominio = ?"
+                + " valor = ?, area_total = ?, area_edificada = ?, comodos = ?, vagas_garagem = ?, banheiros = ?,"
+                + " iptu = ?, condominio = ?"
                 + " WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
@@ -204,11 +204,9 @@ public class ImovelDAO {
         smt.setInt(6, imovel.getComodos());
         smt.setInt(7, imovel.getVagas_garagem());
         smt.setInt(8, imovel.getBanheiros());
-        smt.setString(9, imovel.getTipo_imovel());
-        smt.setString(10, imovel.getModalidade_imovel());
-        smt.setDouble(11, imovel.getIptu());
-        smt.setDouble(12, imovel.getCondominio());
-        smt.setInt(13, imovel.getId_imovel());
+        smt.setDouble(9, imovel.getIptu());
+        smt.setDouble(10, imovel.getCondominio());
+        smt.setInt(11, imovel.getId_imovel());
 
         smt.executeUpdate();
 
