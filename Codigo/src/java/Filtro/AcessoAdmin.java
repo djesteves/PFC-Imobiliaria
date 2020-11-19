@@ -13,7 +13,7 @@ import Modelo.Perfil;
 import java.util.Map;
 import javax.servlet.annotation.WebFilter;
 
-@WebFilter(filterName = "AcessoAdmin", urlPatterns = {"/Controle/UsuarioListarAtivos", "/Controle/AgendamentoLista?modo=Administrador"})
+@WebFilter(filterName = "AcessoAdmin", urlPatterns = {"/Controle/UsuarioListarAtivos"})
 public class AcessoAdmin implements Filter {
 
     @Override

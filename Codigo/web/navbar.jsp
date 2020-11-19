@@ -18,7 +18,7 @@
                         <li class="nav-item text-center">
                             <a class="btn btn-outline-light" href="<%=request.getContextPath()%>/login.jsp">
                                 <i class="far fa-user"></i>
-                                Entrar/Criar Conta
+                                Login | Cadastro
                             </a>
                         </li>
                     </c:if>  

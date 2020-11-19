@@ -9,7 +9,6 @@
 
     .formulario {
         border-radius: 8px;
-        font-weight: lighter;
     }
 
     @media (max-width: 400px) {
@@ -52,9 +51,15 @@
 
         <br>
 
-        <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp" class="btn btn-block btn-primary shadow lift mr-1">
-            Não possui uma Conta? Crie uma agora <i class="fas fa-chevron-right d-none d-md-inline ml-3"></i>
-        </a>
+        <div class="text-right">
+            <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp">
+                Cadastrar |
+            </a>
+            <a href="#">
+                Esqueceu a senha?
+            </a>
+            
+        </div>
     </c:if> 
 
     <c:if test="${usuarioLogado != null}">

@@ -52,7 +52,7 @@ public class AgendamentoCancelar implements ICommand {
             Date dataAgendamento = gc.getTime();
 
             if (new Date().compareTo(dataAgendamento) > 0 && !session.get("nivel").toString().equalsIgnoreCase("ADMINISTRADOR")) {
-                msgErro = "Não é possivel cancelar o agendamento 12 (doze) horas antes da visita, entre em contato com o Administrador";
+                msgErro = "Não é possivel cancelar o agendamento, faltam menos de doze horas para ocorrer a visita, entre em contato com o Administrador";
             }
 
             if (msgErro.equals("")) {

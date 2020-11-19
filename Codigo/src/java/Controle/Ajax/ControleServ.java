@@ -217,6 +217,9 @@ public class ControleServ extends HttpServlet {
                     out.println("<div class=\"card-body\">");
                     out.println("<h2 class=\"card-title\">" + im.getTitulo() + "</h2>");
 
+                    out.println("<i class=\"fas fa-bed\"></i> " + im.getComodos() + "\n");
+                    out.println("<i class=\"fas fa-restroom\"></i> " + im.getBanheiros() + "\n");
+
                     if ("VENDA".equalsIgnoreCase(im.getModalidade_imovel())) {
                         out.println("<span class=\"badge badge-primary\"> " + im.getModalidade_imovel() + "</span>");
                     } else if ("ALUGUEL".equalsIgnoreCase(im.getModalidade_imovel())) {

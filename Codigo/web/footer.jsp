@@ -26,14 +26,14 @@
 <c:if test="${msg != null}">
     <script>
         var mensagem = "${msg}";
-        mostraDialogo(mensagem, "success", 3000);
+        mostraDialogo(mensagem, "success", 5000);
     </script>
 </c:if> 
 
 <c:if test="${msgerro != null}">
     <script>
         var mensagem = "${msgerro}";
-        mostraDialogo(mensagem, "danger", 3000);
+        mostraDialogo(mensagem, "danger", 6000);
     </script>
 </c:if> 
 

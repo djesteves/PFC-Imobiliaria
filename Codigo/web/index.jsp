@@ -17,7 +17,7 @@
             <p> Compre ou venda/alugue de maneira descomplicada!</p>
             <!-- Botões -->
             <div class="text-center text-md-left">
-                <a href="<%=request.getContextPath()%>/catalogoimoveis.jsp" class="btn btn-radius btn-outline-secondary shadow lift mr-1">
+                <a href="<%=request.getContextPath()%>/catalogoimoveis.jsp" class="btn btn-radius btn-outline-primary shadow lift mr-1">
                     <i class="fas fa-home"></i>&nbsp;
                     </i>Catalogo de Imóveis</a>
                 </a>
