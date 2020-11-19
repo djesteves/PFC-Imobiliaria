@@ -29,12 +29,16 @@
                         <c:if test = "${usuarioLogado.nivel != 'USUARIO'}">
                             <c:if test = "${agendamento.status == 'Em Andamento'}">
                                 <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="modalConcluir(${agendamento.id_agendamento}, '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalConcluir" ><i class="fas fa-check" ></i></a>
-                                </c:if>
                             </c:if>
+                        </c:if>
 
                         <c:if test = "${agendamento.status == 'Em Andamento'}">
                             <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="modalCancelar(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}', '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalCancelar" ><i class="fas fa-times" ></i></a>
-                            </c:if>
+                        </c:if>
+
+                        <c:if test = "${agendamento.status == 'Concluido'}">
+                            <a title="Emitir Contrato Préliminar" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('ContratoVenda', ${agendamento.id_agendamento})" ><i class="fas fa-print" ></i></a>
+                        </c:if>
 
                         <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
                     </td>

@@ -47,10 +47,12 @@
                                     Alterar Senha
                                 </a>
 
-                                <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendamentoLista?modo=Usuario">
-                                    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                    Meus Agendamentos
-                                </a>
+                                <c:if test="${'USUARIO'.equalsIgnoreCase(usuarioLogado.nivel)}">
+                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendamentoLista?modo=Usuario">
+                                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                        Meus Agendamentos
+                                    </a>
+                                </c:if>
 
                                 <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel) || 'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
                                     <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ContratoVenda" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30362aa8-bfaa-4ae5-8232-1af28fc4c609">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="id_agendamento" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT UA.nome as NomeAdquirente, UA.cpf_cnpj AS CPFCNPJAdquirente, UT.nome as NomeTransmitente, UT.cpf_cnpj AS CPFCNPJTransmitente, i.id_imovel,
+e.logradouro || ' - ' || e.numero || ', '|| e.bairro  ||' - ' || e.cidade || ' - '|| e.cep as enderecoimovel, i.valor, i.modalidade_imovel
+FROM Agendamento A
+JOIN Usuario UA ON UA.id_usuario = A.id_usuario
+JOIN Imovel I ON I.id_imovel = A.id_imovel
+JOIN Endereco E ON E.id_endereco = I.id_endereco
+JOIN Usuario UT ON UT.id_usuario = I.id_usuario
+WHERE A.Id_Agendamento = $P{id_agendamento}]]>
+	</queryString>
+	<field name="NomeAdquirente" class="java.lang.String"/>
+	<field name="CPFCNPJAdquirente" class="java.lang.String"/>
+	<field name="NomeTransmitente" class="java.lang.String"/>
+	<field name="CPFCNPJTransmitente" class="java.lang.String"/>
+	<field name="id_imovel" class="java.lang.Integer"/>
+	<field name="enderecoimovel" class="java.lang.String"/>
+	<field name="valor" class="java.math.BigDecimal"/>
+	<field name="modalidade_imovel" class="java.lang.String"/>
+	<background>
+		<band height="802">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="792" uuid="9cca7b07-81f6-40f0-9ffc-a4d7cb5f5f71"/>
+			</rectangle>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="72" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="72" uuid="786c194e-a7f4-407b-877c-f586d0c4c22d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="80" y="24" width="475" height="20" uuid="84e84bd5-fc4a-4e20-8c0c-1f30603deccd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Royal Imobiliária]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="80" height="71" uuid="364a68c2-f160-4169-8c5f-a6d349130039"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="311" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="40" width="511" height="16" uuid="2eef0694-0179-4cd4-bb17-ad75045ec6ca"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Adquirente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="90" width="511" height="16" uuid="3b84fb23-bf7a-4f43-be08-92d970a7bea8"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Transmitente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="20" y="246" width="510" height="65" uuid="f29b69f9-94d7-4c7b-8c89-e46c5fd19a86"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contrato preliminar, ou a promessa de contratar, caracteriza-se por seu objeto, que é um contrahere, uma obrigação de contratar”. Executa-se, normalmente, através de da conclusão do contrato definitivo que, em conseqüência, se torna, simultaneamente, solutório e constitutivo. Será solutório, ou liberatório, enquanto consistir no cumprimento de obrigações assumidas no contrato precedente, extinguindo-as. Será constitutivo no concernente às novas relações que dele resultarem, em caráter definitivo. 
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="138" width="511" height="16" uuid="0cfd20a0-9faf-4485-8fef-2fec4b5b44ae"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Imóvel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="154" width="80" height="13" uuid="10b24532-1682-4b80-9f27-a5f1c6e444e5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Código do Imóvel]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="154" width="200" height="13" uuid="e9fb59fa-a1f0-4141-b251-b664d60f835c"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_imovel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="167" width="80" height="13" uuid="16debaef-0d3b-4243-8343-75a34da7cb3f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Endereço]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="98" y="167" width="431" height="13" uuid="3090df02-21ca-46db-9d46-131e68c056d3"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enderecoimovel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="56" width="80" height="13" uuid="df35a419-f106-4696-9c41-cb6e1419d10e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="56" width="431" height="13" uuid="79c267a6-bef0-4515-b23f-5baa37b64238"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomeAdquirente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="69" width="80" height="13" uuid="537163b0-869c-4ae9-9174-9a37db0cbd03">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="69" width="431" height="13" uuid="ab43a7d0-7526-4a44-95ef-7cd344607fb0"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CPFCNPJAdquirente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="119" width="431" height="13" uuid="208639e2-dc3c-43ff-abac-4c61ba9a764d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CPFCNPJTransmitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="98" y="106" width="431" height="13" uuid="f8992adc-ba52-4d76-ae5d-1a48ebb9e893"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomeTransmitente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="106" width="80" height="13" uuid="7c358fd0-7c64-428c-98bb-2b13336524ac">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="119" width="80" height="13" uuid="44057780-2286-4f04-a4d4-e969c79b01b0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="98" y="180" width="200" height="13" uuid="0c8310f9-df10-4b35-9102-773a9b45872a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="18" y="180" width="80" height="13" uuid="b9cb62b3-21ab-4b14-ab04-ffbddf63e00f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c5840bd2-5a99-4f58-ba9a-3cf4b2cb7c79"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Valor de "+$F{modalidade_imovel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="7" width="555" height="20" uuid="0d0bdfac-2794-420e-977e-ac0a1a63fb84">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Contrato Préliminar de ".toUpperCase() +$F{modalidade_imovel} + " de Imóvel".toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="10" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="645465f5-2e20-436a-a88d-0998adc9304b"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="0" width="55" height="10" uuid="018311a6-1372-46c8-9300-b9ab4bfbc7c7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="0" width="30" height="10" uuid="25cd0ba8-5079-446c-ba23-257ca4d4235b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="0" width="115" height="10" uuid="4aae5e81-01f2-431e-bf42-1d27f6fcd16b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[ContratoVenda]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="133">
+			<line>
+				<reportElement x="0" y="123" width="555" height="1" uuid="be909857-f2e4-4a51-9949-e47a9b983f0d"/>
+			</line>
+			<textField>
+				<reportElement x="468" y="123" width="55" height="10" uuid="5bd807b6-fc85-47b5-a0d4-0bfc5a628d92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="523" y="123" width="30" height="10" uuid="350198a2-2548-48a5-9980-6a45a85bd6e5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="123" width="115" height="10" uuid="7392dd32-9779-4d93-8f1a-dee481636145">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[ContratoPreliminar]]></text>
+			</staticText>
+			<line>
+				<reportElement x="18" y="62" width="222" height="1" uuid="4aa0fe20-0cda-4b2a-a805-49fa4d097c2a"/>
+			</line>
+			<textField>
+				<reportElement x="20" y="63" width="220" height="18" uuid="373c4519-a11c-47fe-ad2b-2b8ef8e9961d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomeAdquirente}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="300" y="62" width="223" height="1" uuid="64fdcecb-dd7b-4e78-a221-f2cdc2fd8814"/>
+			</line>
+			<textField>
+				<reportElement x="300" y="63" width="223" height="18" uuid="3ce02822-d459-47c5-ab50-3b4b7e4ca45b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomeTransmitente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="16" uuid="1a673662-b781-4a85-a19e-166ba0db7d22"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assinaturas]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

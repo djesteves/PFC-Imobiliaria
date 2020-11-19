@@ -80,7 +80,7 @@ where ag.id_agendamento = $P{id_agendamento}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dataagendamento}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy HH:mm:ss">
+			<textField pattern="dd/MM/yyyy">
 				<reportElement x="148" y="113" width="372" height="20" uuid="ab8be2db-3b1b-40ab-81d2-1b0bdf18d221">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a273ed2-561e-4ec7-b79d-2e1ad547cd46"/>
 				</reportElement>

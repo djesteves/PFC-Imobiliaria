@@ -161,7 +161,7 @@ public class ControleServ extends HttpServlet {
             parametros.put("datainicio", formatter.parse(request.getParameter("datainicio")));
             parametros.put("datafinal", formatter.parse(request.getParameter("datafinal")));
             parametros.put("situacao", request.getParameter("situacao"));
-        } else if (relatorio.equalsIgnoreCase("FichaAgendamento")) {
+        } else if (relatorio.equalsIgnoreCase("FichaAgendamento") || relatorio.equalsIgnoreCase("ContratoVenda")) {
             parametros.put("id_agendamento", Integer.parseInt(request.getParameter("id_agendamento")));
         }
 
