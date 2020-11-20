@@ -73,7 +73,6 @@ public class ImovelDAO {
         smt.setDouble(18, imovel.getCondominio());
         smt.execute();
 
-        smt.close();
         connection.close();
     }
 
@@ -125,8 +124,6 @@ public class ImovelDAO {
             ArrImovel.add(imovel);
         }
 
-        rs.close();
-        smt.close();
         connection.close();
 
         return ArrImovel;
@@ -175,8 +172,7 @@ public class ImovelDAO {
             imovel.getEndereco().setLogradouro(rs.getString("logradouro"));
             imovel.getEndereco().setNumero(rs.getInt("numero"));
         }
-        rs.close();
-        smt.close();
+
         connection.close();
         return imovel;
     }
@@ -223,7 +219,6 @@ public class ImovelDAO {
 
         smt.executeUpdate();
 
-        smt.close();
         connection.close();
 
     }
@@ -254,8 +249,7 @@ public class ImovelDAO {
 
             listAprovarImovel.add(imovel);
         }
-        rs.close();
-        smt.close();
+
         connection.close();
         return listAprovarImovel;
     }
@@ -274,7 +268,6 @@ public class ImovelDAO {
         smt.setInt(2, id);
         smt.executeUpdate();
 
-        smt.close();
         connection.close();
     }
 
@@ -292,7 +285,24 @@ public class ImovelDAO {
         smt.setInt(2, imovel.getId_imovel());
         smt.executeUpdate();
 
-        smt.close();
+        connection.close();
+
+    }
+
+    public void vendido(Imovel imovel) throws SQLException {
+
+        String UPDATE_IMOVELVENDIDO = "UPDATE Imovel  "
+                + "SET Status = ? "
+                + "WHERE id_imovel = ?";
+
+        Connection connection = ConnectionFactory.getConexao();
+
+        smt = connection.prepareStatement(UPDATE_IMOVELVENDIDO);
+
+        smt.setString(1, imovel.getStatus());
+        smt.setInt(2, imovel.getId_imovel());
+        smt.executeUpdate();
+
         connection.close();
 
     }
@@ -312,7 +322,6 @@ public class ImovelDAO {
         smt.setInt(3, imovel.getId_imovel());
         smt.executeUpdate();
 
-        smt.close();
         connection.close();
 
     }
@@ -376,8 +385,6 @@ public class ImovelDAO {
 
             }
 
-            rs.close();
-            smt.close();
             connection.close();
             return listImoveis;
         }

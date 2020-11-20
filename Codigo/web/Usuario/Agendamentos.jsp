@@ -28,17 +28,17 @@
                     <td>
                         <c:if test = "${usuarioLogado.nivel != 'USUARIO'}">
                             <c:if test = "${agendamento.status == 'Em Andamento'}">
-                                <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="modalConcluir(${agendamento.id_agendamento}, '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalConcluir" ><i class="fas fa-check" ></i></a>
+                                <a title="Concluir Agendamento" class="btn btn-sm btn-success" href="#" onClick="modalConcluir(${agendamento.id_agendamento}, '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}', '${agendamento.imovel.id_imovel}')" data-toggle="modal" data-target="#modalConcluir" ><i class="fas fa-check" ></i></a>
+                                </c:if>
                             </c:if>
-                        </c:if>
 
                         <c:if test = "${agendamento.status == 'Em Andamento'}">
                             <a title="Cancelar Agendamento" class="btn btn-sm btn-danger" href="#" onClick="modalCancelar(${agendamento.id_agendamento}, '${agendamento.dataAgendamento}', '${agendamento.usuario.email}', '${agendamento.usuarioCorretor.email}', '${agendamento.imovel.usuario.email}')" data-toggle="modal" data-target="#modalCancelar" ><i class="fas fa-times" ></i></a>
-                        </c:if>
+                            </c:if>
 
                         <c:if test = "${agendamento.status == 'Concluido'}">
-                            <a title="Emitir Contrato Préliminar" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('ContratoVenda', ${agendamento.id_agendamento})" ><i class="fas fa-print" ></i></a>
-                        </c:if>
+                            <a title="Emitir Minuta Préliminar" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('ContratoVenda', ${agendamento.id_agendamento})" ><i class="fas fa-print" ></i></a>
+                            </c:if>
 
                         <a title="Emitir Ficha de Solicitação" class="btn btn-sm btn-primary" href="#" onClick="EmitirRelatorio('FichaAgendamento', ${agendamento.id_agendamento})"><i class="far fa-file-alt" ></i></a>
                     </td>
@@ -96,6 +96,7 @@
                     <div class="modal-body">
                         <h5 class="modal-title">Deseja realmente concluir o agendamento?</h5>
                         <input type="hidden" id="idagendamentoconcluir" name="idagendamentoconcluir">
+                        <input type="hidden" id="idimovelconcluir" name="idimovelconcluir">
                         <input type="hidden" id="emailsolicitanteconcluir" name="emailsolicitanteconcluir">
                         <input type="hidden" id="emailcorretorconcluir" name="emailcorretorconcluir">
                         <input type="hidden" id="emailanuncianteconcluir" name="emailanuncianteconcluir">
@@ -122,11 +123,12 @@
         $("#obs").val('');
     }
 
-    function modalConcluir(id, emailuser, emailcorretor, emailanunciante) {
+    function modalConcluir(id, emailuser, emailcorretor, emailanunciante, idimovel) {
         $("#idagendamentoconcluir").val(id);
         $("#emailsolicitanteconcluir").val(emailuser);
         $("#emailcorretorconcluir").val(emailcorretor);
         $("#emailanuncianteconcluir").val(emailanunciante);
+        $("#idimovelconcluir").val(idimovel);
     }
 
     function confirmaConclusao(id) {

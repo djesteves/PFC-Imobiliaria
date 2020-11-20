@@ -72,7 +72,6 @@ public class UsuarioDAO {
 
             smt.executeUpdate();
 
-            smt.close();
             connection.close();
 
             return true;
@@ -102,7 +101,6 @@ public class UsuarioDAO {
             logado = true;
         }
 
-        smt.close();
         connection.close();
         return logado;
 
@@ -147,8 +145,6 @@ public class UsuarioDAO {
 
         }
 
-        smt.close();
-        rs.close();
         connection.close();
         return usuario;
     }
@@ -196,7 +192,6 @@ public class UsuarioDAO {
 
         smt.executeUpdate();
 
-        smt.close();
         connection.close();
 
     }
@@ -212,7 +207,7 @@ public class UsuarioDAO {
         smt.setInt(2, usuario.getId_usuario());
 
         smt.executeUpdate();
-        smt.close();
+
         connection.close();
     }
 
@@ -237,8 +232,6 @@ public class UsuarioDAO {
             listUsuario.add(usuario);
         }
 
-        resultSet.close();
-        smt.close();
         connection.close();
 
         return listUsuario;
@@ -258,7 +251,6 @@ public class UsuarioDAO {
 
         smt.executeUpdate();
 
-        smt.close();
         connection.close();
     }
 }
