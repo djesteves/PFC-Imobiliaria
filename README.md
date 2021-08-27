@@ -37,7 +37,8 @@ docker-compose up
 #### To access pgAdmin provide by docker you need to go: 127.0.0.1:5555 and put credentials email and password defined in the docker-compose file and create server connection. in hostname put:
 
 ```sh
-host.docker.internal
+windows: host.docker.internal
+linux: 172.17.0.1
 ```
 
 > Note: you need to create databases manually. first go to https://github.com/zebolinha80/PFC-Imobiliaria/blob/master/Banco/ScriptBancoPostGres.sql and copy the script and execute in psql query in postgres.
