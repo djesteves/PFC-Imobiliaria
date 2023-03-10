@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ICommand {
 
-    public String executar(HttpServletRequest request, HttpServletResponse response);
+    String executar(HttpServletRequest request, HttpServletResponse response);
 }

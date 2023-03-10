@@ -12,13 +12,11 @@ import Modelo.Imovel;
 import Modelo.Usuario;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -29,7 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Diieg
  */
 @WebServlet(name = "ControleServ", urlPatterns = {"/ImovelListarAprovados", "/VisualizarImovel", "/ListarCorretores", "/EmitirRelatorio"})
@@ -62,7 +59,7 @@ public class ControleServ extends HttpServlet {
 
         List<Usuario> corretores = dao.listarCorretores();
 
-
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<option value=\"\">Escolha </option>");
             out.println("<option value=\"AutoAlocar\">Alocar um corretor automaticamente/Não tenho preferência</option>");
@@ -80,6 +77,7 @@ public class ControleServ extends HttpServlet {
 
         Imovel im = dao.listarPorId(id);
 
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<div class=\"modal-header\">\n"
                     + " <h5 class=\"modal-title\" id=\"modalImovelLabel\"> " + im.getTitulo() + " - Número do Anúncio: " + im.getId_imovel() + "</h5>\n"
@@ -193,6 +191,7 @@ public class ControleServ extends HttpServlet {
 
         List<Imovel> imoveis = dao.listarAprovados(filtro);
 
+        response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             if (imoveis.isEmpty()) {

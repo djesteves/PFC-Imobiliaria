@@ -10,7 +10,7 @@ public class ConnectionFactory {
     }
 
     public static java.sql.Connection getConexao() {
-        Connection connection = null;
+        Connection connection;
         try {
             String driverName = "org.postgresql.Driver";
             Class.forName(driverName);
@@ -24,10 +24,10 @@ public class ConnectionFactory {
 
             return connection;
         } catch (ClassNotFoundException e) {
-            System.out.println("O driver expecificado nao foi encontrado." + e);
+            System.out.println("O driver expecificado nao foi encontrado." + e.getMessage());
             return null;
         } catch (SQLException e) {
-            System.out.println("Nao foi possivel conectar ao Banco de Dados." + e);
+            System.out.println("Nao foi possivel conectar ao Banco de Dados." + e.getMessage());
             return null;
         }
     }
