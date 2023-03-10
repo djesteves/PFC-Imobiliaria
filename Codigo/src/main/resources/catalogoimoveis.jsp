@@ -25,7 +25,7 @@
                     <option value="1000000">Até R$ 1.000.000</option>
                     <option value="10000000">Até R$ 10.000.000</option>
                     <option value="50000000">Até R$ 50.000.000</option>
-                    <option value="100000000000000">Todos</option>
+                    <option value="*">Maior que R$ 50.000.000</option>
                 </select>
 
                 <label class="my-1 mr-2" for="tpvenda">Pretendo:</label>
@@ -43,7 +43,7 @@
                     <option value="3">3</option>
                     <option value="4">4</option>
                     <option value="5">5</option>
-                    <option value="">Maior que 5</option>
+                    <option value="*">Maior que 5</option>
                 </select>
 
             </form>
