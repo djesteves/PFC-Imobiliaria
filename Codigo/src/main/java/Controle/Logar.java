@@ -5,14 +5,16 @@ package Controle;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import Modelo.Usuario;
+
 import Dao.UsuarioDAO;
-import java.sql.SQLException;
+import Modelo.Usuario;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.servlet.http.HttpSession;
 
 public class Logar implements ICommand {
 

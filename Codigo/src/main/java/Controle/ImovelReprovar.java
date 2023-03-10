@@ -5,19 +5,13 @@
  */
 package Controle;
 
-import java.sql.SQLException;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import Dao.ImovelDAO;
 import Modelo.Imovel;
-
 import Util.EnviaEmail;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.Map;
 
 /**
@@ -47,32 +41,16 @@ public class ImovelReprovar implements ICommand {
                     + "Motivo: " + request.getParameter("obs") + "</p><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#FFFFFF;\"> <br></p></td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </div></body></html>";
             String email = session.get("email");
 
-            String remetente = "royal.imobiliaria2020@gmail.com";
-            System.out.println("__________________________________________________");
-            System.out.println("Enviando email DE: " + remetente + " PARA: " + email);
-            System.out.println("Assunto: " + assunto);
+            EnviaEmail enviaEmail = new EnviaEmail();
 
-            Message message = new MimeMessage(EnviaEmail.criarSessionMail());
-            message.setFrom(new InternetAddress(remetente)); // Remetente
+            enviaEmail.SendEmailThroughGmail (email,
+                    assunto, msgemail);
 
-            Address[] toUser = InternetAddress // Destinatário(s)
-                    .parse(email.trim().toLowerCase());
-
-            message.setRecipients(Message.RecipientType.TO, toUser);
-            message.setSubject(assunto);// Assunto
-            message.setContent(msgemail, "text/html");
-            /**
-             * Método para enviar a mensagem criada
-             */
-            Transport.send(message);
-
-            System.out.println("Email enviado com sucesso !");
-            System.out.println("__________________________________________________");
 
             request.setAttribute("msg", "Imóvel foi reprovado com sucesso!");
             return "index.jsp";
 
-        } catch (SQLException | NumberFormatException | MessagingException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
             return "index.jsp";

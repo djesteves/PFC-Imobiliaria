@@ -10,15 +10,10 @@ import Dao.ImovelDAO;
 import Modelo.Agendamento;
 import Modelo.Imovel;
 import Util.EnviaEmail;
-import java.sql.SQLException;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 
 /**
  *
@@ -49,33 +44,16 @@ public class AgendamentoConcluir implements ICommand {
             
             String email = request.getParameter("emailsolicitanteconcluir") + ","
                     + request.getParameter("emailcorretorconcluir") + "," + request.getParameter("emailanuncianteconcluir");
-            
-            String remetente = "royal.imobiliaria2020@gmail.com";
-            System.out.println("__________________________________________________");
-            System.out.println("Enviando email DE: " + remetente + " PARA: " + email);
-            System.out.println("Assunto: " + assunto);
-            
-            Message message = new MimeMessage(EnviaEmail.criarSessionMail());
-            message.setFrom(new InternetAddress(remetente)); // Remetente
 
-            Address[] toUser = InternetAddress // Destinatário(s)
-                    .parse(email.trim().toLowerCase());
-            
-            message.setRecipients(Message.RecipientType.TO, toUser);
-            message.setSubject(assunto);// Assunto
-            message.setContent(msgemail, "text/html");
-            /**
-             * Método para enviar a mensagem criada
-             */
-            Transport.send(message);
-            
-            System.out.println("Email enviado com sucesso !");
-            System.out.println("__________________________________________________");
+            EnviaEmail enviaEmail = new EnviaEmail();
+
+            enviaEmail.SendEmailThroughGmail (email,
+                    assunto, msgemail);
             
             request.setAttribute("msg", "Agendamento concluido com sucesso");
             return "index.jsp";
             
-        } catch (SQLException | NumberFormatException | MessagingException ex) {
+        } catch (SQLException | NumberFormatException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
             return "index.jsp";

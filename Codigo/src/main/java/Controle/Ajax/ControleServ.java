@@ -10,6 +10,14 @@ import Dao.ImovelDAO;
 import Dao.RelatorioDAO;
 import Modelo.Imovel;
 import Modelo.Usuario;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -19,13 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -37,20 +38,14 @@ public class ControleServ extends HttpServlet {
 
     NumberFormat nf = NumberFormat.getCurrencyInstance();
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String uri = request.getRequestURI();
         try {
             if (uri.equals(request.getContextPath() + "/VisualizarImovel")) {
                 ListarImovelPorID(request, response);
             } else if (uri.equals(request.getContextPath() + "/ListarCorretores")) {
-                ListarCorretores(request, response);
+                ListarCorretores(response);
             } else if (uri.equals(request.getContextPath() + "/EmitirRelatorio")) {
                 EmitirRelatorio(request, response);
             }
@@ -62,12 +57,11 @@ public class ControleServ extends HttpServlet {
         }
     }
 
-    public void ListarCorretores(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void ListarCorretores(HttpServletResponse response) throws Exception {
         AgendamentoDAO dao = new AgendamentoDAO();
 
         List<Usuario> corretores = dao.listarCorretores();
 
-        response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
             out.println("<option value=\"\">Escolha </option>");
@@ -86,7 +80,6 @@ public class ControleServ extends HttpServlet {
 
         Imovel im = dao.listarPorId(id);
 
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<div class=\"modal-header\">\n"
                     + " <h5 class=\"modal-title\" id=\"modalImovelLabel\"> " + im.getTitulo() + " - Número do Anúncio: " + im.getId_imovel() + "</h5>\n"
@@ -169,7 +162,6 @@ public class ControleServ extends HttpServlet {
 
         String caminho = gerador.geraPdf(jrxml, parametros);
 
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println(caminho);
         }
@@ -177,8 +169,7 @@ public class ControleServ extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         String uri = request.getRequestURI();
 
         try {
@@ -202,7 +193,6 @@ public class ControleServ extends HttpServlet {
 
         List<Imovel> imoveis = dao.listarAprovados(filtro);
 
-        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             if (imoveis.isEmpty()) {

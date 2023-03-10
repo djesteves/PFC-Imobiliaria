@@ -5,12 +5,13 @@
  */
 package Controle;
 
-import java.sql.SQLException;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import Dao.UsuarioDAO;
 import Modelo.Usuario;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *

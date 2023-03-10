@@ -1,12 +1,12 @@
 package Controle;
 
-import Modelo.Usuario;
 import Dao.UsuarioDAO;
-import java.sql.SQLException;
-import javax.servlet.http.HttpServletRequest;
-
-import javax.servlet.http.HttpServletResponse;
 import Modelo.Perfil;
+import Modelo.Usuario;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

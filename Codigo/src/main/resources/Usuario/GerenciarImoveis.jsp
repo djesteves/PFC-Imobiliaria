@@ -12,7 +12,7 @@
         <c:forEach var="i" items="${listaImovel}">
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="../Resources/upload/${i.diretorio_imagem}" alt="Imagem do Imóvel" height="225" width="210">
+                    <img class="card-img-top" src="../resources/Assets/upload/${i.diretorio_imagem}" alt="Imagem do Imóvel" height="225" width="210">
                     <div class="card-body">
                         <h2 class="card-title">${i.titulo}</h2>
                         <p class="card-text">${i.descricao}</p>
@@ -24,7 +24,7 @@
                         <div class="btn-group float-right" role="group" aria-label="AcoesImovel">
                             <a title="Verificar Agendamentos" href="<%=request.getContextPath()%>/Controle/AgendamentoLista?id=${i.id_imovel}&modo=Imovel" class="btn btn-info"><i class="fas fa-book"></i></a>
                             <a title="Alterar Imóvel" href="<%=request.getContextPath()%>/Controle/ImovelListarPorID?id=${i.id_imovel}" class="btn btn-primary"><i class="far fa-edit"></i></a>
-                            <a title="Deletar Imóvel" href="#" onClick="confirmaDelete(${i.id_imovel})" class="btn btn-Danger"><i class="fas fa-trash-alt"></i></a>
+                            <a title="Deletar Imóvel" href="#" class="btn btn-danger" onClick="confirmaDelete(${i.id_imovel})"><i class="fas fa-trash-alt"></i></a>
                         </div>
                     </div>
                 </div>

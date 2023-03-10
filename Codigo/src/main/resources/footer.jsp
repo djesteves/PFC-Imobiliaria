@@ -14,8 +14,8 @@
 <script charset="UTF-8" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script charset="UTF-8" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-<script charset="UTF-8" src="<%=request.getContextPath()%>/Resources/js/wsviacep.js"></script>
-<script charset="UTF-8" src="<%=request.getContextPath()%>/Resources/js/script.js"></script>
+<script charset="UTF-8" src="<%=request.getContextPath()%>/Assets/js/wsviacep.js"></script>
+<script charset="UTF-8" src="<%=request.getContextPath()%>/Assets/js/script.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -8,19 +8,14 @@ package Controle;
 import Dao.AgendamentoDAO;
 import Modelo.Agendamento;
 import Util.EnviaEmail;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
-import javax.mail.Address;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -78,29 +73,12 @@ public class AgendamentoSolicitar implements ICommand {
                         + "Olá, a visita ao Imóvel Nº" + agendamento.getImovel().getId_imovel() + " foi solicitada com sucesso.</h2></td></tr><tr style=\"border-collapse:collapse;\"> <td align=\"center\" style=\"padding:0;Margin:0;padding-top:5px;padding-bottom:20px;font-size:0;\"> <table width=\"5%\" height=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;\"> <tr style=\"border-collapse:collapse;\"> <td style=\"padding:0;Margin:0px;border-bottom:2px solid #FFFFFF;background:rgba(0, 0, 0, 0) none repeat scroll 0% 0%;height:1px;width:100%;margin:0px;\"></td></tr></table> </td></tr><tr style=\"border-collapse:collapse;\"> <td align=\"center\" style=\"padding:0;Margin:0;\"> <p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#FFFFFF;\">"
                         + "A ficha de solicitação estará disponível para impressão na área de agendamentos do usuário. Lembre-se de que caso não seja possivel o comparecimento, solicitar o cancelamento 12 horas antes no sistema!</p><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:helvetica, 'helvetica neue', arial, verdana, sans-serif;line-height:21px;color:#FFFFFF;\"> <br></p></td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </td></tr></table> </div></body></html>";
 
-                String email = (String) session.get("email") + "," + request.getParameter("emailanunciante");
+                String email = session.get("email") + "," + request.getParameter("emailanunciante");
 
-                String remetente = "royal.imobiliaria2020@gmail.com";
-                System.out.println("__________________________________________________");
-                System.out.println("Enviando email DE: " + remetente + " PARA: " + email);
-                System.out.println("Assunto: " + assunto);
+                EnviaEmail enviaEmail = new EnviaEmail();
 
-                Message message = new MimeMessage(EnviaEmail.criarSessionMail());
-                message.setFrom(new InternetAddress(remetente)); // Remetente
-
-                Address[] toUser = InternetAddress // Destinatário(s)
-                        .parse(email.trim().toLowerCase());
-
-                message.setRecipients(Message.RecipientType.TO, toUser);
-                message.setSubject(assunto);// Assunto
-                message.setContent(msgemail, "text/html");
-                /**
-                 * Método para enviar a mensagem criada
-                 */
-                Transport.send(message);
-
-                System.out.println("Email enviado com sucesso !");
-                System.out.println("__________________________________________________");
+                enviaEmail.SendEmailThroughGmail (email,
+                        assunto, msgemail);
 
                 request.setAttribute("msg", "O Agendamento foi realizado com Sucesso");
                 return "index.jsp";
@@ -108,7 +86,7 @@ public class AgendamentoSolicitar implements ICommand {
                 request.setAttribute("msgerro", msgErro);
                 return "index.jsp";
             }
-        } catch (ParseException | SQLException | MessagingException ex) {
+        } catch (ParseException | SQLException ex) {
             request.setAttribute("msgerro", ex.getMessage());
             System.err.println(ex.getMessage());
             return "Usuario/AgendamentoSolicitar.jsp";

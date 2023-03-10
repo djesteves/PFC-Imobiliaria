@@ -1,10 +1,11 @@
 package Controle;
 
-import java.sql.SQLException;
+import Dao.UsuarioDAO;
+import Modelo.Usuario;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Modelo.Usuario;
-import Dao.UsuarioDAO;
+import java.sql.SQLException;
 
 public class UsuarioListarPorID implements ICommand {
 

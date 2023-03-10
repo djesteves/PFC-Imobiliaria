@@ -5,20 +5,14 @@
  */
 package Dao;
 
+import Util.ConnectionFactory;
+import net.sf.jasperreports.engine.*;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import Util.ConnectionFactory;
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.Random;
-import net.sf.jasperreports.engine.JasperExportManager;
 
 /**
  *

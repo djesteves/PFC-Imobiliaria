@@ -5,15 +5,12 @@
  */
 package Dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import Modelo.Imovel;
 import Util.ConnectionFactory;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -257,15 +254,20 @@ public class ImovelDAO {
     public void aprovar(int id) throws SQLException {
 
         String UPDATE_APROVARIMOVEIS = "UPDATE Imovel I "
-                + "SET Status = 'Disponivel', data_validacao = ?"
+                + "SET Status = 'Disponivel', data_validacao = ? "
                 + "WHERE id_imovel = ?";
 
         Connection connection = ConnectionFactory.getConexao();
 
         smt = connection.prepareStatement(UPDATE_APROVARIMOVEIS);
 
+
+
         smt.setTimestamp(1, timestamp);
         smt.setInt(2, id);
+
+        System.out.println(smt);
+
         smt.executeUpdate();
 
         connection.close();

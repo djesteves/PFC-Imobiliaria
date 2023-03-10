@@ -8,11 +8,8 @@ package Dao;
 import Modelo.Agendamento;
 import Modelo.Usuario;
 import Util.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
