@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-@WebFilter(filterName = "AcessoLogado", urlPatterns = {"/usuario/GerenciarImoveis.jsp", "/usuario/FormImovel.jsp", "/usuario/AlterarSenhaUsuario.jsp", "/usuario/AgendamentoSolicitar.jsp", "/usuario/Agendamentos.jsp"})
+@WebFilter(filterName = "AcessoLogado", urlPatterns = {"/usuario/GerenciarImoveis.jsp", "/usuario/FormImovel.jsp",
+        "/usuario/AlterarSenhaUsuario.jsp", "/usuario/AgendamentoSolicitar.jsp", "/usuario/Agendamentos.jsp",
+        "/controle/UsuarioListarPorID"})
 public class AcessoLogado implements Filter {
 
     @Override
