@@ -12,7 +12,7 @@
         <c:forEach var="i" items="${listaImovel}">
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card">
-                    <img class="card-img-top" src="../resources/assets/upload/${i.diretorio_imagem}" alt="Imagem do Imóvel" height="225" width="210">
+                    <img class="card-img-top" src="../assets/upload/${i.diretorio_imagem}" alt="Imagem do Imóvel" height="225" width="210">
                     <div class="card-body">
                         <h2 class="card-title">${i.titulo}</h2>
                         <p class="card-text">${i.descricao}</p>
