@@ -31,11 +31,11 @@
 </style>
 
 
-<form class="formulario" action="<%=request.getContextPath()%>/Controle/Logar" method="post">
+<form class="formulario" action="<%=request.getContextPath()%>/controle/Logar" method="post">
 
     <c:if test="${usuarioLogado == null}">
         <div class="text-center">
-            <img class="mb-4" src="<%=request.getContextPath()%>/Assets/img/icon_imob.png" alt="" width="72" height="72">
+            <img class="mb-4" src="<%=request.getContextPath()%>/assets/img/icon_imob.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Login</h1>
         </div>
         <div  class="form-group">
@@ -52,7 +52,7 @@
         <br>
 
         <div class="text-right">
-            <a href="<%=request.getContextPath()%>/Usuario/FormUsuario.jsp">
+            <a href="<%=request.getContextPath()%>/usuario/FormUsuario.jsp">
                 Cadastrar |
             </a>
             <a href="#">

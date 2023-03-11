@@ -32,30 +32,30 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLogado">
 
-                                <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/UsuarioListarPorID?id=<c:out value='${usuarioLogado.id}' />">
+                                <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/UsuarioListarPorID?id=<c:out value='${usuarioLogado.id}' />">
                                     <i class="fas fa-user-cog"></i>
                                     Meus Dados
                                 </a>
 
-                                <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/ImovelListarPorIDAtivos">
+                                <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/ImovelListarPorIDAtivos">
                                     <i class="fas fa-city"></i>
                                     Meus Imóveis
                                 </a>
 
-                                <a class="dropdown-item" href="<%=request.getContextPath()%>/Usuario/AlterarSenha.jsp">
+                                <a class="dropdown-item" href="<%=request.getContextPath()%>/usuario/AlterarSenha.jsp">
                                     <i class="fas fa-key"></i>
                                     Alterar Senha
                                 </a>
 
                                 <c:if test="${'USUARIO'.equalsIgnoreCase(usuarioLogado.nivel)}">
-                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/AgendamentoLista?modo=Usuario">
+                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/AgendamentoLista?modo=Usuario">
                                         <i class="fas fa-calendar-alt" aria-hidden="true"></i>
                                         Meus Agendamentos
                                     </a>
                                 </c:if>
 
                                 <c:if test="${'CORRETOR'.equalsIgnoreCase(usuarioLogado.nivel) || 'ADMINISTRADOR'.equalsIgnoreCase(usuarioLogado.nivel)}">
-                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/Admin/Dashboard.jsp">
+                                    <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/Dashboard.jsp">
                                         <i class="fa fa-tools" aria-hidden="true"></i>
                                         Administração
                                     </a>
@@ -63,7 +63,7 @@
 
                                 <hr >
 
-                                <a class="dropdown-item" href="<%=request.getContextPath()%>/Controle/Deslogar">
+                                <a class="dropdown-item" href="<%=request.getContextPath()%>/controle/Deslogar">
                                     <i class="fas fa-sign-out-alt"></i>
                                     Sair
                                 </a>
