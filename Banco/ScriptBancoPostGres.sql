@@ -84,8 +84,8 @@ insert into usuario values (DEFAULT, 'Consultor 2 - Danilo', NOW(), '11912345678
 
 -- INSERT USUARIO Vendedor
 insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
-insert into usuario values (DEFAULT, 'Usuario Vendedor', NOW(), '11912345678','1143211234','668.962.280-08', '29.767.686-6', 'F', 1, 'usuario@email.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
+insert into usuario values (DEFAULT, 'Usuario Vendedor', NOW(), '11912345678','1143211234','668.962.280-08', '29.767.686-6', 'F', 1, 'usuario1@email.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
 
 -- INSERT USUARIO Solicitante
 insert into endereco values (DEFAULT, 'Praça dos Imigrantes', null, '13', 'Mogi das Cruzes','08735-080', 'Jardim Avenida','SP');
-insert into usuario values (DEFAULT, 'Usuario Solicitante', NOW(), '11912345678','1143211234','479.229.558-04', '29.767.686-6', 'F', 1, 'diegoguedespereira@gmail.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
+insert into usuario values (DEFAULT, 'Usuario Solicitante', NOW(), '11912345678','1143211234','395.980.440-76', '29.767.686-6', 'F', 1, 'usuario2@email.com', '202CB962AC59075B964B07152D234B70', 'USUARIO', 'Ativo');
